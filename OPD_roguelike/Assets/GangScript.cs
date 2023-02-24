@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class GangScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("Hellow, team!");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
