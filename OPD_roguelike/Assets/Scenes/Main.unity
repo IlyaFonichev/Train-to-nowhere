@@ -354,7 +354,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Huge indie-company
+  m_Text: 'Huge indie-company!
+
+    Train to Nowhere'
 --- !u!222 &639474246
 CanvasRenderer:
   m_ObjectHideFlags: 0

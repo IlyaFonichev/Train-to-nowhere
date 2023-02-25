@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1366
     height: 685
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Hierarchy
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 338
+  controlID: 21
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 160
+  controlID: 48
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 161
+  controlID: 49
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -317,22 +317,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Packages/com.unity.2d.sprite
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets
+  - Packages/com.unity.2d.sprite
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\UnityProjects\GitHub\OPDproject\OPD_roguelike
+  m_LastProjectPath: C:\Users\rst\Documents\GitHub\OPDproject\OPD_roguelike
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ac5d0000
-    m_LastClickedID: 23980
-    m_ExpandedIDs: 00000000ac5d000000ca9a3b
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: 485d0000
+    m_LastClickedID: 23880
+    m_ExpandedIDs: 00000000345d0000485d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ac5d0000
+    m_ExpandedIDs: 00000000345d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -488,25 +488,25 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b25d0000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 74b6ffff9abcffffa4bcfffff0bcffff2afbffff
+      m_SelectedIDs: e45c0000
+      m_LastClickedID: 23780
+      m_ExpandedIDs: 2cfbfffffc5c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Image
+        m_OriginalName: Image
         m_EditFieldRect:
           serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        m_UserData: 0
+          x: 92
+          y: 48
+          width: 165
+          height: 16
+        m_UserData: 23780
         m_IsWaitingForDelay: 0
-        m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_IsRenaming: 1
+        m_OriginalEventType: 7
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 3}
+        m_ClientGUIView: {fileID: 4}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -794,9 +794,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1046.3341, y: 519.1406, z: -5.228547}
+    m_Target: {x: 861.24664, y: 532.76227, z: -5.209634}
     speed: 2
-    m_Value: {x: 1046.3341, y: 519.1406, z: -5.228547}
+    m_Value: {x: 861.24664, y: 532.76227, z: -5.209634}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -847,9 +847,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 579.0027
+    m_Target: 577.11273
     speed: 2
-    m_Value: 579.0027
+    m_Value: 577.11273
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -959,7 +959,7 @@ MonoBehaviour:
       width: 2539.4595
       height: 1080
     m_MinimalGUI: 1
-  m_defaultScale: 0.30833334
+  m_defaultScale: 0.32777777
   m_LastWindowPixelSize: {x: 783, y: 354}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
