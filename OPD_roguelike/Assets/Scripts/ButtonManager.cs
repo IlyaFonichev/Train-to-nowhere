@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour
+public class ButtonManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject settingsPanel, quitPanel;
