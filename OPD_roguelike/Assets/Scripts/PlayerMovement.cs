@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _dashSpeed = 1f;
     [SerializeField] private AnimationCurve _dashSpeedCurve;
     [SerializeField] private float _dashTime = 0.5f;
-    //[SerializeField] private float _dashCooldown = 1f;
     [SerializeField] private GameObject _scope;
     [SerializeField] private GameObject _shot;
 
@@ -20,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private float deltaPosX, deltaPosY, deltaPosZ;
     private bool _isDashing;
     private RectTransform _scope_rt;
-    private float canvasRadius;
+    private Vector3 canvasCenter;
 
     private void Start()
     {
@@ -32,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
         deltaPosY = playerCamera.transform.position.y - transform.position.y;
         deltaPosZ = playerCamera.transform.position.z - transform.position.z;
 
-        // Для стрельбы (перспективная камера под углом)
-        canvasRadius = Mathf.Tan((playerCamera.fieldOfView / 2) * Mathf.Deg2Rad) * playerCamera.nearClipPlane;
+        // Для вычисления вектора направления стрельбы
+        canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
 
     private void FixedUpdate()
@@ -60,30 +59,24 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetAxisRaw("Fire") == 0) yield break;
         if (_isDashing) yield break;
 
-        var mousePos2D = Input.mousePosition;
-        var screenToCameraDistance = playerCamera.nearClipPlane;
+        Vector3 mousePos2D = Input.mousePosition;
 
-        var mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, screenToCameraDistance);
+        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
+        
+        Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
+        Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
 
-        // искомая точка в мировых координатах
-        var worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
+        Vector3 mouseVector = worldPointPos - currCanvasCenter;
+        mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
 
-        //Debug.Log(worldPointPos.x + " " + worldPointPos.y + " " + worldPointPos.z);
+        mouseVector.Normalize();
 
-        Vector3 mousevector = new Vector3(worldPointPos.x - transform.position.x, transform.position.y, playerCamera.transform.position.z - worldPointPos.z - transform.position.z);
-        //mousevector = new vector3(mousevector.x, transform.position.y, mousevector.y);
-        mousevector = mousevector - transform.position;
-
-        Debug.Log(mousevector.x + " " + mousevector.y + " " + mousevector.z);
-
-        mousevector.Normalize();
-
-        GameObject bullet = Instantiate(_shot, transform.position + (mousevector) * 2, new Quaternion(0,0,0,0));
+        GameObject bullet = Instantiate(_shot, transform.position + (mouseVector) * 2, new Quaternion(0,0,0,0));
 
         float elapsedtime = 0f;
         while (elapsedtime < 1)
         {
-            bullet.transform.Translate(mousevector * speed * Time.fixedDeltaTime * _dashSpeed);
+            bullet.transform.Translate(mouseVector * speed * Time.fixedDeltaTime * _dashSpeed);
 
             elapsedtime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
@@ -111,14 +104,6 @@ public class PlayerMovement : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
-
-        // траблы с перемещением после дэша
-        //elapsedTime = 0f;
-        //while (elapsedTime < _dashCooldown)
-        //{
-        //    elapsedTime += Time.deltaTime;
-        //    yield return new WaitForSeconds(Time.deltaTime);
-        //}
 
         _isDashing = false;
         yield break;
