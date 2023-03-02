@@ -20,6 +20,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Score.AddScore(0);
+
+
         rb = gameObject.GetComponent<Rigidbody>();       
 
         // Для вычисления вектора направления стрельбы
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
     private void move(Vector3 direction)
     {
+        //Health.HitToPlayer(1);
+
         if (isDashing) return;
         rb.velocity = direction.normalized * speed;
     }
