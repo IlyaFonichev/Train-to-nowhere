@@ -1,9 +1,12 @@
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    private GameObject prefab;
+    private GameObject[] spawnPointsOfMobs;
+    private GameObject spawnPointsChest;
+    private GameObject[] spawnPointsOfDecorations;
+    //.....
     private bool leftNeighbour;
     private bool rightNeighbour;
     private bool topNeighbour;
@@ -21,9 +24,15 @@ public class Room : MonoBehaviour
 
     private void Start()
     {
-        gameObject.transform.parent = new GameObject("Gang").transform;
-        transform.AddComponent<BoxCollider>();
-        GetComponent<BoxCollider>().isTrigger = true;
+        switch (type)
+        { 
+            case Type.Empty:
+                break;
+            case Type.Start:
+                for()
+                    Instantiate(prefab);
+                break;
+        }
     }
 
 }
