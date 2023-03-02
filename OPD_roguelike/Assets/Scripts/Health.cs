@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
 {
     private static Text _HealthNum = GameObject.Find("HealthNum").GetComponent<Text>();
     private static Image _healthImage = GameObject.Find("DotherHealth").GetComponent<Image>();
+    private static Image _Mather = GameObject.Find("MatherHealth").GetComponent<Image>();
     private static uint _helthOfPlayer = 100;
     public static uint GetHelth()
     {
@@ -22,7 +23,11 @@ public class Health : MonoBehaviour
             SceneManager.LoadScene("Death");
         }
         _HealthNum.text = _helthOfPlayer.ToString();
-        _healthImage.transform.position = new Vector3(-0.7962963f-(2-_helthOfPlayer / 50f), _healthImage.transform.position.y, _healthImage.transform.position.z);
+        // Получаем родительский объект
+        Transform parentTransform = _Mather.transform.parent;
+
+        // Сдвигаем дочерний объект относительно родителя
+        _healthImage.transform.Translate(-0.0185f, 0f, 0f, parentTransform);
     }
 
 
@@ -33,15 +38,4 @@ public class Health : MonoBehaviour
             _helthOfPlayer = 100;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
