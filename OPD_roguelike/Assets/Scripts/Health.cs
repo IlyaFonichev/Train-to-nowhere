@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     private static Image _healthImage = GameObject.Find("DotherHealth").GetComponent<Image>();
     private static Image _Mather = GameObject.Find("MatherHealth").GetComponent<Image>();
     private static uint _helthOfPlayer = 100;
+
     public static uint GetHelth()
     {
         return _helthOfPlayer;
@@ -20,7 +21,7 @@ public class Health : MonoBehaviour
         _helthOfPlayer -= damage;
         if (_helthOfPlayer <= 0)
         {
-            SceneManager.LoadScene("Death");
+            SceneManager.LoadScene("EndScene");
         }
         _HealthNum.text = _helthOfPlayer.ToString();
         // Получаем родительский объект
