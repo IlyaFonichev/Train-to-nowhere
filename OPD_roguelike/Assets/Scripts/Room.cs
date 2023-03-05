@@ -2,37 +2,33 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    private GameObject prefab;
-    private GameObject[] spawnPointsOfMobs;
-    private GameObject spawnPointsChest;
-    private GameObject[] spawnPointsOfDecorations;
-    //.....
-    private bool leftNeighbour;
-    private bool rightNeighbour;
-    private bool topNeighbour;
-    private bool bottomNeighbour;
     [SerializeField]
-    private Type type;
-    enum Type
+    private Vector2 position;
+    [SerializeField]
+    private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
+    public GameObject leftNeighbor
     {
-        Empty,
-        Start,
-        Chest,
-        Mobs,
-        Boss,
+        set { leftRoom = value; }
+        get { return leftRoom; }
     }
-
-    private void Start()
+    public GameObject rightNeighbor
     {
-        switch (type)
-        { 
-            case Type.Empty:
-                break;
-            case Type.Start:
-                for()
-                    Instantiate(prefab);
-                break;
-        }
+        set { rightRoom = value; }
+        get { return rightRoom; }
     }
-
+    public GameObject topNeighbor
+    {
+        set { topRoom = value; }
+        get { return topRoom; }
+    }
+    public GameObject bottomNeighbor
+    {
+        set { bottomRoom = value; }
+        get { return bottomRoom; }
+    }
+    public Vector2 Position
+    {
+        get { return position; }
+        set { position = value; }
+    }
 }
