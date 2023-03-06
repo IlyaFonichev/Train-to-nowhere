@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,11 +19,11 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        Initialized();
-        StartCoroutine(Generate());
+        Initialization();
+        Generate();
     }
 
-    private void Initialized()
+    private void Initialization()
     {
         startRoom.GetComponent<Room>().Position = Vector2.zero;
         rooms.Add(startRoom.gameObject);
@@ -36,14 +35,13 @@ public class LevelGenerator : MonoBehaviour
                 doors.Add(startRoom.transform.GetChild(i).gameObject);
     }
 
-    IEnumerator Generate()
+    private void Generate()
     {
         while (currentCountOfRooms != countOfRooms - 1)
         {
-            Vector2 positionOffset = Vector2.zero;
             int numberOfCurrentParentDoor = Random.Range(0, doors.Count);
             GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
-            positionOffset = SetOffsetVector(currentParentDoor.tag);
+            Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
 
             GameObject newRoom = Instantiate(roomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
             GameObject parentRoom = currentParentDoor.transform.parent.gameObject;
@@ -74,7 +72,6 @@ public class LevelGenerator : MonoBehaviour
                 SetDoors(newRoom, parentRoom, currentParentDoor.tag, true);
                 currentCountOfRooms++;
             }
-            yield return new WaitForSeconds(0.01f);
         }
         DestroyEmptyDoors();
         PlacementRoomPosition();
@@ -82,42 +79,6 @@ public class LevelGenerator : MonoBehaviour
         InstantiateRoomSwitcher();
         gameObject.name = "Map";
         Destroy(gameObject.GetComponent<LevelGenerator>());
-    }
-
-    private void InstantiateRoomSwitcher()
-    {
-        GameObject roomSwitcher = new GameObject("RoomSwitcher");
-        roomSwitcher.transform.position = Vector3.zero;
-        roomSwitcher.AddComponent<RoomSwitcher>();
-        RoomSwitcher switcher = roomSwitcher.GetComponent<RoomSwitcher>();
-        switcher.CurrentRoom = startRoom;
-        switcher.Rooms = rooms;
-        roomSwitcher.GetComponent<RoomSwitcher>().HideInactiveRooms();
-        switcher.Initialized = true;
-        Debug.Log("Управление передано");
-    }
-
-    private Vector2 SetOffsetVector(string doorTag)
-    {
-        Vector2 positionOffset = Vector2.zero;
-        switch (doorTag)
-        {
-            case "TopDoor":
-                positionOffset = Vector2.up;
-                break;
-            case "BottomDoor":
-                positionOffset = Vector2.down;
-                break;
-            case "LeftDoor":
-                positionOffset = Vector2.left;
-                break;
-            case "RightDoor":
-                positionOffset = Vector2.right;
-                break;
-            default:
-                break;
-        }
-        return positionOffset;
     }
 
     private void SetDoors(GameObject currentRoom, GameObject neighbor, string doorTag, bool flag)
@@ -148,7 +109,7 @@ public class LevelGenerator : MonoBehaviour
                 neighbor.GetComponent<Room>().rightNeighbor = currentRoom;
                 currentRoom.GetComponent<Room>().leftNeighbor = neighbor;
                 break;
-            default: 
+            default:
                 break;
         }
     }
@@ -165,9 +126,9 @@ public class LevelGenerator : MonoBehaviour
 
     private void DestroyEmptyDoors()
     {
-        for(int i = 0; i < rooms.Count; i++)
+        for (int i = 0; i < rooms.Count; i++)
         {
-            for(int j = 0; j < rooms[i].transform.childCount; j++)
+            for (int j = 0; j < rooms[i].transform.childCount; j++)
             {
                 switch (rooms[i].transform.GetChild(j).tag)
                 {
@@ -205,6 +166,42 @@ public class LevelGenerator : MonoBehaviour
             }
         }
         doors.Clear();
+    }
+
+    private void InstantiateRoomSwitcher()
+    {
+        GameObject roomSwitcher = new GameObject("RoomSwitcher");
+        roomSwitcher.transform.position = Vector3.zero;
+        roomSwitcher.AddComponent<RoomSwitcher>();
+        RoomSwitcher switcher = roomSwitcher.GetComponent<RoomSwitcher>();
+        switcher.CurrentRoom = startRoom;
+        switcher.Rooms = rooms;
+        roomSwitcher.GetComponent<RoomSwitcher>().HideInactiveRooms();
+        switcher.Initialized = true;
+        Debug.Log("Управление передано");
+    }
+
+    private Vector2 SetOffsetVector(string doorTag)
+    {
+        Vector2 positionOffset = Vector2.zero;
+        switch (doorTag)
+        {
+            case "TopDoor":
+                positionOffset = Vector2.up;
+                break;
+            case "BottomDoor":
+                positionOffset = Vector2.down;
+                break;
+            case "LeftDoor":
+                positionOffset = Vector2.left;
+                break;
+            case "RightDoor":
+                positionOffset = Vector2.right;
+                break;
+            default:
+                break;
+        }
+        return positionOffset;
     }
 
     private void PlacementRoomPosition()

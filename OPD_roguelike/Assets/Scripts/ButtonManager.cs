@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,7 +14,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void LoadLobby()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Dange");
     }
     public void OpenSettings()
     {
