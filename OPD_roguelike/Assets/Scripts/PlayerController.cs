@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static EventManager;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -18,9 +19,22 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     private Vector3 canvasCenter;
 
+    private static Health _healthOfPlayer;
+    private static Score _scoreOfOlayer;
+    public static Health GetHealthOfPlayer() { return _healthOfPlayer; }
+    public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
+
     private void Start()
     {
-        Score.AddScore(0);
+        //создаем здоровье героя
+        _healthOfPlayer = new Health(health: 70, maxHaelthValue: 100);
+        //загружаем интерфейс здоровья
+        EventManager.changeHealthInterface?.Invoke(_healthOfPlayer);
+        //создаем счет очков для героя
+        _scoreOfOlayer = new Score(0);
+        //загружаем интерфейс очков
+        EventManager.changeScoreInterface?.Invoke(_scoreOfOlayer);
+
 
 
         rb = gameObject.GetComponent<Rigidbody>();       
@@ -28,6 +42,7 @@ public class PlayerController : MonoBehaviour
         // Для вычисления вектора направления стрельбы
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
+
 
     private void FixedUpdate()
     {

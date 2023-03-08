@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class ShowCollectedCoins : MonoBehaviour
 {
-    private Text text;
+    [SerializeField] private Text text;
 
     private void Start()
     {
-        text = GetComponent<Text>();
-        text.text = Score.GetScore().ToString();
+        text.text = PlayerController.GetScoreOfPlayer().GetScore().ToString();
     }
 }
