@@ -3,29 +3,29 @@ using UnityEngine.SceneManagement;
 
 public class Health
 {
-    //текущее здоровье, масимальное здоровье дл€ экземпл€ра
+    //tecuLLLee zdorovbe, maximalnoe zdorovbe dl9 eczempl9ra
     [SerializeField] protected uint _healthValue;
     [SerializeField] protected uint _MaxHaelthValue;
 
-    //конструктор здоровь€
+    //constructor zdorovb9
     public Health(uint health, uint maxHaelthValue)
     {
         _healthValue = health;
         _MaxHaelthValue = maxHaelthValue;
     }
 
-    //setter дл€ _healthValue
+    //setter dl9 _healthValue
     public uint GetHealth() { return _healthValue; }
 
-    //setter дл€ _MaxHaelthValue
+    //setter dl9 _MaxHaelthValue
     public uint GetMaxHaelth() { return _MaxHaelthValue; }
 
-    //получение урона
+    //poluchenie urona
     public virtual void Damage(uint damageCalue) { _healthValue -= damageCalue; }
 
-    //лечение
+    //lechenie
     public virtual void Heal(uint healValue) { _healthValue += healValue;}
 
-    //смэрть
+    //smertb
     public virtual void Kill() { _healthValue = 0; }
 }

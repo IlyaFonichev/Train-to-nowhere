@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class Looting : MonoBehaviour
 {
-    //сигнатура
+    //Signatura
     public delegate void AddScore(Score score, uint scoreValue);
-    //событие: изменени€ интерфейса очков
+    //Sobb1tie: izmenenie interfaca ochcov
     public AddScore addScore;
 
-    //если тригера коснулс€ игрок, то объект удал€етс€ и начисл€ютс€ очки
+    //Esli trigera cosnuls9 igrok, to ob'ect udal9ets9 i nachisl9uts9 ochki
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -17,19 +17,19 @@ public class Looting : MonoBehaviour
         }
     }
 
-    // подписываемс€ на событие добавлени€ очков
+    // podpisatbs9 na sobb1tie dobavleni9 ochkov
     private void Start()
     {
         addScore += onAddScore;
     }
 
-    // отписываемс€ от событи€ добавлени€ очков
+    // otpisatbs9 ot sobb1tie dobavleni9 ochkov
     private void OnDestroy()
     {
         addScore += onAddScore;
     }
 
-    //при вызове событи€ добавлени€ очков выполн€етс€ эта функци€
+    //pri vb1zove sobb1ti9 dobavleni9 ochkov vb1poln9ets9 eta function
     private void onAddScore(Score score, uint scoreValue)
     {
         score.AddScore(scoreValue);

@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class Fire : MonoBehaviour
 {
-    //хз, вроде надо
+    //vrode tak nado
     private Collider _currentCollider;
 
-    //при стоянии в огне
+    //pri sto9nii v ogne
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            //событие получения урона
+            //sob1tie polucheni9 urona
             EventManager.takeDamage?.Invoke(PlayerController.GetHealthOfPlayer(), 1);
         }
     }
 
-    // подписываемся на событие получения урона
+    // podpisatbs9 na sob1tie polucheni9 urona
     private void Start() { EventManager.takeDamage += onTakeDamage; }
 
-    // отписываемся от события получения урона
+    // otpisatbs9 ot sob1ti9 polucheni9 urona
     private void OnDestroy() { EventManager.takeDamage -= onTakeDamage; }
 
-    //при вызове событи получения урона выполняется эта функция
+    //pri vb1zove sob1ti9 polucheni9 urona vb1poln9ets9 eta function
     private void onTakeDamage(Health health, uint damage)
     {
         health.Damage(damage);

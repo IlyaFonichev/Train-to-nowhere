@@ -7,14 +7,17 @@ public class ShowScoreOfPlayer : MonoBehaviour
 {
     [SerializeField] private Text _scoreValueText;
 
-    // на старте подписываемся
-    private void Start() { EventManager.changeScoreInterface += onChangeScoreInterface;
+    // Podpisb1vaems9 na sobb1tie izmeneni9 interfaca of score
+    private void Start()
+    { 
+        EventManager.changeScoreInterface += onChangeScoreInterface;
         EventManager.changeScoreInterface?.Invoke(PlayerController.GetScoreOfPlayer());
     }
 
-    // при уничтожении объета отписываемся
+    // Otpisb1vaems9 na sobb1tie izmeneni9 interfaca of score
     private void OnDestroy() { EventManager.changeScoreInterface -= onChangeScoreInterface; }
 
+    // vb1zb1vaets9 pri sob1tii izmeneni9 interfaca of score
     private void onChangeScoreInterface(Score score)
     {
         _scoreValueText.text = score.GetScore().ToString();

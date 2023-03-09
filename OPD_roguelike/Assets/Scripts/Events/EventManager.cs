@@ -6,19 +6,19 @@ using System;
 
 public class EventManager : MonoBehaviour 
 {
-    //сигнатура
+    //signatura
     public delegate void TakeDamage(HealthOfPlayer health, uint damage);
-    //событие: получения урона героем
+    //sobb1tie: poluchenie urona geroem
     public static TakeDamage takeDamage;
 
-    //мигнатура
+    //signatura
     public delegate void ChangeHealthInterface(HealthOfPlayer health);
-    //событие: изменения интерфейса здоровья
+    //sobb1tie: izmenenie interfaca zdorovb9
     public static ChangeHealthInterface changeHealthInterface;
 
-    //сигнатура
+    //signatura
     public delegate void ChangeScoreInterface(Score score);
-    //событие: изменения интерфейса очков
+    //sobb1tie: izmenenie interfaca ochkov
     public static ChangeScoreInterface changeScoreInterface;
 
 }

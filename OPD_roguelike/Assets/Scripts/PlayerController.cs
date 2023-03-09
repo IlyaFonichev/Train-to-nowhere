@@ -26,21 +26,21 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        //создаем здоровье героя
+        //sozdaem zdorovbe igroka
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
-        //загружаем интерфейс здоровья
+        //zagruzaem inteface zdorovb9 igroka
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         EventManager.changeHealthInterface?.Invoke(_healthOfPlayer);
-        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        //sozdaem score igroka
         _scoreOfOlayer = new Score(0);
-        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+        //zagruzaem inteface scora igroka
         EventManager.changeScoreInterface?.Invoke(_scoreOfOlayer);
 
 
 
         rb = gameObject.GetComponent<Rigidbody>();       
 
-        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // ??? пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
 

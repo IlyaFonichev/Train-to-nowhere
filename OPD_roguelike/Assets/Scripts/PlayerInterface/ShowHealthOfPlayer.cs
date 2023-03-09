@@ -10,13 +10,14 @@ public class ShowHealthOfPlayer : MonoBehaviour
     [SerializeField] private Image _healthParentImage;
     [SerializeField] private Image _healthChildImage;
 
-    // на старте подписываемся
+    // podpisb1vaems9 na sobb1tie izmeneni9 interfaca zdorovb9
     private void Start() { EventManager.changeHealthInterface += onChangeHealthInterface;
             EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer()); }
 
-    // при уничтожении объета отписываемся
+    // otpisb1vaems9 ot sobb1ti9 izmeneni9 interfaca zdorovb9
     private void OnDestroy() { EventManager.changeHealthInterface -= onChangeHealthInterface; }
 
+    // function kotora9 vb1zb1vaets9 pri sobb1tii izmeneni9 interfaca zdorovb9
     private void onChangeHealthInterface(HealthOfPlayer health)
     {
         _HealthValueText.text = health.GetHealth().ToString();

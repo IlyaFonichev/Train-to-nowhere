@@ -18,20 +18,21 @@ public class HealthOfPlayer : Health
         _healthValue -= damageCalue;
         if (_healthValue <= 0)
             SceneManager.LoadScene("EndScene");
-        //обновляется интерфейс здоровья для героя
+        //Obnovl9ets9 interface zdorovb9 dl9 gero9
         EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
     }
 
     public override void Heal(uint healValue)
     {
         _healthValue += healValue;
-        //обновляется интерфейс здоровья для героя
+        //Obnovl9ets9 interface zdorovb9 dl9 gero9
         EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
     }
 
     public override void Kill()
     {
         _healthValue = 0;
+        //Obnovl9ets9 interface zdorovb9 dl9 gero9
         EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
     }
 }

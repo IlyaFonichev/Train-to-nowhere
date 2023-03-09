@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class Score
 {
-    //объект в canvas. Отображает счет
+    //Ob'ect v convas. Otobrazaet schet
     private static uint _scoreValue;
 
-    //конструктор. Стартовое количество очков
+    //Constructor. Startovoe colichestvo ochkov
     public Score(uint scoreValue) { _scoreValue = scoreValue; }
 
-    //setter для _scoreValue
+    //setter dl9 _scoreValue
     public uint GetScore() { return _scoreValue; }
 
-    //добавление очков
+    //dobavlenie ochkov
     public void AddScore(uint newScoreValue) 
     { 
         _scoreValue += newScoreValue;
