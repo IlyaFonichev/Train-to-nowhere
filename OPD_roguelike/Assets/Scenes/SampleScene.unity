@@ -1974,6 +1974,7 @@ MonoBehaviour:
   accessRange: 5
   defaultSprite: {fileID: 21300000, guid: 41f36ba249f793349b7d800567691510, type: 3}
   activeSprite: {fileID: 21300000, guid: dcea51d6065d64246aeec467afeff684, type: 3}
+  npcText: UWU
 --- !u!65 &1413321920
 BoxCollider:
   m_ObjectHideFlags: 0
