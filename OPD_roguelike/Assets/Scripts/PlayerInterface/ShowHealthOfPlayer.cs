@@ -17,7 +17,7 @@ public class ShowHealthOfPlayer : MonoBehaviour
     // при уничтожении объета отписываемся
     private void OnDestroy() { EventManager.changeHealthInterface -= onChangeHealthInterface; }
 
-    private void onChangeHealthInterface(Health health)
+    private void onChangeHealthInterface(HealthOfPlayer health)
     {
         _HealthValueText.text = health.GetHealth().ToString();
 

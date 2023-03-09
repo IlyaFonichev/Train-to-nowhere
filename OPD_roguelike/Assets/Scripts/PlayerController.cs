@@ -19,15 +19,15 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     private Vector3 canvasCenter;
 
-    private static Health _healthOfPlayer;
+    private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
-    public static Health GetHealthOfPlayer() { return _healthOfPlayer; }
+    public static HealthOfPlayer GetHealthOfPlayer() { return _healthOfPlayer; }
     public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
 
     private void Start()
     {
         //создаем здоровье героя
-        _healthOfPlayer = new Health(health: 70, maxHaelthValue: 100);
+        _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         //загружаем интерфейс здоровья
         EventManager.changeHealthInterface?.Invoke(_healthOfPlayer);
         //создаем счет очков для героя

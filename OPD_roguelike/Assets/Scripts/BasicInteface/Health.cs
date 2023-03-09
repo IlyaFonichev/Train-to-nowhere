@@ -4,8 +4,8 @@ using UnityEngine.SceneManagement;
 public class Health
 {
     //текущее здоровье, масимальное здоровье для экземпляра
-    [SerializeField] private uint _healthValue;
-    [SerializeField] private uint _MaxHaelthValue;
+    [SerializeField] protected uint _healthValue;
+    [SerializeField] protected uint _MaxHaelthValue;
 
     //конструктор здоровья
     public Health(uint health, uint maxHaelthValue)
@@ -20,28 +20,12 @@ public class Health
     //setter для _MaxHaelthValue
     public uint GetMaxHaelth() { return _MaxHaelthValue; }
 
-    //при получении урона минусуется здоровье, проверяется не умер ли объект
-    public void Damage(uint damageCalue) 
-    { 
-        _healthValue -= damageCalue;
-        if (_healthValue <= 0)
-            SceneManager.LoadScene("EndScene");
-        //обновляется интерфейс здоровья для героя
-        EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
-    }
+    //получение урона
+    public virtual void Damage(uint damageCalue) { _healthValue -= damageCalue; }
 
-    //добавления здоровья
-    public void Heal(uint healValue) 
-    { 
-        _healthValue += healValue;
-        //обновляется интерфейс здоровья для героя
-        EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
-    }
+    //лечение
+    public virtual void Heal(uint healValue) { _healthValue += healValue;}
 
     //смэрть
-    public void Kill() 
-    { 
-        _healthValue = 0;
-        EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
-    }
+    public virtual void Kill() { _healthValue = 0; }
 }
