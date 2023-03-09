@@ -29,17 +29,18 @@ public class PlayerController : MonoBehaviour
         //создаем здоровье героя
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         //загружаем интерфейс здоровья
+        _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         EventManager.changeHealthInterface?.Invoke(_healthOfPlayer);
-        //создаем счет очков для героя
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         _scoreOfOlayer = new Score(0);
-        //загружаем интерфейс очков
+        //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         EventManager.changeScoreInterface?.Invoke(_scoreOfOlayer);
 
 
 
         rb = gameObject.GetComponent<Rigidbody>();       
 
-        // Для вычисления вектора направления стрельбы
+        // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
 
@@ -80,7 +81,8 @@ public class PlayerController : MonoBehaviour
 
         mouseVector.Normalize();
 
-        GameObject bullet = Instantiate(shot, transform.position + (mouseVector) * 2, new Quaternion(0,0,0,0));
+
+        GameObject bullet = Instantiate(shot, transform.position + (mouseVector) * 2, new Quaternion(0, 0, 0, 0));
 
         float elapsedtime = 0f;
         while (elapsedtime < 1)
@@ -92,6 +94,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Destroy(bullet);
+        
 
         yield break;
     }
