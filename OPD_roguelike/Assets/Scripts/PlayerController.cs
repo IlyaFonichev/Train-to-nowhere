@@ -77,12 +77,13 @@ public class PlayerController : MonoBehaviour
         Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
 
         Vector3 mouseVector = worldPointPos - currCanvasCenter;
-        mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
+        mouseVector = new Vector3(mouseVector.x, 0 , mouseVector.z);
 
         mouseVector.Normalize();
 
 
         GameObject bullet = Instantiate(shot, transform.position + (mouseVector) * 2, new Quaternion(0, 0, 0, 0));
+        bullet.tag = "Bullet";
 
         float elapsedtime = 0f;
         while (elapsedtime < 1)

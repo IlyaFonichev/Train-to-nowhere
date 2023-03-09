@@ -12,7 +12,8 @@ public class HealthOfPlayer : Health
         _MaxHaelthValue = maxHaelthValue;
     }
 
-    //pereopredel9em metodb1 iz klassa Health dl9 gero9
+
+    //pereopredel9em metodb1 iz klassa Health dl9 enemy
     public override void Damage(uint damageCalue)
     {
         _healthValue -= damageCalue;
@@ -35,4 +36,5 @@ public class HealthOfPlayer : Health
         //Obnovl9ets9 interface zdorovb9 dl9 gero9
         EventManager.changeHealthInterface?.Invoke(PlayerController.GetHealthOfPlayer());
     }
+
 }
