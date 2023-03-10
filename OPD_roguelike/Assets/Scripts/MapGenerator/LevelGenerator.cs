@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -12,13 +13,15 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     private GameObject roomPrefab;
     [SerializeField]
-    private uint countOfRooms = 1;
+    private uint countOfRooms;
     private uint currentCountOfRooms = 0;
     [SerializeField]
     private const float verticalRoomOffset = 12f, horizontalRoomOffset = 19f;
 
     private void Start()
     {
+        countOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 5 + (uint)Random.Range(0, 3);
+        Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
         Generate();
     }
@@ -178,7 +181,6 @@ public class LevelGenerator : MonoBehaviour
         switcher.Rooms = rooms;
         roomSwitcher.GetComponent<RoomSwitcher>().HideInactiveRooms();
         switcher.Initialized = true;
-        Debug.Log("Управление передано");
     }
 
     private Vector2 SetOffsetVector(string doorTag)
