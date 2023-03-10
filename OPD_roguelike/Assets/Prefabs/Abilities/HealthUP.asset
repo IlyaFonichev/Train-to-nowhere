@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa279f50b2af12e4d986f01b2ad876b5, type: 3}
-  m_Name: SpeedUp
+  m_Name: HealthUP
   m_EditorClassIdentifier: 
-  color: {r: 0.46666667, g: 1, b: 0.49803922, a: 1}
-  sprite: {fileID: 7482667652216324306, guid: 89fbb7718032f8a458b78bb4aa55651a, type: 3}
-  abilityType: 1
-  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u0435 \u0441\u043A\u043E\u0440\u043E\u0441\u0442\u0438
-    \u0438\u0433\u0440\u043E\u043A\u0430"
+  color: {r: 1, g: 0.2627451, b: 0.34509805, a: 1}
+  sprite: {fileID: 7482667652216324306, guid: cd24ab369626adc429ee6cefac5a5d0e, type: 3}
+  abilityType: 3
+  description: "\u0423\u0432\u0435\u043B\u0438\u0447\u0435\u043D\u0438\u0435 \u043A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u0430
+    \u0436\u0438\u0437\u043D\u0435\u0439"

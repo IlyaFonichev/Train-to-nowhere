@@ -4,6 +4,8 @@ using UnityEngine;
 public class Ability : ScriptableObject
 {
     [SerializeField]
+    private Color color; //Это вообще не надо будет, когда будут картинки
+    [SerializeField]
     private Sprite sprite;
     [SerializeField]
     private AbilityType abilityType;
@@ -20,19 +22,20 @@ public class Ability : ScriptableObject
         AbilityType7,
         AbilityType8
     }
-    public string Description
+    public string getDescription
     {
         get { return description; }
-        set { description = value; }
     }
-    public AbilityType Type
+    public AbilityType getType
     {
         get { return abilityType; }
-        set { abilityType = value; }
     }
-    public Sprite Sprite
+    public Sprite getSprite
     {
         get { return sprite; }
-        set { sprite = value; }
+    }
+    public Color getColor
+    {
+        get { return color; }
     }
 }
