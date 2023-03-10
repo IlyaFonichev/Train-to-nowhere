@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static EventManager;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -19,28 +18,23 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     private Vector3 canvasCenter;
 
+
+    public UnStaticEventsOfPlayer useop = new UnStaticEventsOfPlayer();
+
     private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
+
     public static HealthOfPlayer GetHealthOfPlayer() { return _healthOfPlayer; }
     public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
 
     private void Start()
     {
-        //sozdaem zdorovbe igroka
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
-        //zagruzaem inteface zdorovb9 igroka
-        _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
-        EventManager.changeHealthInterface?.Invoke(_healthOfPlayer);
-        //sozdaem score igroka
         _scoreOfOlayer = new Score(0);
-        //zagruzaem inteface scora igroka
-        EventManager.changeScoreInterface?.Invoke(_scoreOfOlayer);
-
 
 
         rb = gameObject.GetComponent<Rigidbody>();       
 
-        // ??? ��� ���������� ������� ����������� ��������
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
 
@@ -58,8 +52,6 @@ public class PlayerController : MonoBehaviour
 
     private void move(Vector3 direction)
     {
-        //Health.HitToPlayer(1);
-
         if (isDashing) return;
         rb.velocity = direction.normalized * speed;
     }

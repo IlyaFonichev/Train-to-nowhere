@@ -6,21 +6,11 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private float _speed = 2.5f;
+    [SerializeField] private PlayerController player;
 
-    private void FixedUpdate()
-    {
-        // Вычисляем направление движения
-        Vector3 direction = (_player.transform.position - transform.position).normalized;
-
-        // Двигаем объект в направлении игрока с учетом скорости
-        transform.position += direction * _speed * Time.deltaTime;
-    }
-
-    public EventManagerOfEnemy eme = new EventManagerOfEnemy();
-
+    public UnStaticEventsOfEnemy eme = new UnStaticEventsOfEnemy();
 
     private HealthOfEnemy _HealthOfEnemy;
-    
     public HealthOfEnemy GetHealthOfEnemy() { return _HealthOfEnemy; }
 
 
@@ -30,6 +20,37 @@ public class EnemyController : MonoBehaviour
         _HealthOfEnemy.SetEnemyController(this);
     }
 
+    private void Start()
+    {
+        eme.takeDamage += onTakeDamage;
+        eme.deathOfMob += onDeathOfMob;
+        //EventManager.takeDamage += onPlayerTakeDamage;
+    }
+
+    private void OnDestroy()
+    {
+        eme.takeDamage -= onTakeDamage;
+        eme.deathOfMob -= onDeathOfMob;
+        //EventManager.takeDamage -= onPlayerTakeDamage;
+    }
+
+    private void onTakeDamage(HealthOfEnemy health, uint damage)
+    {
+        health.Damage(damage);
+    }
+
+    private void onDeathOfMob()
+    {
+        player.useop.EventAddScore(100);
+        Destroy(gameObject);
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 direction = (_player.transform.position - transform.position).normalized;
+
+        transform.position += direction * _speed * Time.deltaTime;
+    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -44,44 +65,7 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            EventManager.takeDamage?.Invoke(PlayerController.GetHealthOfPlayer(), 1);
+            StaticEventsOfPlayer.takeDamage?.Invoke(PlayerController.GetHealthOfPlayer(), 1);
         }
-    }
-
-
-
-
-
-
-
-    private void Start()
-    {
-        eme.takeDamage += onTakeDamage;
-        eme.deathOfMob += onDeathOfMob;
-        //EventManager.takeDamage += onPlayerTakeDamage;
-    }
-
-    private void onPlayerTakeDamage(HealthOfPlayer health, uint damage)
-    {
-        health.Damage(damage);
-    }
-
-    //
-    private void OnDestroy() 
-    {
-        eme.takeDamage -= onTakeDamage;
-        eme.deathOfMob -= onDeathOfMob;
-        //EventManager.takeDamage -= onPlayerTakeDamage;
-    }
-
-    //
-    private void onTakeDamage(HealthOfEnemy health, uint damage)
-    {
-        health.Damage(damage);
-    }
-
-    private void onDeathOfMob()
-    {
-        Destroy(gameObject);
     }
 }

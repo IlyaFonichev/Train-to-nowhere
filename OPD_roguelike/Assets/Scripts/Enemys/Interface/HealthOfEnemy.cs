@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class HealthOfEnemy : Health
 {
-
     private EnemyController enemyController;
 
     public void SetEnemyController(EnemyController enemyController)
@@ -13,15 +7,12 @@ public class HealthOfEnemy : Health
         this.enemyController = enemyController;
     }
 
-
-    //pereopredel9em konstructor
     public HealthOfEnemy(uint health, uint maxHaelthValue) : base(health, maxHaelthValue)
     {
         _healthValue = health;
         _MaxHaelthValue = maxHaelthValue;
     }
 
-    //pereopredel9em metodb1 iz klassa Health dl9 gero9
     public override void Damage(uint damageCalue)
     {
         _healthValue -= damageCalue;
