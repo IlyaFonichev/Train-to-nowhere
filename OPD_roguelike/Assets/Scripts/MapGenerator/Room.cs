@@ -10,22 +10,22 @@ public class Room : MonoBehaviour
 
     //Через PlayerPrefs добавим несколько видов боссов
     [SerializeField]
-    private List<GameObject> bossPrefab;
+    private List<GameObject> bossPrefabs;
     [SerializeField]
-    private List<GameObject> decorations;
+    private List<GameObject> decorationsPrefabs;
     [SerializeField]
-    private List<GameObject> chests;
+    private List<GameObject> chestsPrefabs;
     [SerializeField]
-    private List<GameObject> mobs;
+    private List<GameObject> mobsPrefabs;
 
     [SerializeField]
     private Transform spawnPointBoss;
     [SerializeField]
     private Transform spawnPointChest;
     [SerializeField]
-    private List<Transform> spawnPointDecorations;
+    private List<Transform> spawnPointsDecorations;
     [SerializeField]
-    private List<Transform> spawnPointMobs;
+    private List<Transform> spawnPointsMobs;
 
     private TypeRoom type;
     public enum TypeRoom
@@ -57,27 +57,39 @@ public class Room : MonoBehaviour
 
     private void InstantiationDecorations()
     {
-        for(int i = 0; i < spawnPointDecorations.Count; i++)
+        for(int i = 0; i < spawnPointsDecorations.Count; i++)
         {
             if(Random.Range(0, 5) < 4)
             {
-                Instantiate(decorations[Random.Range(0, decorations.Count)],
-                    spawnPointDecorations[i].position,
+                Instantiate(decorationsPrefabs[Random.Range(0, decorationsPrefabs.Count)],
+                    spawnPointsDecorations[i].position,
                     Quaternion.identity);
             }
         }
     }
     private void InstantiationMobs()
     {
-
+        for (int i = 0; i < spawnPointsMobs.Count; i++)
+        {
+            if (Random.Range(0, 5) < 4)
+            {
+                Instantiate(mobsPrefabs[Random.Range(0, mobsPrefabs.Count)],
+                    spawnPointsMobs[i].position,
+                    Quaternion.identity);
+            }
+        }
     }
     private void InstantiationBoss()
     {
-
+        Instantiate(bossPrefabs[Random.Range(0, bossPrefabs.Count)],
+                    spawnPointBoss.position,
+                    Quaternion.identity);
     }
     private void InstantiationChest()
     {
-
+        Instantiate(chestsPrefabs[Random.Range(0, chestsPrefabs.Count)],
+                    spawnPointChest.position,
+                    Quaternion.identity);
     }
 
     public TypeRoom Type
