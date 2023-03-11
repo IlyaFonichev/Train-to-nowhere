@@ -25,12 +25,6 @@ public class ScriptebleRoom : ScriptableObject
         Boss
     }
 
-    public ScriptType Type
-    {
-        get { return type; }
-        set { type = value; }
-    }
-
     public int Level
     {
         get { return level; }
