@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField]
+    private GameObject objectManager;
     private Vector2 position;
     [SerializeField]
     private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
 
+    [Space(20)]
     //Через PlayerPrefs добавим несколько видов боссов
     [SerializeField]
     private List<GameObject> bossPrefabs;
@@ -27,9 +28,10 @@ public class Room : MonoBehaviour
     [SerializeField]
     private List<Transform> spawnPointsMobs;
 
+    [SerializeField]
     private TypeRoom type;
     public enum TypeRoom
-    { 
+    {
         Empty,
         Start,
         Mobs,
@@ -38,11 +40,10 @@ public class Room : MonoBehaviour
     }
     public void Completion()
     {
+        InstantiateObjectManager();
         InstantiationDecorations();
         switch (type)
         {
-            case TypeRoom.Empty:
-                break;
             case TypeRoom.Chest:
                 InstantiationChest();
                 break;
@@ -52,18 +53,39 @@ public class Room : MonoBehaviour
             case TypeRoom.Mobs:
                 InstantiationMobs();
                 break;
+            default:
+                break;
         }
+        DestroyOtherSpawnPoints();
+    }
+
+    private void InstantiateObjectManager()
+    {
+        objectManager = new GameObject("ObjectManager");
+        objectManager.transform.SetParent(transform);
+    }
+
+    private void DestroyOtherSpawnPoints()
+    {
+        for (int i = 0; i < spawnPointsDecorations.Count; i++)
+            Destroy(spawnPointsDecorations[i].gameObject);
+        for (int i = 0; i < spawnPointsMobs.Count; i++)
+            Destroy(spawnPointsMobs[i].gameObject);
+        Destroy(spawnPointChest.gameObject);
+        Destroy(spawnPointBoss.gameObject);
+        spawnPointsDecorations.Clear();
+        spawnPointsMobs.Clear();
     }
 
     private void InstantiationDecorations()
     {
-        for(int i = 0; i < spawnPointsDecorations.Count; i++)
+        for (int i = 0; i < spawnPointsDecorations.Count; i++)
         {
-            if(Random.Range(0, 5) < 4)
+            if (Random.Range(0, 5) < 4)
             {
                 Instantiate(decorationsPrefabs[Random.Range(0, decorationsPrefabs.Count)],
                     spawnPointsDecorations[i].position,
-                    Quaternion.identity);
+                    Quaternion.identity).transform.SetParent(objectManager.transform);
             }
         }
     }
@@ -73,23 +95,28 @@ public class Room : MonoBehaviour
         {
             if (Random.Range(0, 5) < 4)
             {
-                Instantiate(mobsPrefabs[Random.Range(0, mobsPrefabs.Count)],
+                GameObject newMob = Instantiate(mobsPrefabs[Random.Range(0, mobsPrefabs.Count)],
                     spawnPointsMobs[i].position,
                     Quaternion.identity);
+                newMob.transform.SetParent(objectManager.transform);
+                MobsManager.instance.AddMob(newMob);
             }
         }
     }
     private void InstantiationBoss()
     {
-        Instantiate(bossPrefabs[Random.Range(0, bossPrefabs.Count)],
+        GameObject boss = Instantiate(bossPrefabs[Random.Range(0, bossPrefabs.Count)],
                     spawnPointBoss.position,
                     Quaternion.identity);
+        boss.transform.SetParent(objectManager.transform);
+        MobsManager.instance.AddMob(boss);
     }
+
     private void InstantiationChest()
     {
         Instantiate(chestsPrefabs[Random.Range(0, chestsPrefabs.Count)],
                     spawnPointChest.position,
-                    Quaternion.identity);
+                    Quaternion.identity).transform.SetParent(objectManager.transform);
     }
 
     public TypeRoom Type

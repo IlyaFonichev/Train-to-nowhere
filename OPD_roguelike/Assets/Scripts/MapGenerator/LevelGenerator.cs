@@ -16,9 +16,9 @@ public class LevelGenerator : MonoBehaviour
     private uint currentCountOfRooms = 0;
     [SerializeField]
     private const float verticalRoomOffset = 12f, horizontalRoomOffset = 19f;
-
     private void Start()
     {
+        PlayerPrefs.SetInt("Depth", 0);
         countOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 5 + (uint)Random.Range(0, 3);
         Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
@@ -78,8 +78,8 @@ public class LevelGenerator : MonoBehaviour
         DestroyEmptyDoors();
         PlacementRoomPosition();
         SetParent();
-        CompletionRooms();
         InstantiateRoomSwitcher();
+        CompletionRooms();
         gameObject.name = "Map";
         Destroy(gameObject.GetComponent<LevelGenerator>());
     }
@@ -122,8 +122,7 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < currentRoom.transform.childCount; i++)
         {
             if (!currentRoom.transform.GetChild(i).CompareTag(tag))
-                if (!currentRoom.transform.GetChild(i).CompareTag("Untagged"))
-                    doors.Add(currentRoom.transform.GetChild(i).gameObject);
+                doors.Add(currentRoom.transform.GetChild(i).gameObject);
         }
     }
 
@@ -176,10 +175,12 @@ public class LevelGenerator : MonoBehaviour
         int countChest = Random.Range(1, rooms.Count / 5), currentChestCount = 0;
         int bossRoomNumber = rooms.Count - 1;
         rooms[0].GetComponent<Room>().Type = Room.TypeRoom.Start;
-        rooms[bossRoomNumber].GetComponent<Room>().Type = Room.TypeRoom.Start;
+        rooms[bossRoomNumber].GetComponent<Room>().Type = Room.TypeRoom.Boss;
+        rooms[0].GetComponent<Room>().Completion();
+        rooms[bossRoomNumber].GetComponent<Room>().Completion();
         for (int i = 1; i < bossRoomNumber; i++)
         {
-            if (Random.Range(0, countChest) > currentChestCount)
+            if (Random.Range(0, countChest + 1) > currentChestCount)
             {
                 rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Chest;
                 currentChestCount++;
@@ -196,7 +197,6 @@ public class LevelGenerator : MonoBehaviour
                         break;
                 }
             }
-
             rooms[i].GetComponent<Room>().Completion();
         }
     }

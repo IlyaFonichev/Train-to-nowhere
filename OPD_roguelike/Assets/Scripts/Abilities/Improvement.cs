@@ -7,7 +7,7 @@ public class Improvement : MonoBehaviour
 
     private void OnMouseDown()//Это так, для демонстрации. Поменяем на OnTriggerEnter
     {
-        AbilityUI.AddAbility(ability);
+        AbilityUser.AddAbility(ability);
         Destroy(gameObject);
     }
 }

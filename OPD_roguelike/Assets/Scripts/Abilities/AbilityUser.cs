@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AbilityUI : MonoBehaviour
+public class AbilityUser : MonoBehaviour
 {
     [SerializeField]
     private GameObject emptyAbilityPrefab;
@@ -10,7 +10,7 @@ public class AbilityUI : MonoBehaviour
     private GameObject content;
     [SerializeField]
     private List<Ability> abilities;
-    public static AbilityUI instance;
+    public static AbilityUser instance;
     private void Start()
     {
         instance = this;
