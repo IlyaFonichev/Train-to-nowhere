@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
@@ -53,9 +52,9 @@ public class LevelGenerator : MonoBehaviour
             bool intersection = false;
 
             //Обработка пересечения
-            for(int i = 0; i < rooms.Count; i++)
+            for (int i = 0; i < rooms.Count; i++)
             {
-                if(newRoom.GetComponent<Room>().Position == rooms[i].GetComponent<Room>().Position)
+                if (newRoom.GetComponent<Room>().Position == rooms[i].GetComponent<Room>().Position)
                 {
                     existingRoom = rooms[i];
                     intersection = true;
@@ -63,7 +62,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
-            if(intersection)
+            if (intersection)
             {
                 Destroy(newRoom);
                 SetDoors(existingRoom, parentRoom, currentParentDoor.tag, false);
@@ -79,6 +78,7 @@ public class LevelGenerator : MonoBehaviour
         DestroyEmptyDoors();
         PlacementRoomPosition();
         SetParent();
+        CompletionRooms();
         InstantiateRoomSwitcher();
         gameObject.name = "Map";
         Destroy(gameObject.GetComponent<LevelGenerator>());
@@ -171,6 +171,36 @@ public class LevelGenerator : MonoBehaviour
         doors.Clear();
     }
 
+    private void CompletionRooms()
+    {
+        int countChest = Random.Range(1, rooms.Count / 5), currentChestCount = 0;
+        int bossRoomNumber = rooms.Count - 1;
+        rooms[0].GetComponent<Room>().Type = Room.TypeRoom.Start;
+        rooms[bossRoomNumber].GetComponent<Room>().Type = Room.TypeRoom.Start;
+        for (int i = 1; i < bossRoomNumber; i++)
+        {
+            if (Random.Range(0, countChest) > currentChestCount)
+            {
+                rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Chest;
+                currentChestCount++;
+            }
+            else
+            {
+                switch (Random.Range(0, 4))
+                {
+                    case 0:
+                        rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Empty;
+                        break;
+                    default:
+                        rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Mobs;
+                        break;
+                }
+            }
+
+            rooms[i].GetComponent<Room>().Completion();
+        }
+    }
+
     private void InstantiateRoomSwitcher()
     {
         GameObject roomSwitcher = new GameObject("RoomSwitcher");
@@ -213,7 +243,6 @@ public class LevelGenerator : MonoBehaviour
             rooms[i].transform.position = new Vector3(rooms[i].GetComponent<Room>().Position.x * horizontalRoomOffset,
                 0,
                 rooms[i].GetComponent<Room>().Position.y * verticalRoomOffset);
-
         }
     }
 
