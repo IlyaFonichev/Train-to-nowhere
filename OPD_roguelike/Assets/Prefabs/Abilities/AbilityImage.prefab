@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5662558178039766682}
   - component: {fileID: 3227704278360438827}
   m_Layer: 5
-  m_Name: AbilityUI
+  m_Name: AbilityImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

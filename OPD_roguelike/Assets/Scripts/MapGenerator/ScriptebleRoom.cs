@@ -1,7 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewScriptRoom", menuName = "ScriptableObjects/ScriptRoom")]
+[CreateAssetMenu(fileName = "ScriptRoom", menuName = "Gameplay/New ScriptRoom")]
 public class ScriptebleRoom : ScriptableObject
 {
     [SerializeField] private int level;
@@ -24,6 +25,11 @@ public class ScriptebleRoom : ScriptableObject
         Boss
     }
 
+    public ScriptType Type
+    {
+        get { return type; }
+        set { type = value; }
+    }
 
     public int Level
     {
