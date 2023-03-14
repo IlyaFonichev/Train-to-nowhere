@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;
     [SerializeField] private float dashTime = 0.5f;
-    [SerializeField] private GameObject shot;
-    
+    [SerializeField] private GameObject weapon;
+
     private Rigidbody rb;
     private bool isDashing;
-    private Vector3 canvasCenter;
-
+    private bool weaponEquiped = false;
+    private GameObject curWeapon;
 
     public UnStaticEventsOfPlayer useop = new UnStaticEventsOfPlayer();
 
@@ -32,10 +32,7 @@ public class PlayerController : MonoBehaviour
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         _scoreOfOlayer = new Score(0);
 
-
         rb = gameObject.GetComponent<Rigidbody>();       
-
-        canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
     }
 
 
@@ -46,50 +43,32 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = new Vector3(moveHorizontal, 0, moveVertical);
 
         move(direction);
-        StartCoroutine(shoot());
-        StartCoroutine(Dash(direction));      
+        StartCoroutine(Dash(direction));
+        //instantiateWeapon();
     }
+
+    //private void instantiateWeapon()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.G))
+    //    {
+    //        Debug.Log("!!!!");
+    //        if (weaponEquiped)
+    //        {
+    //            Destroy(curWeapon);
+    //            weaponEquiped = false;
+    //        }
+    //        else
+    //        {
+    //            curWeapon = Instantiate(weapon, new Vector3(transform.position.x + 0.653f, transform.position.y, transform.position.z + -0.444f), Quaternion.identity);
+    //            weaponEquiped = true;
+    //        }
+    //    }
+    //}
 
     private void move(Vector3 direction)
     {
         if (isDashing) return;
         rb.velocity = direction.normalized * speed;
-    }
-
-    private IEnumerator shoot()
-    {
-        if (Input.GetAxisRaw("Fire") == 0) yield break;
-        if (isDashing) yield break;
-
-        Vector3 mousePos2D = Input.mousePosition;
-
-        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
-        
-        Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
-        Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
-
-        Vector3 mouseVector = worldPointPos - currCanvasCenter;
-        mouseVector = new Vector3(mouseVector.x, 0 , mouseVector.z);
-
-        mouseVector.Normalize();
-
-
-        GameObject bullet = Instantiate(shot, transform.position + (mouseVector) * 2, new Quaternion(0, 0, 0, 0));
-        bullet.tag = "Bullet";
-
-        float elapsedtime = 0f;
-        while (elapsedtime < 1)
-        {
-            bullet.transform.Translate(mouseVector * speed * Time.fixedDeltaTime * dashSpeed);
-
-            elapsedtime += Time.deltaTime;
-            yield return new WaitForSeconds(Time.deltaTime);
-        }
-
-        Destroy(bullet);
-        
-
-        yield break;
     }
 
     private IEnumerator Dash(Vector3 direction)
@@ -111,5 +90,10 @@ public class PlayerController : MonoBehaviour
 
         isDashing = false;
         yield break;
+    }
+
+    public bool getDash()
+    {
+        return isDashing;
     }
 }
