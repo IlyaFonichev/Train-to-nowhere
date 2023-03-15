@@ -11,6 +11,7 @@ public class AbilityUser : MonoBehaviour
     [SerializeField]
     private List<Ability> abilities;
     public static AbilityUser instance;
+  
     private void Start()
     {
         instance = this;

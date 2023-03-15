@@ -18,6 +18,7 @@ public class MobsManager : MonoBehaviour
     }
     public void RemoveMob(GameObject mob)
     {
+        RoomSwitcher.getCurrentRoom.GetComponent<Room>().RemoveMob(mob);
         mobs.Remove(mob);
         Destroy(mob);
         if (mobs.Count == 0)

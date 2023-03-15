@@ -10,39 +10,32 @@ public class RoomSwitcher : MonoBehaviour
     [SerializeField]
     private GameObject currentRoom;
     public static RoomSwitcher instance;
+    private bool roomContainMobs;
 
     private void Start()
     {
+        roomContainMobs = false;
         instance = this;
         startCameraPosition = Camera.main.transform.position - currentRoom.transform.position;
     }
     public bool Initialized
     {
-        set
-        {
-            isInitialized = value;
-        }
+        set { isInitialized = value; }
     }
 
     public List<GameObject> Rooms
     {
-        set
-        {
-            rooms = value;
-        }
+        set { rooms = value; }
     }
 
     public GameObject CurrentRoom
     {
-        set
-        {
-            currentRoom = value;
-        }
+        set { currentRoom = value; }
     }
 
     private void Update()
     {
-        if (isInitialized)
+        if (isInitialized && !roomContainMobs)
         {
             if (Input.GetKeyDown(KeyCode.S))
                 Switch("BottomDoor");
@@ -112,11 +105,12 @@ public class RoomSwitcher : MonoBehaviour
 
         Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
     }
+    public bool RoomContainMobs
+    {
+        set { roomContainMobs = value; }
+    }
     public static GameObject getCurrentRoom
     {
-        get
-        {
-            return instance.currentRoom;
-        }
+        get { return instance.currentRoom; }
     }
 }

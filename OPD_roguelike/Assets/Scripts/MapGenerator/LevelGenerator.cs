@@ -23,6 +23,13 @@ public class LevelGenerator : MonoBehaviour
         Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
         Generate();
+        DestroyEmptyDoors();
+        PlacementRoomPosition();
+        SetParent();
+        InstantiateRoomSwitcher();
+        CompletionRooms();
+        gameObject.name = "Map";
+        Destroy(gameObject.GetComponent<LevelGenerator>());
     }
 
     private void Initialization()
@@ -75,13 +82,6 @@ public class LevelGenerator : MonoBehaviour
                 currentCountOfRooms++;
             }
         }
-        DestroyEmptyDoors();
-        PlacementRoomPosition();
-        SetParent();
-        InstantiateRoomSwitcher();
-        CompletionRooms();
-        gameObject.name = "Map";
-        Destroy(gameObject.GetComponent<LevelGenerator>());
     }
 
     private void SetDoors(GameObject currentRoom, GameObject neighbor, string doorTag, bool flag)
@@ -178,6 +178,8 @@ public class LevelGenerator : MonoBehaviour
         rooms[bossRoomNumber].GetComponent<Room>().Type = Room.TypeRoom.Boss;
         rooms[0].GetComponent<Room>().Completion();
         rooms[bossRoomNumber].GetComponent<Room>().Completion();
+        rooms[0].GetComponent<Room>().RoomSwitcherInicialized = true;
+        rooms[bossRoomNumber].GetComponent<Room>().RoomSwitcherInicialized = true;
         for (int i = 1; i < bossRoomNumber; i++)
         {
             if (Random.Range(0, countChest + 1) > currentChestCount)
@@ -198,6 +200,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
             rooms[i].GetComponent<Room>().Completion();
+            rooms[i].GetComponent<Room>().RoomSwitcherInicialized = true;
         }
     }
 

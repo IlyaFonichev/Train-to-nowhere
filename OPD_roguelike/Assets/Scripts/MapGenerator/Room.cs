@@ -1,14 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+[SelectionBase]
 public class Room : MonoBehaviour
 {
+    private bool roomSwitcerInicialized = false;
     private GameObject objectManager;
     private Vector2 position;
     [SerializeField]
-    private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
+    private List<GameObject> mobsInTheRoom;
 
-    [Space(20)]
+    [SerializeField, Header("Type of the room")]
+    private TypeRoom type;
+
+    [SerializeField, Header("Neighbors at the current room")]
+    private GameObject topRoom;
+    [SerializeField]
+    private GameObject leftRoom, rightRoom, bottomRoom;
+
+    [Header("Prefabs for spawn")]
     //Через PlayerPrefs добавим несколько видов боссов
     [SerializeField]
     private List<GameObject> bossPrefabs;
@@ -19,7 +29,7 @@ public class Room : MonoBehaviour
     [SerializeField]
     private List<GameObject> mobsPrefabs;
 
-    [SerializeField]
+    [SerializeField, Header("Spawn points")]
     private Transform spawnPointBoss;
     [SerializeField]
     private Transform spawnPointChest;
@@ -27,9 +37,6 @@ public class Room : MonoBehaviour
     private List<Transform> spawnPointsDecorations;
     [SerializeField]
     private List<Transform> spawnPointsMobs;
-
-    [SerializeField]
-    private TypeRoom type;
     public enum TypeRoom
     {
         Empty,
@@ -57,6 +64,23 @@ public class Room : MonoBehaviour
                 break;
         }
         DestroyOtherSpawnPoints();
+    }
+    private void OnEnable()
+    {
+        if(roomSwitcerInicialized)
+        {
+            if (mobsInTheRoom.Count == 0)
+                RoomSwitcher.instance.RoomContainMobs = false;
+            else
+                RoomSwitcher.instance.RoomContainMobs = true;
+        }
+    }
+
+    public void RemoveMob(GameObject mob)
+    {
+        if (mobsInTheRoom.Count == 1)
+            RoomSwitcher.instance.RoomContainMobs = false;
+        mobsInTheRoom.Remove(mob);
     }
 
     private void InstantiateObjectManager()
@@ -100,6 +124,7 @@ public class Room : MonoBehaviour
                     Quaternion.identity);
                 newMob.transform.SetParent(objectManager.transform);
                 MobsManager.instance.AddMob(newMob);
+                mobsInTheRoom.Add(newMob);
             }
         }
     }
@@ -110,6 +135,7 @@ public class Room : MonoBehaviour
                     Quaternion.identity);
         boss.transform.SetParent(objectManager.transform);
         MobsManager.instance.AddMob(boss);
+        mobsInTheRoom.Add(boss);
     }
 
     private void InstantiationChest()
@@ -149,5 +175,9 @@ public class Room : MonoBehaviour
     {
         get { return position; }
         set { position = value; }
+    }
+    public bool RoomSwitcherInicialized
+    {
+        set { roomSwitcerInicialized = value; }
     }
 }
