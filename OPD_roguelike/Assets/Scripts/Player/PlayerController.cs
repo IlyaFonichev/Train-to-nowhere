@@ -43,27 +43,22 @@ public class PlayerController : MonoBehaviour
         Vector3 direction = new Vector3(moveHorizontal, 0, moveVertical);
 
         move(direction);
-        StartCoroutine(Dash(direction));
-        //instantiateWeapon();
+        StartCoroutine(Dash(direction));      
     }
 
-    //private void instantiateWeapon()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.G))
-    //    {
-    //        Debug.Log("!!!!");
-    //        if (weaponEquiped)
-    //        {
-    //            Destroy(curWeapon);
-    //            weaponEquiped = false;
-    //        }
-    //        else
-    //        {
-    //            curWeapon = Instantiate(weapon, new Vector3(transform.position.x + 0.653f, transform.position.y, transform.position.z + -0.444f), Quaternion.identity);
-    //            weaponEquiped = true;
-    //        }
-    //    }
-    //}
+    private void Update()
+    {
+        instantiateWeapon();
+    }
+
+    private void instantiateWeapon()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            weaponEquiped = !weaponEquiped;
+            weapon.SetActive(weaponEquiped);
+        }
+    }
 
     private void move(Vector3 direction)
     {
