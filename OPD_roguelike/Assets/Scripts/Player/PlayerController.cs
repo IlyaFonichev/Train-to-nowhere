@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
@@ -14,11 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashTime = 0.5f;
     [SerializeField] private GameObject weapon;
 
-    private Rigidbody rb;
+    private Rigidbody _rigidBody;
     private bool isDashing;
     private bool weaponEquiped = false;
 
-    public UnStaticEventsOfPlayer useop = new UnStaticEventsOfPlayer();
+    public UnStaticEventsOfPlayer unStaticEventsOfPlayer = new UnStaticEventsOfPlayer();
 
     private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
@@ -31,7 +30,7 @@ public class PlayerController : MonoBehaviour
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         _scoreOfOlayer = new Score(0);
 
-        rb = gameObject.GetComponent<Rigidbody>();       
+        _rigidBody = gameObject.GetComponent<Rigidbody>();       
     }
 
 
@@ -62,7 +61,7 @@ public class PlayerController : MonoBehaviour
     private void move(Vector3 direction)
     {
         if (isDashing) return;
-        rb.velocity = direction.normalized * speed;
+        _rigidBody.velocity = direction.normalized * speed;
     }
 
     private IEnumerator Dash(Vector3 direction)
@@ -73,10 +72,10 @@ public class PlayerController : MonoBehaviour
 
         isDashing = true;
 
-        float elapsedTime = 0f;
+        float elapsedTime = 0.4f;
         while (elapsedTime < dashTime)
         {
-            rb.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed;
+            _rigidBody.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed * 100;
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);

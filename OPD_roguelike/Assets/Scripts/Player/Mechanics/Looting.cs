@@ -9,7 +9,7 @@ public class Looting : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Destroy(gameObject);
-            player.useop.EventAddScore(50);
+            player.unStaticEventsOfPlayer.EventAddScore(50);
         }
     }
 }

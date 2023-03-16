@@ -8,14 +8,14 @@ public class Subscriptions : MonoBehaviour
     private void Start() 
     { 
         StaticEventsOfPlayer.takeDamage += onTakeDamage;
-        player.useop.addScore += onAddScore;
+        player.unStaticEventsOfPlayer.addScore += onAddScore;
         StaticEventsOfPlayer.heal += onHeal;
     }
 
     private void OnDestroy() 
     { 
         StaticEventsOfPlayer.takeDamage -= onTakeDamage;
-        player.useop.addScore -= onAddScore;
+        player.unStaticEventsOfPlayer.addScore -= onAddScore;
         StaticEventsOfPlayer.heal -= onHeal;
     }
 

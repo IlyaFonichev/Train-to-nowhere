@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
 
     private void onDeathOfMob()
     {
-        player.useop.EventAddScore(100);
+        player.unStaticEventsOfPlayer.EventAddScore(100);
         Destroy(gameObject);
     }
 

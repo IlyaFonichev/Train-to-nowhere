@@ -42,9 +42,15 @@ public class WeaponScript : MonoBehaviour
     private void Update()
     {
         if (Input.mousePosition.x > canvasCenter.x)
-            transform.position = new Vector3(player.transform.position.x + 0.653f, player.transform.position.y, player.transform.position.z + -0.444f);
+        {
+            transform.position = new Vector3(player.transform.position.x + 0.94f, player.transform.position.y, player.transform.position.z + -0.444f);
+            transform.rotation = Quaternion.Euler(90, 0, 0);
+        }
         else
-            transform.position = new Vector3(player.transform.position.x - 0.653f, player.transform.position.y, player.transform.position.z + -0.444f);
+        {
+            transform.position = new Vector3(player.transform.position.x - 0.94f, player.transform.position.y, player.transform.position.z + -0.444f);
+            transform.rotation = Quaternion.Euler(-90, 0, -180);
+        }
 
         if (delay > 1 / fireRate)
         {
