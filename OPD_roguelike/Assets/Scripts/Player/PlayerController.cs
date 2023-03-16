@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private bool isDashing;
     private bool weaponEquiped = false;
-    private GameObject curWeapon;
 
     public UnStaticEventsOfPlayer useop = new UnStaticEventsOfPlayer();
 

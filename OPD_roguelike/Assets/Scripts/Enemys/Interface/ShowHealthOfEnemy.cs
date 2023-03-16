@@ -20,8 +20,8 @@ public class ShowHealthOfEnemy : MonoBehaviour
     private void onChangeHealthInterface(HealthOfEnemy health)
     {
         Vector3 parentPos = _parentHealthImage.transform.position;
-        float _unitŸf–ealth = (_childHealthImage.rectTransform.rect.width / health.GetMaxHaelth()) * (health.GetMaxHaelth() - health.GetHealth());
-        Vector3 shfit = new Vector3(_unitŸf–ealth, 0f, 0f);
+        float _unitOfHealth = (_childHealthImage.rectTransform.rect.width / health.GetMaxHaelth()) * (health.GetMaxHaelth() - health.GetHealth());
+        Vector3 shfit = new Vector3(_unitOfHealth, 0f, 0f);
         _childHealthImage.transform.position = parentPos - shfit;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,16 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float bulletSpeed = 5;
-    [SerializeField] private float bulletLifeSeconds = 1;
-    [SerializeField] private static int magazine = 30;
-    [SerializeField] private static int totalAmmo = 60;
-    [SerializeField] private float fireRate = 10;           // shots per second
-    [SerializeField] private float damage = 30;
+
+    private float bulletSpeed = 5;
+    private float bulletLifeSeconds = 1;
+    private static int magazine = 30;
+    private static int totalAmmo = 60;
+    private float fireRate = 10;           // shots per second
+    private float damage = 30;
 
     [SerializeField] GameObject textBox;
+    [SerializeField] TextAsset textFile;
 
     private Vector3 canvasCenter;
     private PlayerController pc;
@@ -24,6 +27,13 @@ public class WeaponScript : MonoBehaviour
 
     private void Start()
     {
+        string parameters = textFile.text;
+        string[] arr = parameters.Split(';', 7);
+
+        for (int i = 0; i < 7; i++)
+            Debug.Log(arr[i]);
+        //Debug.Log(string.Join("", parameters.Where(c => char.IsDigit(c))));
+
         pc = player.GetComponent<PlayerController>();
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
