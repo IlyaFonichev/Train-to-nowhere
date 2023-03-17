@@ -15,12 +15,20 @@ public class RoomSwitcher : MonoBehaviour
     private void Start()
     {
         roomContainMobs = false;
-        instance = this;
+        SetInstance();
         startCameraPosition = Camera.main.transform.position - currentRoom.transform.position;
+    }
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
     public bool Initialized
     {
         set { isInitialized = value; }
+        get { return isInitialized; }
     }
 
     public List<GameObject> Rooms

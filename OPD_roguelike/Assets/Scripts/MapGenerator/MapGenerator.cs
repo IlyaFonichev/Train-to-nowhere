@@ -1,24 +1,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
-    [SerializeField]
     private GameObject startRoom;
     [SerializeField]
     private List<GameObject> rooms;
     [SerializeField]
     private List<GameObject> doors;
-    [SerializeField]
-    private GameObject roomPrefab;
+    [SerializeField, Tooltip("0 - BossRoom\n1 - ChestRoom\n2 - EmptyRoom\n3 - MobsRoom")]
+    private List<GameObject> roomPrefabs;
     [SerializeField]
     private uint countOfRooms;
     private uint currentCountOfRooms = 0;
     [SerializeField]
     private const float verticalRoomOffset = 12f, horizontalRoomOffset = 19f;
+    public static MapGenerator instance;
     private void Start()
     {
-        PlayerPrefs.SetInt("Depth", 0);
+        SetInstance();
+        //PlayerPrefs.SetInt("Depth", 0);
         countOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 5 + (uint)Random.Range(0, 3);
         Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
@@ -29,11 +30,19 @@ public class LevelGenerator : MonoBehaviour
         InstantiateRoomSwitcher();
         CompletionRooms();
         gameObject.name = "Map";
-        Destroy(gameObject.GetComponent<LevelGenerator>());
+        Destroy(gameObject.GetComponent<MapGenerator>());
+    }
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
 
     private void Initialization()
     {
+        startRoom = Instantiate(roomPrefabs[2], Vector3.zero, Quaternion.Euler(90, 0, 0));
         startRoom.GetComponent<Room>().Position = Vector2.zero;
         rooms.Add(startRoom.gameObject);
         for (int i = 0; i < startRoom.transform.childCount; i++)
@@ -52,7 +61,7 @@ public class LevelGenerator : MonoBehaviour
             GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
             Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
 
-            GameObject newRoom = Instantiate(roomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
+            GameObject newRoom = InstantiateRoom();
             GameObject parentRoom = currentParentDoor.transform.parent.gameObject;
             newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
             GameObject existingRoom = null;
@@ -169,39 +178,36 @@ public class LevelGenerator : MonoBehaviour
         }
         doors.Clear();
     }
+    private GameObject InstantiateRoom()
+    {
+        int numberRoom = Random.Range(0, 5);
+        if (currentCountOfRooms == countOfRooms - 2)
+            return Instantiate(roomPrefabs[0], Vector3.zero, Quaternion.Euler(90, 0, 0));
+        if (currentCountOfRooms == countOfRooms - 3)
+            return Instantiate(roomPrefabs[1], Vector3.zero, Quaternion.Euler(90, 0, 0));
+        else
+        {
+            switch (numberRoom)
+            {
+                case 0:
+                    return Instantiate(roomPrefabs[1], Vector3.zero, Quaternion.Euler(90, 0, 0));
+                default:
+                    int number = Random.Range(0, 5);
+                    switch (number)
+                    {
+                        case 0:
+                            return Instantiate(roomPrefabs[2], Vector3.zero, Quaternion.Euler(90, 0, 0));
+                        default:
+                            return Instantiate(roomPrefabs[3], Vector3.zero, Quaternion.Euler(90, 0, 0));
+                    }
+            }
+        }
+    }
 
     private void CompletionRooms()
     {
-        int countChest = Random.Range(1, rooms.Count / 5), currentChestCount = 0;
-        int bossRoomNumber = rooms.Count - 1;
-        rooms[0].GetComponent<Room>().Type = Room.TypeRoom.Start;
-        rooms[bossRoomNumber].GetComponent<Room>().Type = Room.TypeRoom.Boss;
-        rooms[0].GetComponent<Room>().Completion();
-        rooms[bossRoomNumber].GetComponent<Room>().Completion();
-        rooms[0].GetComponent<Room>().RoomSwitcherInicialized = true;
-        rooms[bossRoomNumber].GetComponent<Room>().RoomSwitcherInicialized = true;
-        for (int i = 1; i < bossRoomNumber; i++)
-        {
-            if (Random.Range(0, countChest + 1) > currentChestCount)
-            {
-                rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Chest;
-                currentChestCount++;
-            }
-            else
-            {
-                switch (Random.Range(0, 4))
-                {
-                    case 0:
-                        rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Empty;
-                        break;
-                    default:
-                        rooms[i].GetComponent<Room>().Type = Room.TypeRoom.Mobs;
-                        break;
-                }
-            }
+        for (int i = 0; i < rooms.Count; i++)
             rooms[i].GetComponent<Room>().Completion();
-            rooms[i].GetComponent<Room>().RoomSwitcherInicialized = true;
-        }
     }
 
     private void InstantiateRoomSwitcher()

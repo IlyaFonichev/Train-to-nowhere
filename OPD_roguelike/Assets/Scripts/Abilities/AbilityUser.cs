@@ -14,7 +14,14 @@ public class AbilityUser : MonoBehaviour
   
     private void Start()
     {
-        instance = this;
+        SetInstance();
+    }
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
     public static void AddAbility(Ability newAbility)
     {

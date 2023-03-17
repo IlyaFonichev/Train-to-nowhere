@@ -10,7 +10,15 @@ public class MobsManager : MonoBehaviour
     public static MobsManager instance;
     private void Awake()
     {
-        instance = this;
+        SetInstance();
+    }
+
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
     public GameObject Portal
     {
