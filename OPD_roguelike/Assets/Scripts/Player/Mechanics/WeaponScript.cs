@@ -16,6 +16,7 @@ public class WeaponScript : MonoBehaviour
     private static int totalAmmo = 60;
     private float fireRate = 10;           // shots per second
     private float damage = 30;
+    private float accuracy = 0.2f;
 
     [SerializeField] GameObject textBox;
     [SerializeField] TextAsset textFile;
@@ -27,12 +28,7 @@ public class WeaponScript : MonoBehaviour
 
     private void Start()
     {
-        string parameters = textFile.text;
-        string[] arr = parameters.Split(';', 7);
-
-        for (int i = 0; i < 7; i++)
-            Debug.Log(arr[i]);
-        //Debug.Log(string.Join("", parameters.Where(c => char.IsDigit(c))));
+        applyParameters();
 
         pc = player.GetComponent<PlayerController>();
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
@@ -43,12 +39,12 @@ public class WeaponScript : MonoBehaviour
     {
         if (Input.mousePosition.x > canvasCenter.x)
         {
-            transform.position = new Vector3(player.transform.position.x + 0.94f, player.transform.position.y, player.transform.position.z + -0.444f);
+            transform.position = new Vector3(player.transform.position.x + 0.956f, player.transform.position.y, player.transform.position.z + -0.19f);
             transform.rotation = Quaternion.Euler(90, 0, 0);
         }
         else
         {
-            transform.position = new Vector3(player.transform.position.x - 0.94f, player.transform.position.y, player.transform.position.z + -0.444f);
+            transform.position = new Vector3(player.transform.position.x - 0.956f, player.transform.position.y, player.transform.position.z + -0.19f);
             transform.rotation = Quaternion.Euler(-90, 0, -180);
         }
 
@@ -77,7 +73,7 @@ public class WeaponScript : MonoBehaviour
         Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
 
         Vector3 mouseVector = worldPointPos - currCanvasCenter;
-        mouseVector = new Vector3(mouseVector.x + Random.Range(-0.2f, 0.2f), 0, mouseVector.z + Random.Range(-0.2f, 0.2f));
+        mouseVector = new Vector3(mouseVector.x + Random.Range(-accuracy, accuracy), 0, mouseVector.z + Random.Range(-accuracy, accuracy));
 
         mouseVector.Normalize();
 
@@ -134,5 +130,23 @@ public class WeaponScript : MonoBehaviour
     private void printAmmo()
     {
         txt.text = magazine.ToString() + " / " + totalAmmo.ToString();
+    }
+
+    private void applyParameters()
+    {
+        string parameters = textFile.text;
+        string[] arr = parameters.Split('\n', 7);
+        float[] parsedParams= new float[arr.Length];
+
+        for (int i = 0; i < 7; i++)
+            parsedParams[i] = float.Parse(arr[i].Substring(6));
+
+        magazine = (int)parsedParams[0];
+        totalAmmo = (int)parsedParams[1];
+        fireRate = (int)parsedParams[2];
+        bulletSpeed = (int)parsedParams[3];
+        bulletLifeSeconds = (int)parsedParams[4];
+        damage = (int)parsedParams[5];
+        accuracy = parsedParams[6];
     }
 }

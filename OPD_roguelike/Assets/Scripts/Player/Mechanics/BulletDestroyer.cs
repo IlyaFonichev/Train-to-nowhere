@@ -11,7 +11,8 @@ public class BulletDestroyer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        if (collision.collider.tag != "Bullet" && collision.collider.tag != "Player")
+            Destroy(gameObject);
     }
 
     private void Start()

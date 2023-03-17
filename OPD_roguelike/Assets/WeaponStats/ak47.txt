@@ -1,7 +1,7 @@
-mag = 30;
-tAm = 60;
-fRt = 10;
-bSp = 5;
-bLS = 1;
-dmg = 30;
-rcl = 0.2;
+mag = 30
+tAm = 120
+fRt = 10
+bSp = 5
+bLS = 1
+dmg = 30
+acc = 0,2
