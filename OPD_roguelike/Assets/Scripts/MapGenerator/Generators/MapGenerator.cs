@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapGenerator : MonoBehaviour
+public abstract class MapGenerator : MonoBehaviour
 {
     private GameObject startRoom;
+    [HideInInspector]
+    public List<GameObject> rooms, doors;
     [SerializeField]
-    private List<GameObject> rooms;
+    private GameObject emptyRoom;
     [SerializeField]
-    private List<GameObject> doors;
-    [SerializeField, Tooltip("0 - BossRoom\n1 - ChestRoom\n2 - EmptyRoom\n3 - MobsRoom")]
-    private List<GameObject> roomPrefabs;
+    private GameObject startRoomPrefab;
     [SerializeField]
     private uint countOfRooms;
     private uint currentCountOfRooms = 0;
@@ -19,8 +19,7 @@ public class MapGenerator : MonoBehaviour
     private void Start()
     {
         SetInstance();
-        //PlayerPrefs.SetInt("Depth", 0);
-        countOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 5 + (uint)Random.Range(0, 3);
+        CountRoomInitialization();
         Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
         Generate();
@@ -42,7 +41,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Initialization()
     {
-        startRoom = Instantiate(roomPrefabs[2], Vector3.zero, Quaternion.Euler(90, 0, 0));
+        startRoom = Instantiate(startRoomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
         startRoom.GetComponent<Room>().Position = Vector2.zero;
         rooms.Add(startRoom.gameObject);
         for (int i = 0; i < startRoom.transform.childCount; i++)
@@ -53,47 +52,11 @@ public class MapGenerator : MonoBehaviour
                 doors.Add(startRoom.transform.GetChild(i).gameObject);
     }
 
-    private void Generate()
-    {
-        while (currentCountOfRooms != countOfRooms - 1)
-        {
-            int numberOfCurrentParentDoor = Random.Range(0, doors.Count);
-            GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
-            Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
+    public abstract void Generate();
+    public abstract void CountRoomInitialization();
+    public abstract GameObject InstantiateRoom();
 
-            GameObject newRoom = InstantiateRoom();
-            GameObject parentRoom = currentParentDoor.transform.parent.gameObject;
-            newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
-            GameObject existingRoom = null;
-            bool intersection = false;
-
-            //Обработка пересечения
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                if (newRoom.GetComponent<Room>().Position == rooms[i].GetComponent<Room>().Position)
-                {
-                    existingRoom = rooms[i];
-                    intersection = true;
-                    break;
-                }
-            }
-
-            if (intersection)
-            {
-                Destroy(newRoom);
-                SetDoors(existingRoom, parentRoom, currentParentDoor.tag, false);
-            }
-            else
-            {
-                rooms.Add(newRoom);
-                newRoom.name += System.Convert.ToString(currentCountOfRooms);
-                SetDoors(newRoom, parentRoom, currentParentDoor.tag, true);
-                currentCountOfRooms++;
-            }
-        }
-    }
-
-    private void SetDoors(GameObject currentRoom, GameObject neighbor, string doorTag, bool flag)
+    public void SetDoors(GameObject currentRoom, GameObject neighbor, string doorTag, bool flag)
     {
         switch (doorTag)
         {
@@ -178,31 +141,6 @@ public class MapGenerator : MonoBehaviour
         }
         doors.Clear();
     }
-    private GameObject InstantiateRoom()
-    {
-        int numberRoom = Random.Range(0, 5);
-        if (currentCountOfRooms == countOfRooms - 2)
-            return Instantiate(roomPrefabs[0], Vector3.zero, Quaternion.Euler(90, 0, 0));
-        if (currentCountOfRooms == countOfRooms - 3)
-            return Instantiate(roomPrefabs[1], Vector3.zero, Quaternion.Euler(90, 0, 0));
-        else
-        {
-            switch (numberRoom)
-            {
-                case 0:
-                    return Instantiate(roomPrefabs[1], Vector3.zero, Quaternion.Euler(90, 0, 0));
-                default:
-                    int number = Random.Range(0, 5);
-                    switch (number)
-                    {
-                        case 0:
-                            return Instantiate(roomPrefabs[2], Vector3.zero, Quaternion.Euler(90, 0, 0));
-                        default:
-                            return Instantiate(roomPrefabs[3], Vector3.zero, Quaternion.Euler(90, 0, 0));
-                    }
-            }
-        }
-    }
 
     private void CompletionRooms()
     {
@@ -222,7 +160,7 @@ public class MapGenerator : MonoBehaviour
         switcher.Initialized = true;
     }
 
-    private Vector2 SetOffsetVector(string doorTag)
+    public Vector2 SetOffsetVector(string doorTag)
     {
         Vector2 positionOffset = Vector2.zero;
         switch (doorTag)
@@ -259,5 +197,19 @@ public class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < rooms.Count; i++)
             rooms[i].transform.parent = gameObject.transform;
+    }
+    public uint CountOfRooms
+    {
+        get { return countOfRooms; }
+        set { countOfRooms = value; }
+    }
+    public uint CurrentCountOfRooms
+    {
+        get { return currentCountOfRooms; }
+        set { currentCountOfRooms = value; }
+    }
+    public GameObject EmptyRoom
+    {
+        get { return emptyRoom; }
     }
 }

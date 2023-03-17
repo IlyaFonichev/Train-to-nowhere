@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MobsManager : MonoBehaviour
 {
@@ -8,8 +9,15 @@ public class MobsManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> mobs;
     public static MobsManager instance;
+    private bool portalIsNeed;
     private void Awake()
     {
+        string sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "Laboratory" || sceneName == "Forest" || sceneName == "Wasteland")
+            portalIsNeed = true;
+        else
+
+            portalIsNeed = false;
         SetInstance();
     }
 
@@ -29,7 +37,7 @@ public class MobsManager : MonoBehaviour
         RoomSwitcher.getCurrentRoom.GetComponent<Room>().RemoveMob(mob);
         mobs.Remove(mob);
         Destroy(mob);
-        if (mobs.Count == 0)
+        if (mobs.Count == 0 && portalIsNeed)
         {
             Instantiate(portalPrefab,
                 RoomSwitcher.getCurrentRoom.transform.position,

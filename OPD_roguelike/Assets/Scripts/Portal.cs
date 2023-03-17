@@ -16,6 +16,6 @@ public class Portal : MonoBehaviour
     private void OnMouseDown()//Это так, для демонстрации. Поменяем на OnTriggerEnter
     {
         PlayerPrefs.SetInt("Depth", PlayerPrefs.GetInt("Depth") + 1);
-        SceneManager.LoadScene("Dange");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

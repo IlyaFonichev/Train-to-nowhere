@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Dange.unity
+    path: Assets/Scenes/Danges/Cave.unity
     guid: f8f3a7e5dd3ad0546aab36c17881acb9
+  - enabled: 1
+    path: Assets/Scenes/TestLobby.unity
+    guid: c933801b1e9ebec4f83a0ecc1022c708
   m_configObjects: {}
