@@ -7,8 +7,10 @@ public class CaveGenerator : MapGenerator
     [SerializeField]
     private GameObject exitDoorPrefab;
     private GameObject currentRoom;
-    [SerializeField, Tooltip("0 - ChestRoom\n1 - MobsRoom")]
-    private List<GameObject> roomPrefabs;
+    [SerializeField]
+    private GameObject chestRoom;
+    [SerializeField]
+    private GameObject mobsRoom;
     public override void CountRoomInitialization()
     {
         CountOfRooms = 7;
@@ -108,8 +110,8 @@ public class CaveGenerator : MapGenerator
     public override GameObject InstantiateRoom()
     {
         if (CurrentCountOfRooms == CountOfRooms - 2)
-            return Instantiate(roomPrefabs[0], Vector3.zero, Quaternion.Euler(90, 0, 0));
+            return Instantiate(chestRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));
         else
-            return Instantiate(roomPrefabs[1], Vector3.zero, Quaternion.Euler(90, 0, 0));
+            return Instantiate(mobsRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));
     }
 }

@@ -348,7 +348,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
+  m_BackGroundColor: {r: 0.24737452, g: 0.4811321, b: 0.33123803, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1134225198}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b26d431a67e4e548be3a374d3273006, type: 3}
+  m_Script: {fileID: 11500000, guid: bc5d0dc42cf051a43bb13bed1add36c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startRoomPrefab: {fileID: 9203718568796747491, guid: 0556df7d3179a6d4980c6f21a31674a9, type: 3}
@@ -445,7 +445,7 @@ MonoBehaviour:
   doors: []
   emptyRoom: {fileID: 4200660226252665563, guid: 350e6125ed00fc349977ebe6b76b5907, type: 3}
   countOfRooms: 0
-  exitDoorPrefab: {fileID: 5927281490991403506, guid: 2c244dcc3ede9b745bc103600cde084c, type: 3}
+  bossRoom: {fileID: 1247276604134399355, guid: 90b93f976701aef4d8d5cf4ddde6b62f, type: 3}
   chestRoom: {fileID: 2634507021731015106, guid: 386c17495719cf348a97d2c7d2a04b20, type: 3}
   mobsRoom: {fileID: 3811036464853382862, guid: 9939531e18d6eb147849f2bb5c3a1c8b, type: 3}
 --- !u!1 &1419857032

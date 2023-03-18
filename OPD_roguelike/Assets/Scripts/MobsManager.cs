@@ -13,7 +13,7 @@ public class MobsManager : MonoBehaviour
     private void Awake()
     {
         string sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "Laboratory" || sceneName == "Forest" || sceneName == "Wasteland")
+        if (sceneName == "Laboratory" || sceneName == "Forest" || sceneName == "Wasteland" || sceneName == "OldDange")
             portalIsNeed = true;
         else
 

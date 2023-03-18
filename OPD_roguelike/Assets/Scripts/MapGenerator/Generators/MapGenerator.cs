@@ -3,13 +3,13 @@ using UnityEngine;
 
 public abstract class MapGenerator : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject startRoomPrefab;
     private GameObject startRoom;
     [HideInInspector]
     public List<GameObject> rooms, doors;
     [SerializeField]
     private GameObject emptyRoom;
-    [SerializeField]
-    private GameObject startRoomPrefab;
     [SerializeField]
     private uint countOfRooms;
     private uint currentCountOfRooms = 0;
@@ -41,15 +41,15 @@ public abstract class MapGenerator : MonoBehaviour
 
     private void Initialization()
     {
-        startRoom = Instantiate(startRoomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
-        startRoom.GetComponent<Room>().Position = Vector2.zero;
-        rooms.Add(startRoom.gameObject);
-        for (int i = 0; i < startRoom.transform.childCount; i++)
-            if (startRoom.transform.GetChild(i).CompareTag("LeftDoor")
-                || startRoom.transform.GetChild(i).CompareTag("BottomDoor")
-                || startRoom.transform.GetChild(i).CompareTag("TopDoor")
-                || startRoom.transform.GetChild(i).CompareTag("RightDoor"))
-                doors.Add(startRoom.transform.GetChild(i).gameObject);
+        StartRoom = Instantiate(StartRoomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
+        StartRoom.GetComponent<Room>().Position = Vector2.zero;
+        rooms.Add(StartRoom.gameObject);
+        for (int i = 0; i < StartRoom.transform.childCount; i++)
+            if (StartRoom.transform.GetChild(i).CompareTag("LeftDoor")
+                || StartRoom.transform.GetChild(i).CompareTag("BottomDoor")
+                || StartRoom.transform.GetChild(i).CompareTag("TopDoor")
+                || StartRoom.transform.GetChild(i).CompareTag("RightDoor"))
+                doors.Add(StartRoom.transform.GetChild(i).gameObject);
     }
 
     public abstract void Generate();
@@ -211,5 +211,14 @@ public abstract class MapGenerator : MonoBehaviour
     public GameObject EmptyRoom
     {
         get { return emptyRoom; }
+    }
+    public GameObject StartRoom
+    {
+        get { return startRoom; }
+        set { startRoom = value; }
+    }
+    public GameObject StartRoomPrefab
+    {
+        get { return startRoomPrefab; }
     }
 }

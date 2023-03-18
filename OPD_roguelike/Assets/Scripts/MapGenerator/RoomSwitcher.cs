@@ -44,6 +44,10 @@ public class RoomSwitcher : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("TestLobby");
+        }
         if (isInitialized && !roomContainMobs)
         {
             if (Input.GetKeyDown(KeyCode.S) && currentRoom.GetComponent<Room>().bottomNeighbor != null)
@@ -65,7 +69,6 @@ public class RoomSwitcher : MonoBehaviour
     }
     private void Switch(string doorTag, string roomTag)
     {
-        Debug.Log(doorTag);
         GameObject tempRoom;
         if(roomTag == "Room")
         {

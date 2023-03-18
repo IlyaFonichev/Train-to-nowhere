@@ -167,10 +167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d4ff57c214eac0489b2e150182a0412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startRoomPrefab: {fileID: 9203718568796747491, guid: 0556df7d3179a6d4980c6f21a31674a9, type: 3}
   rooms: []
   doors: []
   emptyRoom: {fileID: 4200660226252665563, guid: 350e6125ed00fc349977ebe6b76b5907, type: 3}
-  startRoomPrefab: {fileID: 9203718568796747491, guid: 0556df7d3179a6d4980c6f21a31674a9, type: 3}
   countOfRooms: 0
   exitDoorPrefab: {fileID: 5927281490991403506, guid: 2c244dcc3ede9b745bc103600cde084c, type: 3}
 --- !u!1 &707265240
@@ -650,7 +650,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.3791609, g: 0, b: 0.4056604, a: 0}
+  m_BackGroundColor: {r: 0.43867922, g: 1, b: 0.59777296, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

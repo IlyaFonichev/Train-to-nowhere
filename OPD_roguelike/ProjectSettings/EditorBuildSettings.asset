@@ -9,9 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/TestLobby.unity
+    guid: c933801b1e9ebec4f83a0ecc1022c708
+  - enabled: 1
     path: Assets/Scenes/Danges/Cave.unity
     guid: f8f3a7e5dd3ad0546aab36c17881acb9
   - enabled: 1
-    path: Assets/Scenes/TestLobby.unity
-    guid: c933801b1e9ebec4f83a0ecc1022c708
+    path: Assets/Scenes/Danges/Forest.unity
+    guid: 0b14ca7e291775046957213e48cd0adf
+  - enabled: 1
+    path: Assets/Scenes/Danges/Laboratory.unity
+    guid: 33430b402c456634189c1227c4a78278
+  - enabled: 1
+    path: Assets/Scenes/Danges/Training.unity
+    guid: 7437492bc1a49014b8d80e40775d3c88
+  - enabled: 1
+    path: Assets/Scenes/Danges/Wasteland.unity
+    guid: 78f86cc28d7f85847b2ed2662c0e9611
   m_configObjects: {}
