@@ -17,6 +17,8 @@ public class WeaponScript : MonoBehaviour
     private float fireRate = 10;           // shots per second
     private float damage = 30;
     private float accuracy = 0.2f;
+    private bool isMelee = false;
+    private float range = 0;
 
     [SerializeField] GameObject textBox;
     [SerializeField] TextAsset textFile;
@@ -51,7 +53,8 @@ public class WeaponScript : MonoBehaviour
         if (delay > 1 / fireRate)
         {
             delay = 0;
-            StartCoroutine(shoot());
+            if (!isMelee)
+                StartCoroutine(shoot());
         }
         else
             delay += Time.deltaTime;
@@ -99,13 +102,7 @@ public class WeaponScript : MonoBehaviour
 
         Destroy(bullet);
 
-
         yield break;
-    }
-
-    public float getBulletLifeSeconds()
-    {
-        return bulletLifeSeconds;
     }
 
     private void reload()
@@ -135,18 +132,39 @@ public class WeaponScript : MonoBehaviour
     private void applyParameters()
     {
         string parameters = textFile.text;
-        string[] arr = parameters.Split('\n', 7);
+        string[] arr = parameters.Split('\n', 8);
         float[] parsedParams= new float[arr.Length];
 
         for (int i = 0; i < 7; i++)
             parsedParams[i] = float.Parse(arr[i].Substring(6));
 
-        magazine = (int)parsedParams[0];
-        totalAmmo = (int)parsedParams[1];
-        fireRate = (int)parsedParams[2];
-        bulletSpeed = (int)parsedParams[3];
-        bulletLifeSeconds = (int)parsedParams[4];
-        damage = (int)parsedParams[5];
-        accuracy = parsedParams[6];
+        if ((int)parsedParams[0] == 0)  // Range weapon
+        {
+            isMelee = false;
+            magazine = (int)parsedParams[1];
+            totalAmmo = (int)parsedParams[2];
+            fireRate = parsedParams[3];
+            bulletSpeed = parsedParams[4];
+            bulletLifeSeconds = parsedParams[5];
+            damage = parsedParams[6];
+            accuracy = parsedParams[7];
+        }
+        else
+        {
+            isMelee = true;
+            fireRate = parsedParams[1];
+            damage = parsedParams[2];
+            range = parsedParams[3];
+        }
+    }
+
+    public float getBulletLifeSeconds()
+    {
+        return bulletLifeSeconds;
+    }
+
+    public float getDamage()
+    {
+        return damage;
     }
 }

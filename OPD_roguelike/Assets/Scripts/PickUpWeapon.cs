@@ -28,7 +28,6 @@ public class PickUpWeapon : MonoBehaviour
             }
         }
         else
-
         {
             sr.sprite = defaultSprite;
         }
