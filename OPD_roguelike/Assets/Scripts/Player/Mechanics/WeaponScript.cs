@@ -82,7 +82,6 @@ public class WeaponScript : MonoBehaviour
 
 
         GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
-        bullet.tag = "Bullet";
         magazine--;
         printAmmo();
 

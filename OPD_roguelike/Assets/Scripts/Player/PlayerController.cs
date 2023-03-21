@@ -7,7 +7,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed = 10f;
-    [SerializeField] private Camera playerCamera;
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;
     [SerializeField] private float dashTime = 0.5f;
@@ -22,17 +21,26 @@ public class PlayerController : MonoBehaviour
     private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
 
+    public static PlayerController instance;
     public static HealthOfPlayer GetHealthOfPlayer() { return _healthOfPlayer; }
     public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
 
-    private void Start()
+    private void Awake()
     {
+        SetInstance();
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         _scoreOfOlayer = new Score(0);
 
         _rigidBody = gameObject.GetComponent<Rigidbody>();       
     }
 
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     private void FixedUpdate()
     {

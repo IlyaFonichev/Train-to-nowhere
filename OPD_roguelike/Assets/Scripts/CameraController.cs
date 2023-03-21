@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private GameObject scope;
-    [SerializeField] private GameObject player;
+    private GameObject player;
     [SerializeField] private float smoothSpeed = 0.125f;
 
     private RectTransform scope_rt;
@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        player = PlayerController.instance.gameObject;
         scope_rt = scope.GetComponent<RectTransform>();
 
         // „тобы камеру потом можно было двигать

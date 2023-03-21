@@ -401,6 +401,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3421360235356787577, guid: 19676a1032306b14a9ab1d6f68074734, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4597646129091583448, guid: 19676a1032306b14a9ab1d6f68074734, type: 3}
       propertyPath: player
       value: 
@@ -682,7 +686,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
 --- !u!114 &519420033
 MonoBehaviour:
@@ -697,7 +701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scope: {fileID: 446954996}
-  player: {fileID: 1343789286}
   smoothSpeed: 0.125
 --- !u!1001 &574940926
 PrefabInstance:
@@ -2008,9 +2011,21 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3093686674586142599, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3093686674586142651, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093686674586142651, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3093686674586142651, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3093686674586142651, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2525,6 +2540,10 @@ PrefabInstance:
     - target: {fileID: 983759637243456695, guid: 19676a1032306b14a9ab1d6f68074734, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3421360235356787577, guid: 19676a1032306b14a9ab1d6f68074734, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4597646129091583448, guid: 19676a1032306b14a9ab1d6f68074734, type: 3}
       propertyPath: player

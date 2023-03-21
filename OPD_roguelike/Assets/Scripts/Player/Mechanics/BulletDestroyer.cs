@@ -7,29 +7,21 @@ public class BulletDestroyer : MonoBehaviour
     [SerializeField] private GameObject weapon;
 
     private float timer = 0;
-    private float bulletLife = 0;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.tag != "Bullet" && collision.collider.tag != "Player")
+        if (!other.CompareTag("Bullet") && !other.CompareTag("Player"))
             Destroy(gameObject);
     }
 
     private void Start()
     {
-        bulletLife = weapon.GetComponent<WeaponScript>().getBulletLifeSeconds();
+        StartCoroutine(WaitAndDied(weapon.GetComponent<WeaponScript>().getBulletLifeSeconds()));
     }
 
-    private void Update()
+    private IEnumerator WaitAndDied(float time)
     {
-        if (timer > bulletLife)
-        {
-            Destroy(gameObject);
-            timer = 0;
-        }
-        else
-        {
-            timer += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(time);
+        Destroy(gameObject);
     }
 }

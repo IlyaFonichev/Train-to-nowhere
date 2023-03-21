@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
     [SerializeField] private float _speed = 2.5f;
-    [SerializeField] private PlayerController player;
+    private PlayerController player;
 
     public UnStaticEventsOfEnemy eme = new UnStaticEventsOfEnemy();
 
@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        player = PlayerController.instance;
         _HealthOfEnemy = new HealthOfEnemy(health: 1000, maxHaelthValue: 1000);
         _HealthOfEnemy.SetEnemyController(this);
     }
