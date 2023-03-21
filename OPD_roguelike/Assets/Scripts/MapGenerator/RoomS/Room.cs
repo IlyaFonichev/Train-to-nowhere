@@ -10,11 +10,19 @@ public abstract class Room : MonoBehaviour
     private Vector2 position;
     [HideInInspector]
     public List<GameObject> mobsInTheRoom;
-
     [SerializeField, Header("Neighbors at the current room")]
     private GameObject topRoom;
     [SerializeField]
     private GameObject leftRoom, rightRoom, bottomRoom;
+    private RoomType type;
+    public enum RoomType
+    {
+        Start, 
+        Mobs, 
+        Boss,
+        Chest,
+        Empty
+    }
 
     public abstract void Instantiation();
 
@@ -28,7 +36,7 @@ public abstract class Room : MonoBehaviour
     {
         if(RoomSwitcher.instance != null)
         {
-            if(RoomSwitcher.instance.Initialized && RoomSwitcher.getCurrentRoom == gameObject)
+            if(RoomSwitcher.instance.Initialized && RoomSwitcher.instance.CurrentRoom == gameObject)
             {
                 if (mobsInTheRoom.Count == 0)
                     RoomSwitcher.instance.RoomContainMobs = false;
@@ -53,7 +61,10 @@ public abstract class Room : MonoBehaviour
     public void RemoveMob(GameObject mob)
     {
         if (mobsInTheRoom.Count == 1)
+        {
             RoomSwitcher.instance.RoomContainMobs = false;
+            Minimap.instance.CleanRoom();
+        }
         mobsInTheRoom.Remove(mob);
     }
 
@@ -85,5 +96,11 @@ public abstract class Room : MonoBehaviour
     {
         get { return position; }
         set { position = value; }
+    }
+
+    public RoomType Type
+    {
+        get { return type; }
+        set { type = value; }
     }
 }

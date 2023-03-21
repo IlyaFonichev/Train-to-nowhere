@@ -19,17 +19,27 @@ public class Portal : MonoBehaviour
         {
             case "Wasteland":
                 PlayerPrefs.SetInt("WastelandDepth", PlayerPrefs.GetInt("WastelandDepth") + 1);
+                if (PlayerPrefs.GetInt("WastelandDepth") % 5 == 0)
+                    SceneManager.LoadScene("TestLobby");
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "Forest":
                 PlayerPrefs.SetInt("ForestDepth", PlayerPrefs.GetInt("ForestDepth") + 1);
+                if (PlayerPrefs.GetInt("ForestDepth") % 3 == 0)
+                    SceneManager.LoadScene("TestLobby");
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             case "Laboratory":
                 PlayerPrefs.SetInt("LaboratoryDepth", PlayerPrefs.GetInt("LaboratoryDepth") + 1);
+                if(PlayerPrefs.GetInt("LaboratoryDepth") % 7 == 0)
+                    SceneManager.LoadScene("TestLobby");
+                else
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
             default:
                 break;
         }
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

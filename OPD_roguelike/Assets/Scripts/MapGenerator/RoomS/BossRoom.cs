@@ -11,6 +11,7 @@ public class BossRoom : Room
 
     public override void Instantiation()
     {
+        Type = RoomType.Boss;
         GameObject boss = Instantiate(bossPrefabs[Random.Range(0, bossPrefabs.Count)],
                     spawnPointBoss.position,
                     Quaternion.identity);

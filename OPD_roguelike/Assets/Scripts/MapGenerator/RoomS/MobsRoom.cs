@@ -9,6 +9,7 @@ public class MobsRoom : Room
     private List<GameObject> mobsPrefabs;
     public override void Instantiation()
     {
+        Type = RoomType.Mobs;
         for (int i = 0; i < spawnPointsMobs.transform.childCount; i++)
         {
             if (Random.Range(0, 5) < 4)

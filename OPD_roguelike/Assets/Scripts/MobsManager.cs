@@ -34,14 +34,15 @@ public class MobsManager : MonoBehaviour
     }
     public void RemoveMob(GameObject mob)
     {
-        RoomSwitcher.getCurrentRoom.GetComponent<Room>().RemoveMob(mob);
+        RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().RemoveMob(mob);
         mobs.Remove(mob);
         Destroy(mob);
         if (mobs.Count == 0 && portalIsNeed)
         {
+            Minimap.instance.PortalRoom();
             Instantiate(portalPrefab,
-                RoomSwitcher.getCurrentRoom.transform.position,
-                Quaternion.identity).transform.SetParent(RoomSwitcher.getCurrentRoom.transform);
+                RoomSwitcher.instance.CurrentRoom.transform.position,
+                Quaternion.identity).transform.SetParent(RoomSwitcher.instance.CurrentRoom.transform);
             Destroy(transform.gameObject);
         }
     }

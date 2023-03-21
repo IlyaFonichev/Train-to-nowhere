@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/ResetScene.unity
+    guid: ef8121fd9a5efa9429ae90133dd32518
+  - enabled: 1
     path: Assets/Scenes/TestLobby.unity
     guid: c933801b1e9ebec4f83a0ecc1022c708
   - enabled: 1

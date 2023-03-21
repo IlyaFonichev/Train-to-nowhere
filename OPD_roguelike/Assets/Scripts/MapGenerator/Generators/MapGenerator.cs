@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public abstract class MapGenerator : MonoBehaviour
 {
@@ -19,8 +20,9 @@ public abstract class MapGenerator : MonoBehaviour
     private void Start()
     {
         SetInstance();
+
         CountRoomInitialization();
-        Debug.Log("Количество комнат: " + countOfRooms);
+        //Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
         Generate();
         DestroyEmptyDoors();
@@ -28,6 +30,9 @@ public abstract class MapGenerator : MonoBehaviour
         SetParent();
         InstantiateRoomSwitcher();
         CompletionRooms();
+
+        Minimap.instance.SetRooms = rooms;
+        Minimap.instance.DrawMap();
         gameObject.name = "Map";
         Destroy(gameObject.GetComponent<MapGenerator>());
     }
@@ -41,19 +46,22 @@ public abstract class MapGenerator : MonoBehaviour
 
     private void Initialization()
     {
-        StartRoom = Instantiate(StartRoomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
-        StartRoom.GetComponent<Room>().Position = Vector2.zero;
-        rooms.Add(StartRoom.gameObject);
-        for (int i = 0; i < StartRoom.transform.childCount; i++)
-            if (StartRoom.transform.GetChild(i).CompareTag("LeftDoor")
-                || StartRoom.transform.GetChild(i).CompareTag("BottomDoor")
-                || StartRoom.transform.GetChild(i).CompareTag("TopDoor")
-                || StartRoom.transform.GetChild(i).CompareTag("RightDoor"))
-                doors.Add(StartRoom.transform.GetChild(i).gameObject);
+        startRoom = Instantiate(StartRoomPrefab, Vector3.zero, Quaternion.Euler(90, 0, 0));
+        startRoom.GetComponent<Room>().Position = Vector2.zero;
+        startRoom.GetComponent<Room>().Type = Room.RoomType.Start;
+        rooms.Add(startRoom.gameObject);
+        for (int i = 0; i < startRoom.transform.childCount; i++)
+            if (startRoom.transform.GetChild(i).CompareTag("LeftDoor")
+                || startRoom.transform.GetChild(i).CompareTag("BottomDoor")
+                || startRoom.transform.GetChild(i).CompareTag("TopDoor")
+                || startRoom.transform.GetChild(i).CompareTag("RightDoor"))
+                doors.Add(startRoom.transform.GetChild(i).gameObject);
     }
 
     public abstract void Generate();
+
     public abstract void CountRoomInitialization();
+
     public abstract GameObject InstantiateRoom();
 
     public void SetDoors(GameObject currentRoom, GameObject neighbor, string doorTag, bool flag)
@@ -198,6 +206,7 @@ public abstract class MapGenerator : MonoBehaviour
         for (int i = 0; i < rooms.Count; i++)
             rooms[i].transform.parent = gameObject.transform;
     }
+
     public uint CountOfRooms
     {
         get { return countOfRooms; }
@@ -211,11 +220,6 @@ public abstract class MapGenerator : MonoBehaviour
     public GameObject EmptyRoom
     {
         get { return emptyRoom; }
-    }
-    public GameObject StartRoom
-    {
-        get { return startRoom; }
-        set { startRoom = value; }
     }
     public GameObject StartRoomPrefab
     {

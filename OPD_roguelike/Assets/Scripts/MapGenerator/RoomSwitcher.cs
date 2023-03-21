@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class RoomSwitcher : MonoBehaviour
 {
@@ -40,15 +39,16 @@ public class RoomSwitcher : MonoBehaviour
     public GameObject CurrentRoom
     {
         set { currentRoom = value; }
+        get { return currentRoom; }
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Tab))
         {
-            SceneManager.LoadScene("TestLobby");
+            PauseManager.instance.Pause();
         }
-        if (isInitialized && !roomContainMobs)
+        if (isInitialized && !roomContainMobs && !PauseManager.instance.onPause)
         {
             if (Input.GetKeyDown(KeyCode.S) && currentRoom.GetComponent<Room>().bottomNeighbor != null)
                 Switch("BottomDoor", currentRoom.GetComponent<Room>().bottomNeighbor.tag);
@@ -80,6 +80,7 @@ public class RoomSwitcher : MonoBehaviour
                     currentRoom.SetActive(true);
                     //Переход в следующую комнату
                     tempRoom.SetActive(false);
+                    Minimap.instance.Move(0, -1);
                     break;
                 case "TopDoor":
                     tempRoom = currentRoom;
@@ -87,6 +88,7 @@ public class RoomSwitcher : MonoBehaviour
                     currentRoom.SetActive(true);
                     //Переход в следующую комнату
                     tempRoom.SetActive(false);
+                    Minimap.instance.Move(0, 1);
                     break;
                 case "LeftDoor":
                     tempRoom = currentRoom;
@@ -94,6 +96,7 @@ public class RoomSwitcher : MonoBehaviour
                     currentRoom.SetActive(true);
                     //Переход в следующую комнату
                     tempRoom.SetActive(false);
+                    Minimap.instance.Move(-1, 0);
                     break;
                 case "RightDoor":
                     tempRoom = currentRoom;
@@ -101,23 +104,16 @@ public class RoomSwitcher : MonoBehaviour
                     currentRoom.SetActive(true);
                     //Переход в следующую комнату
                     tempRoom.SetActive(false);
+                    Minimap.instance.Move(1, 0);
                     break;
                 default:
                     break;
             }
             Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
         }
-        else
-        {
-            SceneManager.LoadScene("TestLobby");
-        }
     }
     public bool RoomContainMobs
     {
         set { roomContainMobs = value; }
-    }
-    public static GameObject getCurrentRoom
-    {
-        get { return instance.currentRoom; }
     }
 }
