@@ -19,7 +19,6 @@ public class Minimap : MonoBehaviour
     [SerializeField]
     private GameObject offsetPosition;
     private Vector2 maxPosition = Vector2.zero, minPosition = Vector2.zero;
-    private bool noMove;
     private int numberOfCurrentRoom;
     [SerializeField, Range(1f, 1.5f), Min(1)]
     private float changeScale;
@@ -29,7 +28,6 @@ public class Minimap : MonoBehaviour
         doorManager = new GameObject("DoorManager");
         doorManager.transform.SetParent(offsetPosition.transform);
         numberOfCurrentRoom = 0;
-        noMove = false;
         space = transform.GetComponent<RectTransform>().rect.width / 16;
         SetInstance();
         width = space * 4;
@@ -51,18 +49,7 @@ public class Minimap : MonoBehaviour
     public void Move(int x, int y)
     {
         SwitchUIRoom();
-        if (!noMove)
-        {
-            if (RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().Position.x == minPosition.x
-                || RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().Position.y == minPosition.y
-                || RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().Position.x == maxPosition.x
-                || RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().Position.y == maxPosition.y)
-                noMove = true;
-            if (!noMove)
-                offsetPosition.GetComponent<RectTransform>().position -= new Vector3(x * (width + space), y * (height + space), 0);
-        }
-        else
-            noMove = false;
+        offsetPosition.GetComponent<RectTransform>().position -= new Vector3(x * (width + space), y * (height + space), 0);
     }
 
     private void SwitchUIRoom()

@@ -20,7 +20,6 @@ public abstract class MapGenerator : MonoBehaviour
     private void Start()
     {
         SetInstance();
-
         CountRoomInitialization();
         //Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();

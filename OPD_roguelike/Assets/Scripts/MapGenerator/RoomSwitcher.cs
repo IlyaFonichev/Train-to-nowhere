@@ -48,7 +48,7 @@ public class RoomSwitcher : MonoBehaviour
         {
             PauseManager.instance.Pause();
         }
-        if (isInitialized && !roomContainMobs && !PauseManager.instance.onPause)
+        if (isInitialized && !roomContainMobs /*&& !PauseManager.instance.onPause*/)
         {
             if (Input.GetKeyDown(KeyCode.S) && currentRoom.GetComponent<Room>().bottomNeighbor != null)
                 Switch("BottomDoor", currentRoom.GetComponent<Room>().bottomNeighbor.tag);

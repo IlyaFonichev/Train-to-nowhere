@@ -14,7 +14,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void LoadLobby()
     {
-        SceneManager.LoadScene("Dange");
+        SceneManager.LoadScene("TestLobby");
     }
     public void OpenSettings()
     {
