@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6416456406088761553}
   - component: {fileID: 6416456406088761552}
-  - component: {fileID: 6416456406088761555}
   - component: {fileID: 8322345591963127237}
   m_Layer: 0
   m_Name: ak47
@@ -28,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 6416456406088761554}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 5, y: 0.2, z: -0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -72,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1657013051
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 17ff4bdd848b72740bc0c443064641e3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -86,19 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!65 &6416456406088761555
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6416456406088761554}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.0000002, z: 0.20000005}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8322345591963127237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,8 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f19298daf37bb46af19d42e9eb1a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 3093686674586142654, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
+  player: {fileID: 0}
   playerCamera: {fileID: 0}
   bulletPrefab: {fileID: 7728887404393700067, guid: faa6321d42d73fd4c9d8ac26778951a2, type: 3}
   textBox: {fileID: 0}
-  textFile: {fileID: 0}
+  textFile: {fileID: 4900000, guid: ac7b70734ba202840a808e236f79b237, type: 3}
