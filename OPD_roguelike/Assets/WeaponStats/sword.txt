@@ -1,0 +1,4 @@
+mel = 1
+fRt = 10
+dmg = 30
+rng = 1
