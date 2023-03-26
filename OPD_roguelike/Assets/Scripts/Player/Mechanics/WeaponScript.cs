@@ -21,7 +21,6 @@ public class WeaponScript : MonoBehaviour
     private float range = 0;
 
     [SerializeField] GameObject textBox;
-    [SerializeField] TextAsset textFile;
 
     private Vector3 canvasCenter;
     private PlayerController pc;
@@ -128,9 +127,9 @@ public class WeaponScript : MonoBehaviour
         txt.text = magazine.ToString() + " / " + totalAmmo.ToString();
     }
 
-    private void applyParameters()
+    public void applyParameters()
     {
-        string parameters = textFile.text;
+        string parameters = GetComponent<Item>().getItemProperties().text;
         string[] arr = parameters.Split('\n', 8);
         float[] parsedParams= new float[arr.Length];
 
@@ -148,7 +147,7 @@ public class WeaponScript : MonoBehaviour
             damage = parsedParams[6];
             accuracy = parsedParams[7];
         }
-        else
+        else  // melee weapon
         {
             isMelee = true;
             fireRate = parsedParams[1];

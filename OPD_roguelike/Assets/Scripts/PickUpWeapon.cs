@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class PickUpWeapon : MonoBehaviour
@@ -10,6 +11,8 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField] private Sprite activeSprite;
 
     private SpriteRenderer sr;
+    private Transform curWeapon;
+    private TextAsset storedProperties;
 
     private void Start()
     {
@@ -23,8 +26,19 @@ public class PickUpWeapon : MonoBehaviour
             sr.sprite = activeSprite;
             if (Input.GetKeyDown(KeyCode.E))
             {
-                gameObject.AddComponent<WeaponScript>();
-                gameObject.GetComponent<PickUpWeapon>().enabled = false;
+                curWeapon = player.transform.GetChild(2);
+
+                sr.sprite = curWeapon.GetComponent<SpriteRenderer>().sprite;
+                curWeapon.GetComponent<SpriteRenderer>().sprite = defaultSprite;
+                defaultSprite = sr.sprite;
+                activeSprite = sr.sprite;
+
+                storedProperties = gameObject.GetComponent<Item>().getItemProperties();
+
+                gameObject.GetComponent<Item>().setItemProperties(curWeapon.GetComponent<Item>().getItemProperties());
+                curWeapon.GetComponent<Item>().setItemProperties(storedProperties); 
+                
+                curWeapon.GetComponent<WeaponScript>().applyParameters();
             }
         }
         else
