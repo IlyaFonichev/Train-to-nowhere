@@ -6,8 +6,6 @@ public class BulletDestroyer : MonoBehaviour
 {
     [SerializeField] private GameObject weapon;
 
-    private float timer = 0;
-
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Bullet") && !other.CompareTag("Player"))
