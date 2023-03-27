@@ -61,50 +61,7 @@ public class CaveGenerator : MapGenerator
 
             currentRoom = newRoom;
         }
-        InstantiateExitDoor();
-    }
-
-    public void InstantiateExitDoor()
-    {
-        int angle = 0;
-        int neighbor = Random.Range(0, 4);
-        GameObject exitDoor = null;
-        string exitDoorTag = "";
-        switch (neighbor)
-        {
-            case 0:
-                if (rooms[0].GetComponent<Room>().topNeighbor == null)
-                    exitDoorTag = "TopDoor";
-                else
-                    exitDoorTag = "BottomDoor";
-                break;
-            case 1:
-                if (rooms[0].GetComponent<Room>().bottomNeighbor == null)
-                    exitDoorTag = "BottomDoor";
-                else
-                    exitDoorTag = "TopDoor";
-                break;
-            case 2:
-                angle = 90;
-                if (rooms[0].GetComponent<Room>().leftNeighbor == null)
-                    exitDoorTag = "LeftDoor";
-                else
-                    exitDoorTag = "RightDoor";
-                break;
-            case 3:
-                angle = 90;
-                if (rooms[0].GetComponent<Room>().rightNeighbor == null)
-                    exitDoorTag = "RightDoor";
-                else
-                    exitDoorTag = "LeftDoor";
-                break;
-            default:
-                break;
-        }
-        for (int i = 0; i < rooms[0].transform.childCount; i++)
-            if (rooms[0].transform.GetChild(i).CompareTag(exitDoorTag))
-                exitDoor = rooms[0].transform.GetChild(i).gameObject;
-        Instantiate(exitDoorPrefab, exitDoor.transform.position, Quaternion.Euler(90, 0, angle)).transform.SetParent(rooms[0].transform);
+        InstantiateExitDoor(exitDoorPrefab);
     }
 
     public override GameObject InstantiateRoom()

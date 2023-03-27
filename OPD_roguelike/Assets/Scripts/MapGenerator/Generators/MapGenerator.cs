@@ -7,7 +7,7 @@ public abstract class MapGenerator : MonoBehaviour
     [SerializeField]
     private GameObject startRoomPrefab;
     private GameObject startRoom;
-    [HideInInspector]
+    [SerializeField]
     public List<GameObject> rooms, doors;
     [SerializeField]
     private GameObject emptyRoom;
@@ -17,6 +17,7 @@ public abstract class MapGenerator : MonoBehaviour
     [SerializeField]
     private const float verticalRoomOffset = 12f, horizontalRoomOffset = 19f;
     public static MapGenerator instance;
+    public GameObject existingRoom;
     private void Start()
     {
         SetInstance();
@@ -49,12 +50,13 @@ public abstract class MapGenerator : MonoBehaviour
         startRoom.GetComponent<Room>().Position = Vector2.zero;
         startRoom.GetComponent<Room>().Type = Room.RoomType.Start;
         rooms.Add(startRoom.gameObject);
-        for (int i = 0; i < startRoom.transform.childCount; i++)
-            if (startRoom.transform.GetChild(i).CompareTag("LeftDoor")
-                || startRoom.transform.GetChild(i).CompareTag("BottomDoor")
-                || startRoom.transform.GetChild(i).CompareTag("TopDoor")
-                || startRoom.transform.GetChild(i).CompareTag("RightDoor"))
-                doors.Add(startRoom.transform.GetChild(i).gameObject);
+        GameObject originRoom = startRoom.GetComponent<Room>().OriginRoom;
+        for (int i = 0; i < originRoom.transform.childCount; i++)
+            if (originRoom.transform.GetChild(i).CompareTag("LeftDoor")
+                || originRoom.transform.GetChild(i).CompareTag("BottomDoor")
+                || originRoom.transform.GetChild(i).CompareTag("TopDoor")
+                || originRoom.transform.GetChild(i).CompareTag("RightDoor"))
+                doors.Add(originRoom.transform.GetChild(i).gameObject);
     }
 
     public abstract void Generate();
@@ -98,10 +100,11 @@ public abstract class MapGenerator : MonoBehaviour
 
     private void AddDoorsOfNewRoom(GameObject currentRoom, string tag)
     {
-        for (int i = 0; i < currentRoom.transform.childCount; i++)
+        GameObject targetRoom = currentRoom.GetComponent<Room>().OriginRoom;
+        for (int i = 0; i < targetRoom.transform.childCount; i++)
         {
-            if (!currentRoom.transform.GetChild(i).CompareTag(tag))
-                doors.Add(currentRoom.transform.GetChild(i).gameObject);
+            if (!targetRoom.transform.GetChild(i).CompareTag(tag))
+                doors.Add(targetRoom.transform.GetChild(i).gameObject);
         }
     }
 
@@ -109,36 +112,37 @@ public abstract class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < rooms.Count; i++)
         {
-            for (int j = 0; j < rooms[i].transform.childCount; j++)
+            for (int j = 0; j < rooms[i].GetComponent<Room>().OriginRoom.transform.childCount; j++)
             {
-                switch (rooms[i].transform.GetChild(j).tag)
+                GameObject targetRoom = rooms[i].GetComponent<Room>().OriginRoom.transform.GetChild(j).gameObject;
+                switch (targetRoom.tag)
                 {
                     case "TopDoor":
                         if (rooms[i].GetComponent<Room>().topNeighbor == null)
                         {
-                            doors.Remove(rooms[i].transform.GetChild(j).gameObject);
-                            Destroy(rooms[i].transform.GetChild(j).gameObject);
+                            doors.Remove(targetRoom);
+                            Destroy(targetRoom);
                         }
                         break;
                     case "BottomDoor":
                         if (rooms[i].GetComponent<Room>().bottomNeighbor == null)
                         {
-                            doors.Remove(rooms[i].transform.GetChild(j).gameObject);
-                            Destroy(rooms[i].transform.GetChild(j).gameObject);
+                            doors.Remove(targetRoom);
+                            Destroy(targetRoom);
                         }
                         break;
                     case "LeftDoor":
                         if (rooms[i].GetComponent<Room>().leftNeighbor == null)
                         {
-                            doors.Remove(rooms[i].transform.GetChild(j).gameObject);
-                            Destroy(rooms[i].transform.GetChild(j).gameObject);
+                            doors.Remove(targetRoom);
+                            Destroy(targetRoom);
                         }
                         break;
                     case "RightDoor":
                         if (rooms[i].GetComponent<Room>().rightNeighbor == null)
                         {
-                            doors.Remove(rooms[i].transform.GetChild(j).gameObject);
-                            Destroy(rooms[i].transform.GetChild(j).gameObject);
+                            doors.Remove(targetRoom);
+                            Destroy(targetRoom);
                         }
                         break;
                     default:
@@ -188,6 +192,110 @@ public abstract class MapGenerator : MonoBehaviour
                 break;
         }
         return positionOffset;
+    }
+
+    public void InstantiateExitDoor(GameObject exitDoorPrefab)
+    {
+        int angle = 0;
+        int neighbor = Random.Range(0, 4);
+        GameObject exitDoor = null;
+        GameObject exitRoomDoor = new GameObject("ExitDoor");
+        string exitDoorTag = "";
+        switch (neighbor)
+        {
+            case 0:
+                if (rooms[0].GetComponent<Room>().topNeighbor == null)
+                {
+                    exitDoorTag = "TopDoor";
+                    rooms[0].GetComponent<Room>().topNeighbor = exitRoomDoor;
+                }
+                else
+                {
+                    exitDoorTag = "BottomDoor";
+                    rooms[0].GetComponent<Room>().bottomNeighbor = exitRoomDoor;
+                }
+                break;
+            case 1:
+                if (rooms[0].GetComponent<Room>().bottomNeighbor == null)
+                {
+                    exitDoorTag = "BottomDoor";
+                    rooms[0].GetComponent<Room>().bottomNeighbor = exitRoomDoor;
+                }
+                else
+                {
+                    exitDoorTag = "TopDoor";
+                    rooms[0].GetComponent<Room>().topNeighbor = exitRoomDoor;
+                }
+                break;
+            case 2:
+                angle = 90;
+                if (rooms[0].GetComponent<Room>().leftNeighbor == null)
+                {
+                    exitDoorTag = "LeftDoor";
+                    rooms[0].GetComponent<Room>().leftNeighbor = exitRoomDoor;
+                }
+                else
+                {
+                    exitDoorTag = "RightDoor";
+                    rooms[0].GetComponent<Room>().rightNeighbor = exitRoomDoor;
+                }
+                break;
+            case 3:
+                angle = 90;
+                if (rooms[0].GetComponent<Room>().rightNeighbor == null)
+                {
+                    exitDoorTag = "RightDoor";
+                    rooms[0].GetComponent<Room>().rightNeighbor = exitRoomDoor;
+                }
+                else
+                {
+                    exitDoorTag = "LeftDoor";
+                    rooms[0].GetComponent<Room>().leftNeighbor = exitRoomDoor;
+                }
+                break;
+            default:
+                break;
+        }
+        for (int i = 0; i < rooms[0].GetComponent<Room>().OriginRoom.transform.childCount; i++)
+            if (rooms[0].GetComponent<Room>().OriginRoom.transform.GetChild(i).CompareTag(exitDoorTag))
+                exitDoor = rooms[0].GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject;
+        Instantiate(exitDoorPrefab, exitDoor.transform.position, Quaternion.Euler(90, 0, angle)).transform.SetParent(rooms[0].transform);
+    }
+
+    public void ProceduralGenerate(int numberOfCurrentParentDoor)
+    {
+        GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
+        Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
+
+        GameObject newRoom = InstantiateRoom();
+        GameObject parentRoom = currentParentDoor.transform.parent.transform.parent.gameObject;
+        newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
+        GameObject existingRoom = null;
+        bool intersection = false;
+
+        //Обработка пересечения
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (newRoom.GetComponent<Room>().Position == rooms[i].GetComponent<Room>().Position)
+            {
+                existingRoom = rooms[i];
+                intersection = true;
+                break;
+            }
+        }
+
+        if (intersection)
+        {
+            Destroy(newRoom);
+            newRoom = existingRoom;
+        }
+        else
+        {
+            rooms.Add(newRoom);
+            newRoom.name += System.Convert.ToString(CurrentCountOfRooms);
+            CurrentCountOfRooms++;
+        }
+        SetDoors(newRoom, parentRoom, currentParentDoor.tag, !intersection);
     }
 
     private void PlacementRoomPosition()

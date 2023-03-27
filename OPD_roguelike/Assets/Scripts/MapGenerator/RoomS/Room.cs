@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public abstract class Room : MonoBehaviour
 {
     [SerializeField]
+    private GameObject originRoom;
+    [SerializeField]
     private GameObject decorationPrefab;
     private GameObject objectManager;
     private Vector2 position;
@@ -102,5 +104,9 @@ public abstract class Room : MonoBehaviour
     {
         get { return type; }
         set { type = value; }
+    }
+    public GameObject OriginRoom
+    {
+        get { return originRoom; }
     }
 }

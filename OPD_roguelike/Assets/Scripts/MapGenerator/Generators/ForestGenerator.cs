@@ -18,39 +18,7 @@ public class ForestGenerator : MapGenerator
     {
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
-            int numberOfCurrentParentDoor = Random.Range(0, doors.Count);
-            GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
-            Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
-
-            GameObject newRoom = InstantiateRoom();
-            GameObject parentRoom = currentParentDoor.transform.parent.gameObject;
-            newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
-            GameObject existingRoom = null;
-            bool intersection = false;
-
-            //Обработка пересечения
-            for (int i = 0; i < rooms.Count; i++)
-            {
-                if (newRoom.GetComponent<Room>().Position == rooms[i].GetComponent<Room>().Position)
-                {
-                    existingRoom = rooms[i];
-                    intersection = true;
-                    break;
-                }
-            }
-
-            if (intersection)
-            {
-                Destroy(newRoom);
-                newRoom = existingRoom;
-            }
-            else
-            {
-                rooms.Add(newRoom);
-                newRoom.name += System.Convert.ToString(CurrentCountOfRooms);
-                CurrentCountOfRooms++;
-            }
-            SetDoors(newRoom, parentRoom, currentParentDoor.tag, !intersection);
+            ProceduralGenerate(Random.Range(0, doors.Count));
         }
     }
     public override GameObject InstantiateRoom()

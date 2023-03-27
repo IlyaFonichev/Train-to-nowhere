@@ -10,6 +10,7 @@ TagManager:
   - LeftDoor
   - RightDoor
   - ExitDoor
+  - OriginRoom
   layers:
   - Default
   - TransparentFX
