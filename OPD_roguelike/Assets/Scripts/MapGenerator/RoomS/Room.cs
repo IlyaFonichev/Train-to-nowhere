@@ -17,6 +17,8 @@ public abstract class Room : MonoBehaviour
     [SerializeField]
     private GameObject leftRoom, rightRoom, bottomRoom;
     private RoomType type;
+    [SerializeField]
+    private GameObject border;
     public enum RoomType
     {
         Start, 
@@ -34,20 +36,6 @@ public abstract class Room : MonoBehaviour
         Instantiation();
         InstantiateDecoration();
     }
-    private void OnEnable()
-    {
-        if(RoomSwitcher.instance != null)
-        {
-            if(RoomSwitcher.instance.Initialized && RoomSwitcher.instance.CurrentRoom == gameObject)
-            {
-                if (mobsInTheRoom.Count == 0)
-                    RoomSwitcher.instance.RoomContainMobs = false;
-                else
-                    RoomSwitcher.instance.RoomContainMobs = true;
-            }
-        }
-    }
-
     private void InstantiateObjectManager()
     {
         objectManager = new GameObject("ObjectManager");
@@ -64,7 +52,9 @@ public abstract class Room : MonoBehaviour
     {
         if (mobsInTheRoom.Count == 1)
         {
-            RoomSwitcher.instance.RoomContainMobs = false;
+            for (int i = 0; i < GetComponent<Room>().OriginRoom.transform.childCount; i++) 
+                RoomSwitcher.instance.HideDoorCollider(GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
+            type = RoomType.Empty;
             Minimap.instance.CleanRoom();
         }
         mobsInTheRoom.Remove(mob);

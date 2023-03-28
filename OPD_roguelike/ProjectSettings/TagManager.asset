@@ -11,6 +11,16 @@ TagManager:
   - RightDoor
   - ExitDoor
   - OriginRoom
+  - Bullet
+  - NPC
+  - Enemy
+  - Training
+  - Cave
+  - Forest
+  - Laboratory
+  - Wasteland
+  - DoorCollider
+  - DoorSprite
   layers:
   - Default
   - TransparentFX

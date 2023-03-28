@@ -357,7 +357,7 @@ MonoBehaviour:
   rooms: []
   doors: []
   emptyRoom: {fileID: 4200660226252665563, guid: 350e6125ed00fc349977ebe6b76b5907, type: 3}
-  countOfRooms: 0
+  existingRoom: {fileID: 0}
   exitDoorPrefab: {fileID: 5927281490991403506, guid: 2c244dcc3ede9b745bc103600cde084c, type: 3}
   chestRoom: {fileID: 2634507021731015106, guid: 386c17495719cf348a97d2c7d2a04b20, type: 3}
   mobsRoom: {fileID: 3811036464853382862, guid: 9939531e18d6eb147849f2bb5c3a1c8b, type: 3}

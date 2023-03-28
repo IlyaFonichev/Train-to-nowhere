@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
 
     private void showScope()
     {
+        Cursor.visible = false;
         Vector2 mousePos = Input.mousePosition;
         scope_rt.anchoredPosition = mousePos;
     }
