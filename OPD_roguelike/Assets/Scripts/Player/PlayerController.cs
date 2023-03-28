@@ -52,20 +52,6 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Dash(direction));      
     }
 
-    private void Update()
-    {
-        instantiateWeapon();
-    }
-
-    private void instantiateWeapon()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            weaponEquiped = !weaponEquiped;
-            weapon.SetActive(weaponEquiped);
-        }
-    }
-
     private void move(Vector3 direction)
     {
         if (isDashing) return;

@@ -8,7 +8,7 @@ public class BulletDestroyer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Bullet") && !other.CompareTag("Player"))
+        if (!other.CompareTag("Bullet") && !other.CompareTag("Player") && !other.CompareTag("Item"))
             Destroy(gameObject);
     }
 

@@ -12,13 +12,16 @@ public class WeaponScript : MonoBehaviour
 
     private float bulletSpeed = 5;
     private float bulletLifeSeconds = 1;
-    private static int magazine = 30;
-    private static int totalAmmo = 60;
+    private int magazine = 30;
+    private int totalAmmo = 60;
     private float fireRate = 10;           // shots per second
     private float damage = 30;
     private float accuracy = 0.2f;
     private bool isMelee = false;
     private float range = 0;
+
+    private int currAmmo;
+    private int currMagazine;
 
     [SerializeField] GameObject textBox;
 
@@ -30,28 +33,29 @@ public class WeaponScript : MonoBehaviour
     private void Start()
     {
         applyParameters();
-
+        
         pc = player.GetComponent<PlayerController>();
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
+
+        printAmmo();
     }
 
     private void Update()
     {
         if (Input.mousePosition.x > canvasCenter.x)
         {
-            transform.position = new Vector3(player.transform.position.x + 0.956f, player.transform.position.y, player.transform.position.z + -0.19f);
+            transform.position = new Vector3(player.transform.position.x + 0.956f, player.transform.position.y, player.transform.position.z + -0.049f);
             transform.rotation = Quaternion.Euler(90, 0, 0);
         }
         else
         {
-            transform.position = new Vector3(player.transform.position.x - 0.956f, player.transform.position.y, player.transform.position.z + -0.19f);
+            transform.position = new Vector3(player.transform.position.x - 0.956f, player.transform.position.y, player.transform.position.z + -0.049f);
             transform.rotation = Quaternion.Euler(-90, 0, -180);
         }
 
         if (delay > 1 / fireRate)
         {
-            delay = 0;
             if (!isMelee)
                 StartCoroutine(shoot());
         }
@@ -65,7 +69,9 @@ public class WeaponScript : MonoBehaviour
     {
         if (Input.GetAxisRaw("Fire") == 0) yield break;
         if (pc.getDash()) yield break;
-        if (magazine == 0) yield break;
+        if (currMagazine == 0) yield break;
+
+        delay = 0;
 
         Vector3 mousePos2D = Input.mousePosition;
 
@@ -81,7 +87,7 @@ public class WeaponScript : MonoBehaviour
 
 
         GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
-        magazine--;
+        currMagazine--;
         printAmmo();
 
         Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
@@ -105,55 +111,43 @@ public class WeaponScript : MonoBehaviour
 
     private void reload()
     {
-        if (Input.GetKeyDown(KeyCode.R) && totalAmmo > 0 && magazine < 30)
+        if (Input.GetKeyDown(KeyCode.R) && currAmmo > 0 && currMagazine < magazine)
         {
-            if (totalAmmo + magazine >= 30)
+            if (currAmmo + currMagazine >= magazine)
             {
-                totalAmmo -= 30 - magazine;
-                magazine = 30;
+                currAmmo -= magazine - currMagazine;
+                currMagazine = magazine;
             }
             else
             {
-                magazine += totalAmmo;
-                totalAmmo = 0;
+                currMagazine += currAmmo;
+                currAmmo = 0;
             }
-                        
+
             printAmmo();
         }
     }
 
-    private void printAmmo()
+    public void printAmmo()
     {
-        txt.text = magazine.ToString() + " / " + totalAmmo.ToString();
+        txt.text = currMagazine.ToString() + " / " + currAmmo.ToString();
     }
 
     public void applyParameters()
     {
-        string parameters = GetComponent<Item>().getItemProperties().text;
-        string[] arr = parameters.Split('\n', 8);
-        float[] parsedParams= new float[arr.Length];
+        float[] parsedParams = new float[7];
+        GetComponent<Item>().MakeParamsArray().CopyTo(parsedParams, 0);
 
-        for (int i = 0; i < 7; i++)
-            parsedParams[i] = float.Parse(arr[i].Substring(6));
+        magazine = (int)parsedParams[0];
+        totalAmmo = (int)parsedParams[1];
+        fireRate = parsedParams[2];
+        bulletSpeed = parsedParams[3];
+        bulletLifeSeconds = parsedParams[4];
+        damage = parsedParams[5];
+        accuracy = parsedParams[6];
 
-        if ((int)parsedParams[0] == 0)  // Range weapon
-        {
-            isMelee = false;
-            magazine = (int)parsedParams[1];
-            totalAmmo = (int)parsedParams[2];
-            fireRate = parsedParams[3];
-            bulletSpeed = parsedParams[4];
-            bulletLifeSeconds = parsedParams[5];
-            damage = parsedParams[6];
-            accuracy = parsedParams[7];
-        }
-        else  // melee weapon
-        {
-            isMelee = true;
-            fireRate = parsedParams[1];
-            damage = parsedParams[2];
-            range = parsedParams[3];
-        }
+        currAmmo = totalAmmo;
+        currMagazine = magazine;
     }
 
     public float getBulletLifeSeconds()

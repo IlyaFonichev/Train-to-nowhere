@@ -11,8 +11,7 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField] private Sprite activeSprite;
 
     private SpriteRenderer sr;
-    private Transform curWeapon;
-    private TextAsset storedProperties;
+    private GameObject curWeapon;
 
     private void Start()
     {
@@ -26,19 +25,18 @@ public class PickUpWeapon : MonoBehaviour
             sr.sprite = activeSprite;
             if (Input.GetKeyDown(KeyCode.E))
             {
-                curWeapon = player.transform.GetChild(2);
+                curWeapon = player.GetComponent<InventoryScript>().firstWeapon;
 
-                sr.sprite = curWeapon.GetComponent<SpriteRenderer>().sprite;
-                curWeapon.GetComponent<SpriteRenderer>().sprite = defaultSprite;
-                defaultSprite = sr.sprite;
-                activeSprite = sr.sprite;
+                curWeapon.GetComponent<WeaponScript>().enabled = false;
+                curWeapon.GetComponent<PickUpWeapon>().enabled = true;
 
-                storedProperties = gameObject.GetComponent<Item>().getItemProperties();
-
-                gameObject.GetComponent<Item>().setItemProperties(curWeapon.GetComponent<Item>().getItemProperties());
-                curWeapon.GetComponent<Item>().setItemProperties(storedProperties); 
+                player.GetComponent<InventoryScript>().firstWeapon = gameObject;
                 
-                curWeapon.GetComponent<WeaponScript>().applyParameters();
+                gameObject.GetComponent<WeaponScript>().enabled = true;
+
+                gameObject.GetComponent<WeaponScript>().printAmmo();
+
+                gameObject.GetComponent<PickUpWeapon>().enabled = false;
             }
         }
         else
