@@ -2391,6 +2391,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1616089419725292736, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
+      propertyPath: dashSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1616089419725292752, guid: 4fb6ec91f0fe1644ca7d539f0feef580, type: 3}
       propertyPath: _scoreValueText
       value: 

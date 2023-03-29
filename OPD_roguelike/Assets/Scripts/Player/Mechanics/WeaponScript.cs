@@ -135,10 +135,13 @@ public class WeaponScript : MonoBehaviour
             printAmmo();
         }
     }
-
+    
     public void printAmmo()
     {
-        txt.text = currMagazine.ToString() + " / " + currAmmo.ToString();
+        if (magazine != 0)
+            txt.text = currMagazine.ToString() + " / " + currAmmo.ToString();
+        else
+            txt.text = "";
     }
 
     private void applyParameters()

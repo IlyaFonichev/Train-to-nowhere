@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < dashTime)
         {
-            _rigidBody.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed * 100;
+            _rigidBody.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed;
 
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
