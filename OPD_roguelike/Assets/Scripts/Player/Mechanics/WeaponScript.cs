@@ -32,6 +32,8 @@ public class WeaponScript : MonoBehaviour
     private float delay = 0;
     private Text txt;
 
+    private Quaternion weaponAngle;
+
     private void Start()
     {
         applyParameters();
@@ -52,7 +54,9 @@ public class WeaponScript : MonoBehaviour
         if (delay > 1 / fireRate)
         {
             if (!isMelee)
-                StartCoroutine(shoot());
+                StartCoroutine(shoot());    // ranged attack
+            else
+                StartCoroutine(attack());   // melee attack
         }
         else
             delay += Time.deltaTime;
@@ -60,7 +64,7 @@ public class WeaponScript : MonoBehaviour
         reload();
     }
 
-    private IEnumerator shoot()
+    private IEnumerator shoot()  // ranged attack
     {
         if (Input.GetAxisRaw("Fire") == 0) yield break;
         if (pc.getDash()) yield break;
@@ -88,6 +92,25 @@ public class WeaponScript : MonoBehaviour
             elapsedtime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
+
+        Destroy(bullet);
+
+        yield break;
+    }
+
+    private IEnumerator attack()    // melee attack
+    {
+        if (Input.GetAxisRaw("Fire") == 0) yield break;
+        if (pc.getDash()) yield break;
+
+        delay = 0;
+
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
+
+        bullet.transform.localScale = new Vector3(range, range, 1);
+        bullet.transform.rotation = weaponAngle;
+
+        yield return new WaitForSeconds(0.1f);
 
         Destroy(bullet);
 
@@ -131,7 +154,12 @@ public class WeaponScript : MonoBehaviour
         damage = parsedParams[5];
         accuracy = parsedParams[6];
 
-        bulletLifeSeconds = range / bulletSpeed;
+        if (magazine == 0)
+            isMelee = true;
+
+        if (!isMelee)
+            bulletLifeSeconds = range / bulletSpeed;
+
         currAmmo = totalAmmo;
         currMagazine = magazine;
     }
@@ -173,6 +201,8 @@ public class WeaponScript : MonoBehaviour
             else
                 transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
         }
+
+        weaponAngle = transform.rotation;
     }
 
     public float getBulletLifeSeconds()
