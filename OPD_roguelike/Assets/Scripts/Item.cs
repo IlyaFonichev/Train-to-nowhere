@@ -6,14 +6,16 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private GameObject reader;
+    [SerializeField] private GameObject readerObj;
 
+    private CSVReader reader;
     private string[] data;
 
     private void Start()
     {
-        data = new string[reader.GetComponent<CSVReader>().ReadCSV().Length];
-        reader.GetComponent<CSVReader>().ReadCSV().CopyTo(data, 0);
+        reader = readerObj.GetComponent<CSVReader>();
+        data = new string[reader.ReadCSV().Length];
+        reader.ReadCSV().CopyTo(data, 0);
     }
 
     private int FindNameParams()

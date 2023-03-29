@@ -10,11 +10,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;
     [SerializeField] private float dashTime = 0.5f;
-    [SerializeField] private GameObject weapon;
 
     private Rigidbody _rigidBody;
     private bool isDashing;
-    private bool weaponEquiped = false;
 
     public UnStaticEventsOfPlayer unStaticEventsOfPlayer = new UnStaticEventsOfPlayer();
 
@@ -66,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         isDashing = true;
 
-        float elapsedTime = 0.4f;
+        float elapsedTime = 0f;
         while (elapsedTime < dashTime)
         {
             _rigidBody.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed * 100;

@@ -26,6 +26,8 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] GameObject textBox;
 
     private Vector3 canvasCenter;
+    private Vector3 mouseVector;
+
     private PlayerController pc;
     private float delay = 0;
     private Text txt;
@@ -43,16 +45,9 @@ public class WeaponScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.mousePosition.x > canvasCenter.x)
-        {
-            transform.position = new Vector3(player.transform.position.x + 0.956f, player.transform.position.y, player.transform.position.z + -0.049f);
-            transform.rotation = Quaternion.Euler(90, 0, 0);
-        }
-        else
-        {
-            transform.position = new Vector3(player.transform.position.x - 0.956f, player.transform.position.y, player.transform.position.z + -0.049f);
-            transform.rotation = Quaternion.Euler(-90, 0, -180);
-        }
+        calculateMouseVector();
+
+        pointWeaponToMouse();
 
         if (delay > 1 / fireRate)
         {
@@ -73,20 +68,10 @@ public class WeaponScript : MonoBehaviour
 
         delay = 0;
 
-        Vector3 mousePos2D = Input.mousePosition;
+        Vector3 shootVector = new Vector3(mouseVector.x + Random.Range(-accuracy, accuracy), 0, mouseVector.z + Random.Range(-accuracy, accuracy));
+        shootVector.Normalize();
 
-        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
-
-        Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
-        Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
-
-        Vector3 mouseVector = worldPointPos - currCanvasCenter;
-        mouseVector = new Vector3(mouseVector.x + Random.Range(-accuracy, accuracy), 0, mouseVector.z + Random.Range(-accuracy, accuracy));
-
-        mouseVector.Normalize();
-
-
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + (shootVector), new Quaternion(0, 0, 0, 0));
         currMagazine--;
         printAmmo();
 
@@ -96,7 +81,7 @@ public class WeaponScript : MonoBehaviour
         while (elapsedtime < bulletLifeSeconds)
         {
             if (bullet != null)
-                bulletRb.velocity = mouseVector * bulletSpeed;
+                bulletRb.velocity = shootVector * bulletSpeed;
             else
                 yield break;
 
@@ -133,7 +118,7 @@ public class WeaponScript : MonoBehaviour
         txt.text = currMagazine.ToString() + " / " + currAmmo.ToString();
     }
 
-    public void applyParameters()
+    private void applyParameters()
     {
         float[] parsedParams = new float[7];
         GetComponent<Item>().MakeParamsArray().CopyTo(parsedParams, 0);
@@ -142,12 +127,52 @@ public class WeaponScript : MonoBehaviour
         totalAmmo = (int)parsedParams[1];
         fireRate = parsedParams[2];
         bulletSpeed = parsedParams[3];
-        bulletLifeSeconds = parsedParams[4];
+        range = parsedParams[4];
         damage = parsedParams[5];
         accuracy = parsedParams[6];
 
+        bulletLifeSeconds = range / bulletSpeed;
         currAmmo = totalAmmo;
         currMagazine = magazine;
+    }
+
+    private void calculateMouseVector()
+    {
+        Vector3 mousePos2D = Input.mousePosition;
+
+        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
+
+        Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
+        Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
+
+        mouseVector = worldPointPos - currCanvasCenter;
+
+        mouseVector.Normalize();
+    }
+
+    private void pointWeaponToMouse()
+    {
+        Vector2 mouseVector2d = new Vector2(mouseVector.x, mouseVector.z);
+        Vector3 mousePos2D = Input.mousePosition;
+
+        if (mousePos2D.x > canvasCenter.x)
+        {
+            transform.position = new Vector3(player.transform.position.x + 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
+
+            if (mousePos2D.y > canvasCenter.y)
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
+            else
+                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
+        }
+        else
+        {
+            transform.position = new Vector3(player.transform.position.x - 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
+
+            if (mousePos2D.y > canvasCenter.y)
+                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
+            else
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
+        }
     }
 
     public float getBulletLifeSeconds()
