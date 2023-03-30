@@ -37,7 +37,7 @@ public class WeaponScript : MonoBehaviour
     private void Start()
     {
         applyParameters();
-        
+
         pc = player.GetComponent<PlayerController>();
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
@@ -107,7 +107,7 @@ public class WeaponScript : MonoBehaviour
 
         GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
 
-        bullet.transform.localScale = new Vector3(range, range, 1);
+        bullet.transform.localScale = new Vector3(range, range, 0.1f);
         bullet.transform.rotation = weaponAngle;
 
         yield return new WaitForSeconds(0.1f);
@@ -178,6 +178,8 @@ public class WeaponScript : MonoBehaviour
 
         mouseVector = worldPointPos - currCanvasCenter;
 
+        mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
+
         mouseVector.Normalize();
     }
 
@@ -190,7 +192,9 @@ public class WeaponScript : MonoBehaviour
         {
             transform.position = new Vector3(player.transform.position.x + 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mousePos2D.y > canvasCenter.y)
+            if (mousePos2D.y > canvasCenter.y && mousePos2D.y < canvasCenter.y * 1.20f)
+                transform.rotation = Quaternion.Euler(90, -(int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
+            else if (mousePos2D.y > canvasCenter.y)
                 transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
             else
                 transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
@@ -199,7 +203,9 @@ public class WeaponScript : MonoBehaviour
         {
             transform.position = new Vector3(player.transform.position.x - 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mousePos2D.y > canvasCenter.y)
+            if (mousePos2D.y > canvasCenter.y && mousePos2D.y < canvasCenter.y * 1.20f)
+                transform.rotation = Quaternion.Euler(-90, (int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
+            else if (mousePos2D.y > canvasCenter.y)
                 transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
             else
                 transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector2d), -180);

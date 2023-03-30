@@ -34,7 +34,7 @@ public class PickUpWeapon : MonoBehaviour
                 
                 gameObject.GetComponent<WeaponScript>().enabled = true;
 
-                gameObject.GetComponent<WeaponScript>().printAmmo();
+                StartCoroutine(waitPrint());
 
                 gameObject.GetComponent<PickUpWeapon>().enabled = false;
             }
@@ -43,5 +43,14 @@ public class PickUpWeapon : MonoBehaviour
         {
             sr.sprite = defaultSprite;
         }
+    }
+
+    private IEnumerator waitPrint()
+    {
+        yield return new WaitForEndOfFrame();
+
+        gameObject.GetComponent<WeaponScript>().printAmmo();
+
+        yield break;
     }
 }
