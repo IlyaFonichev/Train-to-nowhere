@@ -35,6 +35,8 @@ public class WeaponScript : MonoBehaviour
 
     private Quaternion weaponAngle;
 
+    private bool isReloading = false;
+
     private void Start()
     {
         player = PlayerController.instance.gameObject;
@@ -56,7 +58,7 @@ public class WeaponScript : MonoBehaviour
 
         pointWeaponToMouse();
 
-        if (delay > 1 / fireRate)
+        if (delay > 1 / fireRate && !isReloading)
         {
             if (!isMelee)
                 StartCoroutine(shoot());    // ranged attack
@@ -66,7 +68,7 @@ public class WeaponScript : MonoBehaviour
         else
             delay += Time.deltaTime;
 
-        reload();
+        StartCoroutine(reload());
     }
 
     private IEnumerator shoot()  // ranged attack
@@ -122,9 +124,18 @@ public class WeaponScript : MonoBehaviour
         yield break;
     }
 
-    private void reload()
+    private IEnumerator reload()
     {
-        if (Input.GetKeyDown(KeyCode.R) && currAmmo > 0 && currMagazine < magazine)
+        if (!Input.GetKeyDown(KeyCode.R)) yield break;
+        if (currAmmo == 0) yield break;
+        if (currMagazine == magazine) yield break;
+
+        isReloading = true;
+        txt.text = "Reloading...";
+
+        yield return new WaitForSeconds(1f);
+
+        if (currAmmo > 0 && currMagazine < magazine)
         {
             if (currAmmo + currMagazine >= magazine)
             {
@@ -139,6 +150,11 @@ public class WeaponScript : MonoBehaviour
 
             printAmmo();
         }
+
+        printAmmo();
+        isReloading = false;
+
+        yield break;
     }
     
     public void printAmmo()
