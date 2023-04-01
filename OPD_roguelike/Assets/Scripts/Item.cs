@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private GameObject readerObj;
-
     private CSVReader reader;
     private string[] data;
 
     private void Start()
     {
-        reader = readerObj.GetComponent<CSVReader>();
+        reader = CSVReader.instance;
         data = new string[reader.ReadCSV().Length];
         reader.ReadCSV().CopyTo(data, 0);
     }

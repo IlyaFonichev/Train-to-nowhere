@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class WeaponScript : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-    [SerializeField] private Camera playerCamera;
+    private GameObject player;
+    private Camera playerCamera;
+
     [SerializeField] private GameObject bulletPrefab;
 
     private float bulletSpeed = 5;
@@ -23,7 +24,7 @@ public class WeaponScript : MonoBehaviour
     private int currAmmo;
     private int currMagazine;
 
-    [SerializeField] GameObject textBox;
+    GameObject textBox;
 
     private Vector3 canvasCenter;
     private Vector3 mouseVector;
@@ -36,6 +37,10 @@ public class WeaponScript : MonoBehaviour
 
     private void Start()
     {
+        player = PlayerController.instance.gameObject;
+        playerCamera = CameraController.instance.gameObject.GetComponent<Camera>();
+        textBox = AmmoTextBox.instance.gameObject;
+
         applyParameters();
 
         pc = player.GetComponent<PlayerController>();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PickUpWeapon : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    private GameObject player;
     [SerializeField] private float accessRange;
     [SerializeField] private Sprite defaultSprite;
     [SerializeField] private Sprite activeSprite;
@@ -15,6 +15,8 @@ public class PickUpWeapon : MonoBehaviour
 
     private void Start()
     {
+        player = PlayerController.instance.gameObject;
+
         sr = GetComponent<SpriteRenderer>();
     }
 
