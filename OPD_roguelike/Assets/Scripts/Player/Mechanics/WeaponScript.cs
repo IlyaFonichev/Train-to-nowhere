@@ -21,8 +21,8 @@ public class WeaponScript : MonoBehaviour
     private bool isMelee = false;
     private float range = 0;
 
-    private int currAmmo;
-    private int currMagazine;
+    public int currAmmo;
+    public int currMagazine;
 
     GameObject textBox;
 
@@ -112,7 +112,7 @@ public class WeaponScript : MonoBehaviour
 
         delay = 0;
 
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + (mouseVector), new Quaternion(0, 0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, transform.position, new Quaternion(0, 0, 0, 0));
 
         bullet.transform.localScale = new Vector3(range, range, 0.1f);
         bullet.transform.rotation = weaponAngle;
@@ -248,5 +248,15 @@ public class WeaponScript : MonoBehaviour
     public bool getReloading()
     {
         return isReloading;
+    }
+
+    public int getTotalAmmo()
+    {
+        return totalAmmo;
+    }
+
+    public int getMagazine()
+    {
+        return magazine;
     }
 }
