@@ -54,6 +54,7 @@ MonoBehaviour:
   leftRoom: {fileID: 0}
   rightRoom: {fileID: 0}
   bottomRoom: {fileID: 0}
+  border: {fileID: 1840352471285022112}
   bossPrefabs:
   - {fileID: 6855950395059140150, guid: 7702ed2027ec40a43abf9624330f8c85, type: 3}
   - {fileID: 6855950395059140150, guid: 7702ed2027ec40a43abf9624330f8c85, type: 3}
@@ -270,5 +271,10 @@ Transform:
 --- !u!1 &1236577395632500193 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6711016100874560710, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
+  m_PrefabInstance: {fileID: 5479584425077229863}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1840352471285022112 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6161306726294975623, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
   m_PrefabInstance: {fileID: 5479584425077229863}
   m_PrefabAsset: {fileID: 0}

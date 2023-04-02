@@ -117,6 +117,7 @@ MonoBehaviour:
   leftRoom: {fileID: 0}
   rightRoom: {fileID: 0}
   bottomRoom: {fileID: 0}
+  border: {fileID: 666527519261981854}
   chestsPrefabs:
   - {fileID: 6152233675815284346, guid: 794fddca06be75a4bb2bd1df98cfe71d, type: 3}
   - {fileID: 6152233675815284346, guid: e011772eba659ca4c89970dc03c0389a, type: 3}
@@ -270,5 +271,10 @@ Transform:
 --- !u!1 &116233204497034463 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6711016100874560710, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
+  m_PrefabInstance: {fileID: 6682955839108057113}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &666527519261981854 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6161306726294975623, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
   m_PrefabInstance: {fileID: 6682955839108057113}
   m_PrefabAsset: {fileID: 0}

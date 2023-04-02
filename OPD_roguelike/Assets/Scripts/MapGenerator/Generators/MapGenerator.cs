@@ -1,22 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public abstract class MapGenerator : MonoBehaviour
 {
     [SerializeField]
     private GameObject startRoomPrefab;
     private GameObject startRoom;
-    [SerializeField]
+    [HideInInspector]
     public List<GameObject> rooms, doors;
     [SerializeField]
     private GameObject emptyRoom;
-    [SerializeField]
     private uint countOfRooms;
     private uint currentCountOfRooms = 0;
     [SerializeField]
     private const float verticalRoomOffset = 12f, horizontalRoomOffset = 19f;
     public static MapGenerator instance;
+    [HideInInspector]
     public GameObject existingRoom;
     private void Start()
     {
@@ -121,28 +120,28 @@ public abstract class MapGenerator : MonoBehaviour
                         if (rooms[i].GetComponent<Room>().topNeighbor == null)
                         {
                             doors.Remove(targetRoom);
-                            Destroy(targetRoom);
+                            DestroyDoorSprite(targetRoom, "TopDoor");
                         }
                         break;
                     case "BottomDoor":
                         if (rooms[i].GetComponent<Room>().bottomNeighbor == null)
                         {
                             doors.Remove(targetRoom);
-                            Destroy(targetRoom);
+                            DestroyDoorSprite(targetRoom, "BottomDoor");
                         }
                         break;
                     case "LeftDoor":
                         if (rooms[i].GetComponent<Room>().leftNeighbor == null)
                         {
                             doors.Remove(targetRoom);
-                            Destroy(targetRoom);
+                            DestroyDoorSprite(targetRoom, "LeftDoor");
                         }
                         break;
                     case "RightDoor":
                         if (rooms[i].GetComponent<Room>().rightNeighbor == null)
                         {
                             doors.Remove(targetRoom);
-                            Destroy(targetRoom);
+                            DestroyDoorSprite(targetRoom, "RightDoor");
                         }
                         break;
                     default:
@@ -151,6 +150,16 @@ public abstract class MapGenerator : MonoBehaviour
             }
         }
         doors.Clear();
+    }
+
+    private void DestroyDoorSprite(GameObject targetRoom, string roomTag)
+    {
+        for (int p = 0; p < targetRoom.transform.childCount; p++)
+            if (targetRoom.transform.GetChild(p).CompareTag("DoorSprite"))
+            {
+                Destroy(targetRoom.transform.GetChild(p).gameObject);
+                break;
+            }
     }
 
     private void CompletionRooms()
@@ -167,8 +176,10 @@ public abstract class MapGenerator : MonoBehaviour
         RoomSwitcher switcher = roomSwitcher.GetComponent<RoomSwitcher>();
         switcher.CurrentRoom = startRoom;
         switcher.Rooms = rooms;
-        roomSwitcher.GetComponent<RoomSwitcher>().HideInactiveRooms();
+        switcher.HideInactiveRooms();
         switcher.Initialized = true;
+        for(int i = 0; i < startRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
+            switcher.HideDoorCollider(startRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
     }
 
     public Vector2 SetOffsetVector(string doorTag)

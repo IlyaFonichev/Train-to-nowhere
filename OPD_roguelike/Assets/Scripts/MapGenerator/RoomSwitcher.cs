@@ -10,11 +10,9 @@ public class RoomSwitcher : MonoBehaviour
     [SerializeField]
     private GameObject currentRoom;
     public static RoomSwitcher instance;
-    private bool roomContainMobs;
 
     private void Start()
     {
-        roomContainMobs = false;
         SetInstance();
         startCameraPosition = Camera.main.transform.position - currentRoom.transform.position;
     }
@@ -48,17 +46,6 @@ public class RoomSwitcher : MonoBehaviour
         {
             PauseManager.instance.Pause();
         }
-        if (isInitialized && !roomContainMobs /*&& !PauseManager.instance.onPause*/)
-        {
-            if (Input.GetKeyDown(KeyCode.S) && currentRoom.GetComponent<Room>().bottomNeighbor != null)
-                Switch("BottomDoor", currentRoom.GetComponent<Room>().bottomNeighbor.tag);
-            if (Input.GetKeyDown(KeyCode.A) && currentRoom.GetComponent<Room>().leftNeighbor != null)
-                Switch("LeftDoor", currentRoom.GetComponent<Room>().leftNeighbor.tag);
-            if (Input.GetKeyDown(KeyCode.D) && currentRoom.GetComponent<Room>().rightNeighbor != null)
-                Switch("RightDoor", currentRoom.GetComponent<Room>().rightNeighbor.tag);
-            if (Input.GetKeyDown(KeyCode.W) && currentRoom.GetComponent<Room>().topNeighbor != null)
-                Switch("TopDoor", currentRoom.GetComponent<Room>().topNeighbor.tag);
-        }
     }
 
     public void HideInactiveRooms()
@@ -67,53 +54,66 @@ public class RoomSwitcher : MonoBehaviour
             if (rooms[i] != currentRoom)
                 rooms[i].SetActive(false);
     }
-    private void Switch(string doorTag, string roomTag)
+    public void Switch(string doorTag)
     {
-        GameObject tempRoom;
-        if(roomTag == "Room")
+        GameObject tempRoom = null;
+        switch (doorTag)
         {
-            switch (doorTag)
-            {
-                case "BottomDoor":
-                    tempRoom = currentRoom;
-                    currentRoom = currentRoom.GetComponent<Room>().bottomNeighbor;
-                    currentRoom.SetActive(true);
-                    //Переход в следующую комнату
-                    tempRoom.SetActive(false);
-                    Minimap.instance.Move(0, -1);
-                    break;
-                case "TopDoor":
-                    tempRoom = currentRoom;
-                    currentRoom = currentRoom.GetComponent<Room>().topNeighbor;
-                    currentRoom.SetActive(true);
-                    //Переход в следующую комнату
-                    tempRoom.SetActive(false);
-                    Minimap.instance.Move(0, 1);
-                    break;
-                case "LeftDoor":
-                    tempRoom = currentRoom;
-                    currentRoom = currentRoom.GetComponent<Room>().leftNeighbor;
-                    currentRoom.SetActive(true);
-                    //Переход в следующую комнату
-                    tempRoom.SetActive(false);
-                    Minimap.instance.Move(-1, 0);
-                    break;
-                case "RightDoor":
-                    tempRoom = currentRoom;
-                    currentRoom = currentRoom.GetComponent<Room>().rightNeighbor;
-                    currentRoom.SetActive(true);
-                    //Переход в следующую комнату
-                    tempRoom.SetActive(false);
-                    Minimap.instance.Move(1, 0);
-                    break;
-                default:
-                    break;
-            }
-            Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
+            case "BottomDoor":
+                tempRoom = currentRoom;
+                currentRoom = currentRoom.GetComponent<Room>().bottomNeighbor;
+                currentRoom.SetActive(true);
+                //Переход в следующую комнату
+                tempRoom.SetActive(false);
+                Minimap.instance.Move(0, -1);
+                break;
+            case "TopDoor":
+                tempRoom = currentRoom;
+                currentRoom = currentRoom.GetComponent<Room>().topNeighbor;
+                currentRoom.SetActive(true);
+                //Переход в следующую комнату
+                tempRoom.SetActive(false);
+                Minimap.instance.Move(0, 1);
+                break;
+            case "LeftDoor":
+                tempRoom = currentRoom;
+                currentRoom = currentRoom.GetComponent<Room>().leftNeighbor;
+                currentRoom.SetActive(true);
+                //Переход в следующую комнату
+                tempRoom.SetActive(false);
+                Minimap.instance.Move(-1, 0);
+                break;
+            case "RightDoor":
+                tempRoom = currentRoom;
+                currentRoom = currentRoom.GetComponent<Room>().rightNeighbor;
+                currentRoom.SetActive(true);
+                //Переход в следующую комнату
+                tempRoom.SetActive(false);
+                Minimap.instance.Move(1, 0);
+                break;
+            default:
+                break;
         }
+        if(currentRoom.GetComponent<Room>().Type != Room.RoomType.Boss && currentRoom.GetComponent<Room>().Type != Room.RoomType.Mobs)
+        {
+            for (int i = 0; i < currentRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
+                HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
+        }
+        else
+        {
+            for (int i = 0; i < currentRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
+                HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, true);
+        }
+        Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
     }
-    public bool RoomContainMobs
+
+    public void HideDoorCollider(GameObject targetRoom, bool state)
     {
-        set { roomContainMobs = value; }
+        for (int p = 0; p < targetRoom.transform.childCount; p++)
+            if (targetRoom.transform.GetChild(p).CompareTag("DoorCollider"))
+            {
+                targetRoom.transform.GetChild(p).gameObject.SetActive(state);
+                break;
+            }
     }
 }

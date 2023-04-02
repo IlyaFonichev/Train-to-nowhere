@@ -139,6 +139,7 @@ MonoBehaviour:
   leftRoom: {fileID: 0}
   rightRoom: {fileID: 0}
   bottomRoom: {fileID: 0}
+  border: {fileID: 5800791349338653014}
 --- !u!1001 &360806034588317137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196,6 +197,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
+--- !u!1 &5800791349338653014 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6161306726294975623, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
+  m_PrefabInstance: {fileID: 360806034588317137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6351068037557915926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6711016100874560711, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
