@@ -244,4 +244,9 @@ public class WeaponScript : MonoBehaviour
     {
         return damage;
     }
+
+    public bool getReloading()
+    {
+        return isReloading;
+    }
 }

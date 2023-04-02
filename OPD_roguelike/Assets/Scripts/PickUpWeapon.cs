@@ -29,16 +29,19 @@ public class PickUpWeapon : MonoBehaviour
             {
                 curWeapon = player.GetComponent<InventoryScript>().firstWeapon;
 
-                curWeapon.GetComponent<WeaponScript>().enabled = false;
-                curWeapon.GetComponent<PickUpWeapon>().enabled = true;
+                if (!curWeapon.GetComponent<WeaponScript>().getReloading()) 
+                {
+                    curWeapon.GetComponent<WeaponScript>().enabled = false;
+                    curWeapon.GetComponent<PickUpWeapon>().enabled = true;
 
-                player.GetComponent<InventoryScript>().firstWeapon = gameObject;
-                
-                gameObject.GetComponent<WeaponScript>().enabled = true;
+                    player.GetComponent<InventoryScript>().firstWeapon = gameObject;
 
-                StartCoroutine(waitPrint());
+                    gameObject.GetComponent<WeaponScript>().enabled = true;
 
-                gameObject.GetComponent<PickUpWeapon>().enabled = false;
+                    StartCoroutine(waitPrint());
+
+                    gameObject.GetComponent<PickUpWeapon>().enabled = false;
+                }
             }
         }
         else
