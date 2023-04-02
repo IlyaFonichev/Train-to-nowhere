@@ -19,11 +19,7 @@ public abstract class OriginEnemy : MonoBehaviour
     private float speed;
     [SerializeField]
     private Vector3 direction;
-    [SerializeField]
-    private GameObject target;
     private bool selecting;
-    [SerializeField]
-    private AnimationCurve speedCurve;
 
     public enum Condition
     {
@@ -33,6 +29,11 @@ public abstract class OriginEnemy : MonoBehaviour
         Die
     }
     private void Awake()
+    {
+        Initialization();
+    }
+
+    private void Initialization()
     {
         selecting = false;
         condition = Condition.Idle;
@@ -47,26 +48,17 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(speedCurve.Evaluate(Vector3.Distance(rigidbody.transform.position, targetVector)));
-        if (Vector3.Distance(targetVector, rigidbody.transform.position) < 0.5f && !selecting)
-        {
-            StartCoroutine(SelectTargetPosition());
-        }
-        if(condition == Condition.Idle)
-        {
-            rigidbody.velocity = new Vector3(direction.x * speedCurve.Evaluate(Vector3.Distance(rigidbody.transform.position, targetVector)),
-                0, direction.z * speedCurve.Evaluate(Vector3.Distance(rigidbody.transform.position, targetVector))) * speed;
-        }
+        Move(rigidbody, targetVector, selecting, condition, direction, speed);
     }
+    public abstract void Move(Rigidbody rigidbody, Vector3 targetVector, bool selecting, Condition condition, Vector3 direction, float speed);
 
-    private IEnumerator SelectTargetPosition()
+    public IEnumerator SelectTargetPosition()
     {
         selecting = true;
         direction = Vector3.zero;
         yield return new WaitForSeconds(Random.Range(0.5f, 1f));
         targetVector = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
         direction = (targetVector - rigidbody.transform.position).normalized;
-        target.transform.position = targetVector;
         selecting = false;
     }
 
@@ -75,7 +67,8 @@ public abstract class OriginEnemy : MonoBehaviour
         switch (other.tag)
         {
             case "Bullet":
-                currentHealth -= 1;
+                TakeDamge();
+                Destroy(other);
                 break;
             default:
                 break;
