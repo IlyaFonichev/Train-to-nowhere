@@ -11,6 +11,21 @@ public class CameraController : MonoBehaviour
     private RectTransform scope_rt;
     private float deltaPosX, deltaPosY, deltaPosZ;
 
+    public static CameraController instance;
+
+    private void Awake()
+    {
+        SetInstance();
+    }
+
+    private void SetInstance()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
+
     private void Start()
     {
         player = PlayerController.instance.gameObject;
@@ -31,7 +46,6 @@ public class CameraController : MonoBehaviour
 
     private void showScope()
     {
-        Cursor.visible = false;
         Vector2 mousePos = Input.mousePosition;
         scope_rt.anchoredPosition = mousePos;
     }

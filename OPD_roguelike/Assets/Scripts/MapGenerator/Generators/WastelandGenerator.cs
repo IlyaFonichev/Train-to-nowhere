@@ -21,6 +21,7 @@ public class WastelandGenerator : MapGenerator
         numberOfCurrentParentDoor = 0;
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
+            AddLoadSceneIndicator();
             ProceduralGenerate(numberOfCurrentParentDoor);
             numberOfCurrentParentDoor++;
         }

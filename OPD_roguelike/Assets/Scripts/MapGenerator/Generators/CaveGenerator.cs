@@ -20,6 +20,7 @@ public class CaveGenerator : MapGenerator
         currentRoom = rooms[0];
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
+            AddLoadSceneIndicator();
             int neighbor = Random.Range(0, 4);
             string currentDoorTag = "";
             switch (neighbor)

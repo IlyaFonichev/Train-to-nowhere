@@ -14,6 +14,7 @@ public class TrainingGenerator : MapGenerator
     {
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
+            AddLoadSceneIndicator();
             int numberOfCurrentParentDoor = Random.Range(0, doors.Count);
             GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
             Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);

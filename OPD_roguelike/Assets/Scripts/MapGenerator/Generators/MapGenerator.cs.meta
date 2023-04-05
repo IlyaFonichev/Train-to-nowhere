@@ -4,8 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - startRoom: {instanceID: 0}
-  - roomPrefab: {fileID: 6711016100874560710, guid: 49c3b2531f74ffa44b344a96095c97c5, type: 3}
+  - startRoomPrefab: {fileID: 9203718568796747491, guid: 0556df7d3179a6d4980c6f21a31674a9, type: 3}
+  - emptyRoom: {fileID: 4200660226252665563, guid: 350e6125ed00fc349977ebe6b76b5907, type: 3}
+  - existingRoom: {instanceID: 0}
+  - loadIndicator: {fileID: 7700006956521117797, guid: b360160bc85e7e94daf8adf1ce0c757b, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

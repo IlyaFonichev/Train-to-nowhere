@@ -18,6 +18,7 @@ public class ForestGenerator : MapGenerator
     {
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
+            AddLoadSceneIndicator();
             ProceduralGenerate(Random.Range(0, doors.Count));
         }
     }

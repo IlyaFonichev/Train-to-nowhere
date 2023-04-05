@@ -1,7 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,10 +46,14 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(moveHorizontal, 0, moveVertical);
+        if (MapGenerator.instance)
+            if (MapGenerator.instance.SceneIsLoad)
+                return;
 
-       
-        if (!isDashing)
+        if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause))
             _rigidBody.velocity = direction.normalized * speed;
+        else
+            _rigidBody.velocity = Vector3.zero;
         StartCoroutine(Dash(direction));
     }
     private void OnLevelWasLoaded(int level)
@@ -125,8 +127,8 @@ public class PlayerController : MonoBehaviour
             switch (other.tag)
             {
                 case "LeftDoor":
-                    for(int i = 0; i < currentRoom.transform.childCount; i++)
-                        if(currentRoom.transform.GetChild(i).CompareTag("RightDoor"))
+                    for (int i = 0; i < currentRoom.transform.childCount; i++)
+                        if (currentRoom.transform.GetChild(i).CompareTag("RightDoor"))
                         {
                             _rigidBody.transform.position = currentRoom.transform.GetChild(i).position + Vector3.left * switchRoomOffet;
                             break;
@@ -160,9 +162,9 @@ public class PlayerController : MonoBehaviour
                     break;
             }
         }
-    }    
+    }
     public Rigidbody Rigidbody
     {
         get { return _rigidBody; }
-    }    
+    }
 }

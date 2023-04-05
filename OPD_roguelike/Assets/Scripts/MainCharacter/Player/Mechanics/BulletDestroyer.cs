@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class BulletDestroyer : MonoBehaviour
 {
-    [SerializeField] private GameObject weapon;
+    [SerializeField] private GameObject player;
+
+    private GameObject weapon;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Bullet") && !other.CompareTag("Player"))
+        if (!other.CompareTag("Bullet") && !other.CompareTag("Player") && !other.CompareTag("Item"))
             Destroy(gameObject);
     }
 
     private void Start()
     {
+        weapon = player.GetComponent<InventoryScript>().firstWeapon;
+
         StartCoroutine(WaitAndDied(weapon.GetComponent<WeaponScript>().getBulletLifeSeconds()));
     }
 

@@ -17,24 +17,53 @@ public abstract class MapGenerator : MonoBehaviour
     public static MapGenerator instance;
     [HideInInspector]
     public GameObject existingRoom;
-    private void Start()
+    private float loadScene, currentLoad;
+    [SerializeField]
+    private GameObject loadIndicator, mobsManager;
+    private GameObject indicator;
+    private bool sceneIsLoded;
+
+    private void Awake()
     {
+        sceneIsLoded = false;
+        loadScene = 0;
+        InstallMobsManager();
+        LoadSceneIndicator();
         SetInstance();
         CountRoomInitialization();
-        //Debug.Log("Количество комнат: " + countOfRooms);
         Initialization();
         Generate();
-        DestroyEmptyDoors();
-        PlacementRoomPosition();
+        DestroyEmptyDoors(); //+20%
+        PlacementRoomPosition(); //+20%
         SetParent();
         InstantiateRoomSwitcher();
-        CompletionRooms();
+        CompletionRooms(); //+20%
 
         Minimap.instance.SetRooms = rooms;
         Minimap.instance.DrawMap();
         gameObject.name = "Map";
-        Destroy(gameObject.GetComponent<MapGenerator>());
+        loadScene = 100;
     }
+    private void InstallMobsManager()
+    {
+        Instantiate(mobsManager);
+    }
+    private void LoadSceneIndicator()
+    {
+        indicator = Instantiate(loadIndicator, Vector3.zero, Quaternion.identity);
+    }
+    private void Update()
+    {
+        if (currentLoad < loadScene)
+            currentLoad += 20 * Time.deltaTime;
+        if (currentLoad >= 100)
+        {
+            sceneIsLoded = true;
+            Destroy(indicator);
+            Destroy(gameObject.GetComponent<MapGenerator>());
+        }
+    }
+
     private void SetInstance()
     {
         if (instance == null)
@@ -111,6 +140,7 @@ public abstract class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < rooms.Count; i++)
         {
+            AddLoadSceneIndicator();
             for (int j = 0; j < rooms[i].GetComponent<Room>().OriginRoom.transform.childCount; j++)
             {
                 GameObject targetRoom = rooms[i].GetComponent<Room>().OriginRoom.transform.GetChild(j).gameObject;
@@ -165,7 +195,10 @@ public abstract class MapGenerator : MonoBehaviour
     private void CompletionRooms()
     {
         for (int i = 0; i < rooms.Count; i++)
+        {
             rooms[i].GetComponent<Room>().Completion();
+            AddLoadSceneIndicator();
+        }
     }
 
     private void InstantiateRoomSwitcher()
@@ -178,7 +211,7 @@ public abstract class MapGenerator : MonoBehaviour
         switcher.Rooms = rooms;
         switcher.HideInactiveRooms();
         switcher.Initialized = true;
-        for(int i = 0; i < startRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
+        for (int i = 0; i < startRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
             switcher.HideDoorCollider(startRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
     }
 
@@ -313,16 +346,27 @@ public abstract class MapGenerator : MonoBehaviour
     {
         for (int i = 0; i < rooms.Count; i++)
         {
+            AddLoadSceneIndicator();
             rooms[i].transform.position = new Vector3(rooms[i].GetComponent<Room>().Position.x * horizontalRoomOffset,
                 0,
                 rooms[i].GetComponent<Room>().Position.y * verticalRoomOffset);
         }
     }
-
     private void SetParent()
     {
         for (int i = 0; i < rooms.Count; i++)
+        {
             rooms[i].transform.parent = gameObject.transform;
+        }
+    }
+    public void AddLoadSceneIndicator()
+    {
+        loadScene += 20 * 1 / CountOfRooms;
+    }
+
+    public float Load
+    {
+        get { return currentLoad; }
     }
 
     public uint CountOfRooms
@@ -342,5 +386,9 @@ public abstract class MapGenerator : MonoBehaviour
     public GameObject StartRoomPrefab
     {
         get { return startRoomPrefab; }
+    }
+    public bool SceneIsLoad
+    {
+        get { return sceneIsLoded; }
     }
 }

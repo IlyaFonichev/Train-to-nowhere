@@ -225,37 +225,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &451943601
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 451943602}
-  m_Layer: 0
-  m_Name: Player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &451943602
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 451943601}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.258159, y: 2.4003346, z: 4.4205933}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &671400220 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 428760959323539732, guid: baeeaa03cd6f8e542927b46b85e8fe24, type: 3}
@@ -393,56 +362,12 @@ MonoBehaviour:
   rooms: []
   doors: []
   emptyRoom: {fileID: 4200660226252665563, guid: 350e6125ed00fc349977ebe6b76b5907, type: 3}
-  countOfRooms: 0
+  existingRoom: {fileID: 0}
+  loadIndicator: {fileID: 7700006956521117797, guid: b360160bc85e7e94daf8adf1ce0c757b, type: 3}
+  mobsManager: {fileID: 1390601773356812624, guid: d490673455f446f4c8a4b3d96f2c1de6, type: 3}
   bossRoom: {fileID: 1247276604134399355, guid: 90b93f976701aef4d8d5cf4ddde6b62f, type: 3}
   chestRoom: {fileID: 2634507021731015106, guid: 386c17495719cf348a97d2c7d2a04b20, type: 3}
   mobsRoom: {fileID: 3811036464853382862, guid: 9939531e18d6eb147849f2bb5c3a1c8b, type: 3}
---- !u!1 &1419857032
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1419857034}
-  - component: {fileID: 1419857033}
-  m_Layer: 0
-  m_Name: MobsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1419857033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419857032}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 915561087cba4b44fb46de2050db79af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portalPrefab: {fileID: 6047950105879492127, guid: 0fa90d3a99611024f8049063a23ead40, type: 3}
-  mobs: []
---- !u!4 &1419857034
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1419857032}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1459557473
 GameObject:
   m_ObjectHideFlags: 0
