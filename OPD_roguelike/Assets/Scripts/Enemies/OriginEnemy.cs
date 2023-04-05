@@ -6,20 +6,18 @@ using UnityEngine.UI;
 public abstract class OriginEnemy : MonoBehaviour
 {
     [SerializeField]
-    private GameObject spriteManager, canvas, particleSystemManager;
+    private GameObject spriteManager, canvas, particleSystemManager, currentTerget, preTarget, nextTarget;
     [SerializeField]
     private Image healthBar;
     [SerializeField, Min(3)]
     private int maxHealth;
     private int currentHealth;
-    private Rigidbody rigidbody;
+    [HideInInspector]
+    public Rigidbody rigidbody;
     private Condition condition;
-    private Vector3 roomOrigin, targetVector;
+    private Vector3 roomOrigin, targetVector, nextTargetPosition, preTargetPosition;
     [SerializeField]
     private float speed;
-    [SerializeField]
-    private Vector3 direction;
-    private bool selecting;
 
     public enum Condition
     {
@@ -35,33 +33,44 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void Initialization()
     {
-        selecting = false;
         condition = Condition.Idle;
-        StartCoroutine(SelectTargetPosition());
         if (RoomSwitcher.instance != null)
             roomOrigin = RoomSwitcher.instance.CurrentRoom.transform.position;
         else
             roomOrigin = Vector3.zero;
         currentHealth = maxHealth;
         rigidbody = GetComponent<Rigidbody>();
+        nextTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
+        preTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
+        targetVector = preTargetPosition;
     }
 
     private void FixedUpdate()
     {
-        Move(rigidbody, targetVector, selecting, condition, direction, speed);
+        currentTerget.transform.position = targetVector;
+        preTarget.transform.position = preTargetPosition;
+        nextTarget.transform.position = nextTargetPosition;
+        if (condition == Condition.Idle)
+            Move();
     }
-    public abstract void Move(Rigidbody rigidbody, Vector3 targetVector, bool selecting, Condition condition, Vector3 direction, float speed);
+    public abstract void Move();
 
-    public IEnumerator SelectTargetPosition()
+    public void Step()
     {
-        selecting = true;
-        direction = Vector3.zero;
-        yield return new WaitForSeconds(Random.Range(0.5f, 1f));
-        targetVector = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
-        direction = (targetVector - rigidbody.transform.position).normalized;
-        selecting = false;
+        speed = 3;
+        preTargetPosition = nextTargetPosition;
+        targetVector = preTargetPosition;
+        while(Vector3.Distance(preTargetPosition, nextTargetPosition) < 5f)
+            nextTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
     }
-
+    public void CheckDistance()
+    {
+        targetVector = Vector3.MoveTowards(targetVector, nextTargetPosition, speed * Time.deltaTime);
+        if (Vector3.Distance(targetVector, nextTargetPosition) < Vector3.Distance(preTargetPosition, nextTargetPosition) / 2)
+        {
+            Step();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -105,5 +114,13 @@ public abstract class OriginEnemy : MonoBehaviour
         }
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
+    }
+    public float Speed
+    {
+        get { return speed; }
+    }
+    public Vector3 TargetPosition
+    {
+        get { return targetVector; }
     }
 }
