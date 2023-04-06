@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float switchRoomOffet;
+    private float switchRoomOffet = 3f;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;

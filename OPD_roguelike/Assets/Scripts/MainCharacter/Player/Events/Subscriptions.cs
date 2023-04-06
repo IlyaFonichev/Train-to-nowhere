@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Subscriptions : MonoBehaviour
 {
-    [SerializeField] private PlayerController player;
-
+    private PlayerController player;
 
     private void Start() 
     { 
+        player = GetComponent<PlayerController>();
         StaticEventsOfPlayer.takeDamage += onTakeDamage;
         player.unStaticEventsOfPlayer.addScore += onAddScore;
         StaticEventsOfPlayer.heal += onHeal;
