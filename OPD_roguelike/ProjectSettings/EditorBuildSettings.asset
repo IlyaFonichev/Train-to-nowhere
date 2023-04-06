@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Danges/Wasteland.unity
     guid: 78f86cc28d7f85847b2ed2662c0e9611
+  - enabled: 1
+    path: Assets/Scenes/Test/SampleScene.unity
+    guid: 5b38e7274aac2a34aafe660b88f4ff1f
   m_configObjects: {}

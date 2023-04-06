@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BulletDestroyer : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
     private GameObject weapon;
 
     private void OnTriggerEnter(Collider other)
@@ -15,9 +13,8 @@ public class BulletDestroyer : MonoBehaviour
     }
 
     private void Start()
-    {
-        weapon = player.GetComponent<InventoryScript>().firstWeapon;
-
+    {       
+        weapon = PlayerController.instance.gameObject.GetComponent<InventoryScript>().firstWeapon;
         StartCoroutine(WaitAndDied(weapon.GetComponent<WeaponScript>().getBulletLifeSeconds()));
     }
 

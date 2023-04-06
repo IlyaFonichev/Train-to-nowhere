@@ -1,0 +1,4 @@
+Name;Magazine;Total ammo;Fire rate;Bullet speed;Range;Damage;Accuracy
+ak47;30;210;10;5;5;30;0,2
+m4;30;90;20;10;10;15;0,1
+sword;0;0;5;0;5;50;0
