@@ -21,8 +21,8 @@ public class WeaponScript : MonoBehaviour
     private bool isMelee = false;
     private float range = 0;
 
-    public int currAmmo;
-    public int currMagazine;
+    [HideInInspector] public int currAmmo;
+    [HideInInspector] public int currMagazine;
 
     GameObject textBox;
 
