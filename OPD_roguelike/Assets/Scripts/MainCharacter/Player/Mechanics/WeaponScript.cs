@@ -37,6 +37,8 @@ public class WeaponScript : MonoBehaviour
 
     private bool isReloading = false;
 
+    private Player stats;
+
     private void Start()
     {
         player = PlayerController.instance.gameObject;
@@ -48,6 +50,7 @@ public class WeaponScript : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
+        stats = player.GetComponent<Player>();
 
         printAmmo();
     }
@@ -58,7 +61,7 @@ public class WeaponScript : MonoBehaviour
 
         pointWeaponToMouse();
 
-        if (delay > 1 / fireRate && !isReloading)
+        if (delay > 1 / (fireRate * stats.rateOfFireMultiplayer) && !isReloading)
         {
             if (!isMelee)
                 StartCoroutine(shoot());    // ranged attack
@@ -242,7 +245,7 @@ public class WeaponScript : MonoBehaviour
 
     public float getDamage()
     {
-        return damage;
+        return damage * stats.damageDealMultiplayer;
     }
 
     public bool getReloading()

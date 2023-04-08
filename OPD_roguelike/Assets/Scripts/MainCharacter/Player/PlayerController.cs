@@ -11,11 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;
     [SerializeField] private float dashTime = 0.5f;
-    private GameObject weapon;
 
     private Rigidbody _rigidBody;
     private bool isDashing;
-    private bool weaponEquiped = false;
     public UnStaticEventsOfPlayer unStaticEventsOfPlayer = new UnStaticEventsOfPlayer();
     private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
@@ -51,7 +49,7 @@ public class PlayerController : MonoBehaviour
                 return;
 
         if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause))
-            _rigidBody.velocity = direction.normalized * speed;
+            _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speedMultiplayer;
         else
             _rigidBody.velocity = Vector3.zero;
         StartCoroutine(Dash(direction));
@@ -59,20 +57,6 @@ public class PlayerController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         _rigidBody.transform.position = Vector3.zero;
-    }
-
-    private void Update()
-    {
-        instantiateWeapon();
-    }
-
-    private void instantiateWeapon()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            weaponEquiped = !weaponEquiped;
-            weapon.SetActive(weaponEquiped);
-        }
     }
 
     private IEnumerator Dash(Vector3 direction)
