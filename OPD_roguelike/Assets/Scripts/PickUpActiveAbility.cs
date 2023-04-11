@@ -20,15 +20,12 @@ public class PickUpActiveAbility : MonoBehaviour
                 try
                 {
                     curAbility = player.gameObject.GetComponent<InventoryScript>().ability;
-                    curAbility.GetComponent<ActiveAbility>().enabled = false;
-                    curAbility.GetComponent<SpriteRenderer>().enabled = true;
                     curAbility.GetComponent<PickUpActiveAbility>().enabled = true;
                     curAbility.transform.position = player.transform.position;
                 }
                 catch { }
 
                 player.gameObject.GetComponent<InventoryScript>().ability = gameObject;
-                gameObject.GetComponent<ActiveAbility>().enabled = true;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<PickUpActiveAbility>().enabled = false;
             }
