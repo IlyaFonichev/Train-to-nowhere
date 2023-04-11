@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUpActiveAbility : MonoBehaviour
 {
@@ -21,11 +22,13 @@ public class PickUpActiveAbility : MonoBehaviour
                 {
                     curAbility = player.gameObject.GetComponent<InventoryScript>().ability;
                     curAbility.GetComponent<PickUpActiveAbility>().enabled = true;
+                    curAbility.GetComponent<SpriteRenderer>().enabled = true;
                     curAbility.transform.position = player.transform.position;
                 }
                 catch { }
 
                 player.gameObject.GetComponent<InventoryScript>().ability = gameObject;
+                ActiveAbilityBox.instance.gameObject.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.GetComponent<PickUpActiveAbility>().enabled = false;
             }

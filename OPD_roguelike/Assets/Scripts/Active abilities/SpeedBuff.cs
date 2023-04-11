@@ -12,12 +12,11 @@ public class SpeedBuff : ActiveAbility
     public override IEnumerator ApplyBuff()
     {
         Player p = PlayerController.instance.gameObject.GetComponent<Player>();
-        float tmp = p.speedMultiplayer;
 
-        p.speedMultiplayer = multiplayer;
+        p.speedMultiplayer *= multiplayer;
 
         yield return new WaitForSeconds(time);
 
-        p.speedMultiplayer = tmp;
+        p.speedMultiplayer /= multiplayer;
     }
 }

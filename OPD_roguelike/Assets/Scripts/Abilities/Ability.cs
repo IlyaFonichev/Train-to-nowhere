@@ -23,15 +23,6 @@ public class Ability : ScriptableObject
         AbilityType8
     }
 
-    public enum ActiveAbilityType
-    {
-        godMode,
-        damageUp,
-        ammoBox,
-        infinityAmmo,
-        speedUp
-    }
-
     public string getDescription
     {
         get { return description; }

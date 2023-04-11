@@ -52,6 +52,7 @@ public class PlayerController : MonoBehaviour
             _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speedMultiplayer;
         else
             _rigidBody.velocity = Vector3.zero;
+
         StartCoroutine(Dash(direction));
     }
     private void OnLevelWasLoaded(int level)
