@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PickUpWeapon : MonoBehaviour
@@ -11,7 +12,6 @@ public class PickUpWeapon : MonoBehaviour
     [SerializeField] private Sprite activeSprite;
 
     private SpriteRenderer sr;
-    private GameObject curWeapon;
 
     private void Start()
     {
@@ -27,21 +27,29 @@ public class PickUpWeapon : MonoBehaviour
             sr.sprite = activeSprite;
             if (Input.GetKeyDown(KeyCode.E))
             {
-                curWeapon = player.GetComponent<InventoryScript>().firstWeapon;
-
-                if (!curWeapon.GetComponent<WeaponScript>().getReloading()) 
+                GameObject storedCurWeapon = player.GetComponent<InventoryScript>().firstWeapon;
+                if (storedCurWeapon != null)
                 {
+                    GameObject curWeapon = Instantiate(storedCurWeapon, transform.position, Quaternion.Euler(90, 0, 0));
                     curWeapon.GetComponent<WeaponScript>().enabled = false;
                     curWeapon.GetComponent<PickUpWeapon>().enabled = true;
+                    curWeapon.name = player.GetComponent<InventoryScript>().firstWeapon.name;
+                    curWeapon.transform.localScale = new Vector3(0.3f, 0.3f, 1);
 
-                    player.GetComponent<InventoryScript>().firstWeapon = gameObject;
-
-                    gameObject.GetComponent<WeaponScript>().enabled = true;
-
-                    StartCoroutine(waitPrint());
-
-                    gameObject.GetComponent<PickUpWeapon>().enabled = false;
+                    Destroy(player.GetComponent<InventoryScript>().firstWeapon);
                 }
+ 
+                GameObject newWeapon = Instantiate(gameObject, transform.position, Quaternion.Euler(90, 0, 0), player.transform);
+                newWeapon.name = gameObject.name;
+                newWeapon.GetComponent<PickUpWeapon>().enabled = false;
+                newWeapon.GetComponent<WeaponScript>().enabled = true;
+                newWeapon.transform.localScale = Vector3.one;
+
+                StartCoroutine(waitPrint(newWeapon));
+
+                player.GetComponent<InventoryScript>().firstWeapon = newWeapon;
+
+                Destroy(gameObject);
             }
         }
         else
@@ -50,11 +58,11 @@ public class PickUpWeapon : MonoBehaviour
         }
     }
 
-    private IEnumerator waitPrint()
+    private IEnumerator waitPrint(GameObject obj)
     {
         yield return new WaitForEndOfFrame();
 
-        gameObject.GetComponent<WeaponScript>().printAmmo();
+        obj.GetComponent<WeaponScript>().printAmmo();
 
         yield break;
     }

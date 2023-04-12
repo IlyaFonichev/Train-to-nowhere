@@ -13,6 +13,7 @@ public class CSVReader : MonoBehaviour
     private void Awake()
     {
         SetInstance();
+        DontDestroyOnLoad(gameObject);
     }
 
     private void SetInstance()

@@ -9,7 +9,7 @@ public class WeaponScript : MonoBehaviour
     private GameObject player;
     private Camera playerCamera;
 
-    [SerializeField] private GameObject bulletPrefab;
+    public GameObject bulletPrefab;
 
     private float bulletSpeed = 5;
     private float bulletLifeSeconds = 1;
@@ -21,8 +21,8 @@ public class WeaponScript : MonoBehaviour
     private bool isMelee = false;
     private float range = 0;
 
-    [HideInInspector] public int currAmmo;
-    [HideInInspector] public int currMagazine;
+    [HideInInspector] public int currAmmo = -1;
+    [HideInInspector] public int currMagazine = -1;
 
     GameObject textBox;
 
@@ -187,8 +187,11 @@ public class WeaponScript : MonoBehaviour
         if (!isMelee)
             bulletLifeSeconds = range / bulletSpeed;
 
-        currAmmo = totalAmmo;
-        currMagazine = magazine;
+        if (currAmmo == -1)
+        {
+            currAmmo = totalAmmo;
+            currMagazine = magazine;
+        }
     }
 
     private void calculateMouseVector()
