@@ -52,8 +52,7 @@ public abstract class Room : MonoBehaviour
     {
         if (mobsInTheRoom.Count == 1)
         {
-            for (int i = 0; i < GetComponent<Room>().OriginRoom.transform.childCount; i++) 
-                RoomSwitcher.instance.HideDoorCollider(GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
+            RoomSwitcher.instance.HideDoorCollider(GetComponent<Room>().OriginRoom.gameObject, false);
             type = RoomType.Empty;
             Minimap.instance.CleanRoom();
         }

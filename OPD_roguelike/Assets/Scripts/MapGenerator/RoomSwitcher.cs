@@ -56,7 +56,7 @@ public class RoomSwitcher : MonoBehaviour
     }
     public void Switch(string doorTag)
     {
-        GameObject tempRoom = null;
+        GameObject tempRoom;
         switch (doorTag)
         {
             case "BottomDoor":
@@ -94,26 +94,31 @@ public class RoomSwitcher : MonoBehaviour
             default:
                 break;
         }
-        if(currentRoom.GetComponent<Room>().Type != Room.RoomType.Boss && currentRoom.GetComponent<Room>().Type != Room.RoomType.Mobs)
-        {
-            for (int i = 0; i < currentRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
-                HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
-        }
-        else
-        {
-            for (int i = 0; i < currentRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
-                HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, true);
-        }
+        HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom,
+                !(currentRoom.GetComponent<Room>().Type != Room.RoomType.Boss && currentRoom.GetComponent<Room>().Type != Room.RoomType.Mobs));
         Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
     }
 
-    public void HideDoorCollider(GameObject targetRoom, bool state)
+    public void HideDoorCollider(GameObject originRoom, bool state)
     {
-        for (int p = 0; p < targetRoom.transform.childCount; p++)
-            if (targetRoom.transform.GetChild(p).CompareTag("DoorCollider"))
+        Room room = currentRoom.GetComponent<Room>();
+        for (int i = 0; i < originRoom.transform.childCount; i++)
+        {
+            GameObject tempDoor = originRoom.transform.GetChild(i).gameObject;
+            if ((room.leftNeighbor != null && tempDoor.CompareTag("LeftDoor"))
+                || (room.topNeighbor != null && tempDoor.CompareTag("TopDoor"))
+                || (room.rightNeighbor != null && tempDoor.CompareTag("RightDoor"))
+                || (room.bottomNeighbor != null && tempDoor.CompareTag("BottomDoor")))
             {
-                targetRoom.transform.GetChild(p).gameObject.SetActive(state);
-                break;
+                for(int j = 0; j < tempDoor.transform.childCount; j++)
+                {
+                    if(tempDoor.transform.GetChild(j).CompareTag("DoorCollider"))
+                    {
+                        tempDoor.transform.GetChild(j).gameObject.SetActive(state);
+                        break;
+                    }
+                }
             }
+        }
     }
 }

@@ -144,46 +144,20 @@ public abstract class MapGenerator : MonoBehaviour
             for (int j = 0; j < rooms[i].GetComponent<Room>().OriginRoom.transform.childCount; j++)
             {
                 GameObject targetRoom = rooms[i].GetComponent<Room>().OriginRoom.transform.GetChild(j).gameObject;
-                switch (targetRoom.tag)
-                {
-                    case "TopDoor":
-                        if (rooms[i].GetComponent<Room>().topNeighbor == null)
-                        {
-                            doors.Remove(targetRoom);
-                            DestroyDoorSprite(targetRoom, "TopDoor");
-                        }
-                        break;
-                    case "BottomDoor":
-                        if (rooms[i].GetComponent<Room>().bottomNeighbor == null)
-                        {
-                            doors.Remove(targetRoom);
-                            DestroyDoorSprite(targetRoom, "BottomDoor");
-                        }
-                        break;
-                    case "LeftDoor":
-                        if (rooms[i].GetComponent<Room>().leftNeighbor == null)
-                        {
-                            doors.Remove(targetRoom);
-                            DestroyDoorSprite(targetRoom, "LeftDoor");
-                        }
-                        break;
-                    case "RightDoor":
-                        if (rooms[i].GetComponent<Room>().rightNeighbor == null)
-                        {
-                            doors.Remove(targetRoom);
-                            DestroyDoorSprite(targetRoom, "RightDoor");
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                Room room = rooms[i].GetComponent<Room>();
+                if ((room.topNeighbor == null && targetRoom.CompareTag("TopDoor")) ||
+                    (room.bottomNeighbor == null && targetRoom.CompareTag("BottomDoor")) ||
+                    (room.leftNeighbor == null && targetRoom.CompareTag("LeftDoor")) ||
+                    (room.rightNeighbor == null && targetRoom.CompareTag("RightDoor")))
+                    DestroyDoorSprite(targetRoom);
             }
         }
         doors.Clear();
     }
 
-    private void DestroyDoorSprite(GameObject targetRoom, string roomTag)
+    private void DestroyDoorSprite(GameObject targetRoom)
     {
+        Destroy(targetRoom.GetComponent<BoxCollider>());
         for (int p = 0; p < targetRoom.transform.childCount; p++)
             if (targetRoom.transform.GetChild(p).CompareTag("DoorSprite"))
             {
@@ -211,8 +185,7 @@ public abstract class MapGenerator : MonoBehaviour
         switcher.Rooms = rooms;
         switcher.HideInactiveRooms();
         switcher.Initialized = true;
-        for (int i = 0; i < startRoom.GetComponent<Room>().OriginRoom.transform.childCount; i++)
-            switcher.HideDoorCollider(startRoom.GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject, false);
+        switcher.HideDoorCollider(startRoom.GetComponent<Room>().OriginRoom, false);
     }
 
     public Vector2 SetOffsetVector(string doorTag)
