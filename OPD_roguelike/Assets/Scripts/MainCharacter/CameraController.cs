@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         SetInstance();
     }
 

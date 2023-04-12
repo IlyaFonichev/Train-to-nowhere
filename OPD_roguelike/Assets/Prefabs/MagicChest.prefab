@@ -47,7 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drops:
-  - {fileID: 6525483773581471700, guid: 81b66828dc451b84db37cb3536caf517, type: 3}
+  - {fileID: 6969675783745027384, guid: 5e0cffdab33daad45b44d0dd4872598b, type: 3}
+  - {fileID: 8512752634016109940, guid: 7c02fae46494d934eb71697e16d523ae, type: 3}
+  - {fileID: 5896423840269087808, guid: f07fcca958f7a5d4baa5e5220670ca57, type: 3}
 --- !u!65 &3348978775622145443
 BoxCollider:
   m_ObjectHideFlags: 0

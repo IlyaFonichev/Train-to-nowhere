@@ -49,6 +49,7 @@ MonoBehaviour:
   drops:
   - {fileID: 1709420197688912299, guid: 327f33a2e46ae40448605478784ca5ed, type: 3}
   - {fileID: 3686278920412583437, guid: dcec27c296f6e8f4291a10f193ce8426, type: 3}
+  - {fileID: 6525483773581471700, guid: 81b66828dc451b84db37cb3536caf517, type: 3}
 --- !u!65 &4244736784284219610
 BoxCollider:
   m_ObjectHideFlags: 0

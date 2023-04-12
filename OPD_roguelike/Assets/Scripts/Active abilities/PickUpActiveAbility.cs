@@ -13,24 +13,30 @@ public class PickUpActiveAbility : MonoBehaviour
         player = PlayerController.instance.gameObject;
     }
 
+    // realize later appearence of image in box
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
             if ((gameObject.transform.position - player.transform.position).magnitude < 2)
             {
-                try
+                GameObject curAbility = player.gameObject.GetComponent<InventoryScript>().ability;
+                if (curAbility != null )
                 {
-                    curAbility = player.gameObject.GetComponent<InventoryScript>().ability;
-                    curAbility.GetComponent<PickUpActiveAbility>().enabled = true;
-                    curAbility.GetComponent<SpriteRenderer>().enabled = true;
-                    curAbility.transform.position = player.transform.position;
-                }
-                catch { }
+                    GameObject spawnedCurAbility = Instantiate(curAbility, transform.position, Quaternion.Euler(90, 0, 0));
+                    spawnedCurAbility.GetComponent<PickUpActiveAbility>().enabled = true;
+                    spawnedCurAbility.GetComponent<SpriteRenderer>().enabled = true;
+                    spawnedCurAbility.name = curAbility.name;
 
-                player.gameObject.GetComponent<InventoryScript>().ability = gameObject;
-                ActiveAbilityBox.instance.gameObject.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
-                gameObject.GetComponent<PickUpActiveAbility>().enabled = false;
+                    Destroy(curAbility);
+                }
+
+                GameObject newAbility = Instantiate(gameObject, player.transform);
+                newAbility.GetComponent<PickUpActiveAbility>().enabled = false;
+                newAbility.GetComponent<SpriteRenderer>().enabled = false;
+                newAbility.name = gameObject.name;
+                player.gameObject.GetComponent<InventoryScript>().ability = newAbility;
+
+                Destroy(gameObject);
             }
     }
 }

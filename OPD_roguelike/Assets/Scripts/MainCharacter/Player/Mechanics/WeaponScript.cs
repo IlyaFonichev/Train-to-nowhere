@@ -43,7 +43,7 @@ public class WeaponScript : MonoBehaviour
     {
         player = PlayerController.instance.gameObject;
         playerCamera = CameraController.instance.gameObject.GetComponent<Camera>();
-        textBox = AmmoTextBox.instance.gameObject;
+        textBox = GameObject.Find("Ammo");
 
         applyParameters();
 
@@ -51,6 +51,14 @@ public class WeaponScript : MonoBehaviour
         canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
         stats = player.GetComponent<Player>();
+
+        printAmmo();
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        textBox = GameObject.Find("Ammo");
+        txt = textBox.GetComponent<Text>();
 
         printAmmo();
     }
