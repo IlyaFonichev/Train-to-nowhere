@@ -755,6 +755,7 @@ GameObject:
   - component: {fileID: 1393189034}
   - component: {fileID: 1393189033}
   - component: {fileID: 1393189032}
+  - component: {fileID: 1393189035}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -828,6 +829,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 70, y: 0, z: 0}
+--- !u!114 &1393189035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393189031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4732669bcd39aa48ab6119977140e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scope: {fileID: 0}
+  smoothSpeed: 0.125
 --- !u!1 &1419976021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,6 +1145,7 @@ GameObject:
   - component: {fileID: 1862429939}
   - component: {fileID: 1862429941}
   - component: {fileID: 1862429942}
+  - component: {fileID: 1862429943}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1167,7 +1183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1168ae95b783354fb9cbea92fe24874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  switchRoomOffet: 3
   speed: 10
   dashSpeed: 1
   dashSpeedCurve:
@@ -1208,7 +1223,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!135 &1862429942
@@ -1224,3 +1239,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1862429943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862429937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4362167c157aa8440868c9bf1b82e117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageDealMultiplayer: 1
+  speedMultiplayer: 1
+  rateOfFireMultiplayer: 1

@@ -29,7 +29,9 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         player = PlayerController.instance.gameObject;
-        scope_rt = scope.GetComponent<RectTransform>();
+
+        if (scope != null)
+            scope.TryGetComponent<RectTransform>(out scope_rt);
 
         // „тобы камеру потом можно было двигать
         deltaPosX = transform.position.x - player.transform.position.x;
@@ -46,8 +48,11 @@ public class CameraController : MonoBehaviour
 
     private void showScope()
     {
-        Vector2 mousePos = Input.mousePosition;
-        scope_rt.anchoredPosition = mousePos;
+        if (scope_rt)
+        {
+            Vector2 mousePos = Input.mousePosition;
+            scope_rt.anchoredPosition = mousePos;
+        }
     }
 
     private void followPlayer()
