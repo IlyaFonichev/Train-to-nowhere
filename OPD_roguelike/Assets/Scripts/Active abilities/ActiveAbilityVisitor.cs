@@ -11,7 +11,7 @@ public class ActiveAbilityVisitor : MonoBehaviour
         try
         {
             if (Input.GetKeyDown(KeyCode.Q))
-                if (gameObject.GetComponent<InventoryScript>().ability.TryGetComponent<ActiveAbility>(out ab))
+                if (gameObject.GetComponent<InventoryScript>().ability.TryGetComponent<ActiveAbility>(out ab) && !PauseManager.instance.GetComponent<PauseManager>().onPause)
                     ab.Accept(this);
         }
         catch { }

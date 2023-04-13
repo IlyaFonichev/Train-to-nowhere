@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class InventoryScript : MonoBehaviour
 {
-    public GameObject firstWeapon;
+    [HideInInspector] public GameObject firstWeapon;
     [HideInInspector] public GameObject ability;
 }

@@ -34,7 +34,7 @@ public class PickUpWeapon : MonoBehaviour
                     curWeapon.GetComponent<WeaponScript>().enabled = false;
                     curWeapon.GetComponent<PickUpWeapon>().enabled = true;
                     curWeapon.name = player.GetComponent<InventoryScript>().firstWeapon.name;
-                    curWeapon.transform.localScale = new Vector3(0.3f, 0.3f, 1);
+                    //curWeapon.transform.localScale = new Vector3(0.3f, 0.3f, 1);
 
                     Destroy(player.GetComponent<InventoryScript>().firstWeapon);
                 }
@@ -43,7 +43,7 @@ public class PickUpWeapon : MonoBehaviour
                 newWeapon.name = gameObject.name;
                 newWeapon.GetComponent<PickUpWeapon>().enabled = false;
                 newWeapon.GetComponent<WeaponScript>().enabled = true;
-                newWeapon.transform.localScale = Vector3.one;
+                //newWeapon.transform.localScale = Vector3.one;
 
                 StartCoroutine(waitPrint(newWeapon));
 
