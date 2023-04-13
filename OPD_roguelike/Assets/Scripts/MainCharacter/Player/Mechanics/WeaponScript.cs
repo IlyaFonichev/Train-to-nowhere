@@ -69,7 +69,7 @@ public class WeaponScript : MonoBehaviour
 
         pointWeaponToMouse();
 
-        if (delay > 1 / (fireRate * stats.rateOfFireMultiplayer) && !isReloading && !PauseManager.instance.GetComponent<PauseManager>().onPause)
+        if (delay > 1 / (fireRate * stats.rateOfFireMultiplayer) && !isReloading && (PauseManager.instance == null || !PauseManager.instance.GetComponent<PauseManager>().onPause))
         {
             if (!isMelee)
                 StartCoroutine(shoot());    // ranged attack
