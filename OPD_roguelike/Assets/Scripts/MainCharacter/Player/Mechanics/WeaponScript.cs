@@ -26,7 +26,6 @@ public class WeaponScript : MonoBehaviour
 
     GameObject textBox;
 
-    private Vector3 canvasCenter;
     private Vector3 mouseVector;
 
     private PlayerController pc;
@@ -48,7 +47,6 @@ public class WeaponScript : MonoBehaviour
         applyParameters();
 
         pc = player.GetComponent<PlayerController>();
-        canvasCenter = new Vector3(Screen.width / 2, Screen.height / 2, playerCamera.nearClipPlane);
         txt = textBox.GetComponent<Text>();
         stats = player.GetComponent<Player>();
 
@@ -204,46 +202,58 @@ public class WeaponScript : MonoBehaviour
 
     private void calculateMouseVector()
     {
+        //Vector3 mousePos2D = Input.mousePosition;
+
+        //Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
+
+        //Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
+        //Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
+
+        //mouseVector = worldPointPos - currCanvasCenter;
+
+        //mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
+
+        //mouseVector.Normalize();
+
+        float distance = playerCamera.gameObject.GetComponent<CameraController>().DeltaPosition.magnitude;
+
         Vector3 mousePos2D = Input.mousePosition;
 
-        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
+        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, distance);
 
         Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
-        Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
 
-        mouseVector = worldPointPos - currCanvasCenter;
+        mouseVector = worldPointPos - gameObject.transform.position;
 
         mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
 
         mouseVector.Normalize();
     }
 
+    // in work
     private void pointWeaponToMouse()
     {
-        Vector2 mouseVector2d = new Vector2(mouseVector.x, mouseVector.z);
-        Vector3 mousePos2D = Input.mousePosition;
-
-        if (mousePos2D.x > canvasCenter.x)
+        if (mouseVector.x > 0)
         {
             transform.position = new Vector3(player.transform.position.x + 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mousePos2D.y > canvasCenter.y && mousePos2D.y < canvasCenter.y * 1.20f)
-                transform.rotation = Quaternion.Euler(90, -(int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
-            else if (mousePos2D.y > canvasCenter.y)
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
+            if (mouseVector.z > 0 && mouseVector.z < 0.2f)
+                transform.rotation = Quaternion.Euler(90, -(int)Vector2.Angle(Vector2.right, mouseVector), 0);
+            else if (mouseVector.z > 0)
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.right, mouseVector), 0);
             else
-                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.right, mouseVector2d), 0);
+                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.right, mouseVector), 0);
         }
         else
         {
             transform.position = new Vector3(player.transform.position.x - 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mousePos2D.y > canvasCenter.y && mousePos2D.y < canvasCenter.y * 1.20f)
-                transform.rotation = Quaternion.Euler(-90, (int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
-            else if (mousePos2D.y > canvasCenter.y)
-                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
+            if (mouseVector.z > 0 && mouseVector.z < 0.2f)
+                transform.rotation = Quaternion.Euler(-90, (int)Vector2.Angle(Vector2.left, mouseVector), -180);
+            else if (mouseVector.z > 0)
+                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.left, mouseVector), -180);
             else
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector2d), -180);
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector), -180);
         }
 
         weaponAngle = transform.rotation;
