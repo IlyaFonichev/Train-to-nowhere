@@ -1,76 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class OriginEnemy : MonoBehaviour
 {
     [SerializeField]
-    private GameObject spriteManager, canvas, particleSystemManager, currentTerget, preTarget, nextTarget;
+    private GameObject spriteManager, canvas, particleSystemManager;
     [SerializeField]
     private Image healthBar;
     [SerializeField, Min(3)]
     private int maxHealth;
     private int currentHealth;
     [HideInInspector]
-    public Rigidbody rigidbody;
+    public Rigidbody rb;
     private Condition condition;
-    private Vector3 roomOrigin, targetVector, nextTargetPosition, preTargetPosition;
+    [HideInInspector]
+    public Vector3 roomOrigin, targetVector, nextTargetPosition, preTargetPosition;
     [SerializeField]
     private float speed;
 
     public enum Condition
     {
-        None,
-        Idle,
-        Angry,
-        Die
-    }
-    private void Awake()
-    {
-        Initialization();
+        Spawn,
+        Walking,
+        Attacking,
+        Died
     }
 
-    private void Initialization()
+    private void Awake()
     {
-        condition = Condition.Idle;
-        if (RoomSwitcher.instance != null)
-            roomOrigin = RoomSwitcher.instance.CurrentRoom.transform.position;
-        else
-            roomOrigin = Vector3.zero;
+        rb = GetComponent<Rigidbody>();
         currentHealth = maxHealth;
-        rigidbody = GetComponent<Rigidbody>();
-        nextTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
-        preTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
-        targetVector = preTargetPosition;
+        condition = Condition.Spawn;
+
+        if (SceneManager.GetActiveScene().name == "CaveTest") //Test
+            Spawn();
     }
+
+    public abstract void Initialization();
 
     private void FixedUpdate()
     {
-        currentTerget.transform.position = targetVector;
-        preTarget.transform.position = preTargetPosition;
-        nextTarget.transform.position = nextTargetPosition;
-        if (condition == Condition.Idle)
+        if (condition == Condition.Walking)
             Move();
     }
+
     public abstract void Move();
 
-    public void Step()
-    {
-        speed = 3;
-        preTargetPosition = nextTargetPosition;
-        targetVector = preTargetPosition;
-        while(Vector3.Distance(preTargetPosition, nextTargetPosition) < 5f)
-            nextTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
-    }
-    public void CheckDistance()
-    {
-        targetVector = Vector3.MoveTowards(targetVector, nextTargetPosition, speed * Time.deltaTime);
-        if (Vector3.Distance(targetVector, nextTargetPosition) < Vector3.Distance(preTargetPosition, nextTargetPosition) / 2)
-        {
-            Step();
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -89,6 +67,12 @@ public abstract class OriginEnemy : MonoBehaviour
         TakeDamge();
     }
 
+    public void Spawn()
+    {
+        condition = Condition.Walking;
+        Initialization();
+    }
+
     private void TakeDamge()
     {
         if (currentHealth > 0)
@@ -96,25 +80,29 @@ public abstract class OriginEnemy : MonoBehaviour
             currentHealth -= 1;
             UpdateHealthBar();
         }
-        if (currentHealth == 0)
+        if (currentHealth == 0 && condition != Condition.Died)
             StartCoroutine(Death());
     }
+
     private void UpdateHealthBar()
     {
         healthBar.fillAmount = (float)currentHealth / maxHealth;
     }
+
     IEnumerator Death()
     {
-        condition = Condition.Die;
+        condition = Condition.Died;
         Destroy(canvas);
         Destroy(spriteManager);
         for(int i = 0; i < particleSystemManager.transform.childCount; i++)
         {
             particleSystemManager.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         }
+        MobsManager.instance.RemoveMob(gameObject);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
     }
+
     public float Speed
     {
         get { return speed; }

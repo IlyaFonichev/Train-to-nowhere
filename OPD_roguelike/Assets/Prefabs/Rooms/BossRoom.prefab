@@ -50,14 +50,9 @@ MonoBehaviour:
   originRoom: {fileID: 1236577395632500193}
   decorationPrefab: {fileID: 7074952758764395874, guid: ec0f1762bdcacab42b0e47f158089c60, type: 3}
   mobsInTheRoom: []
-  topRoom: {fileID: 0}
-  leftRoom: {fileID: 0}
-  rightRoom: {fileID: 0}
-  bottomRoom: {fileID: 0}
   border: {fileID: 1840352471285022112}
   bossPrefabs:
-  - {fileID: 6855950395059140150, guid: 7702ed2027ec40a43abf9624330f8c85, type: 3}
-  - {fileID: 6855950395059140150, guid: 7702ed2027ec40a43abf9624330f8c85, type: 3}
+  - {fileID: 4171776608731449253, guid: 7a604dbc0d55089478170bf90b73ecd6, type: 3}
   spawnPointBoss: {fileID: 9168760259085107179}
 --- !u!1 &1247276605641978824
 GameObject:

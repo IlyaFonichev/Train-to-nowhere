@@ -79,7 +79,7 @@ public class Minimap : MonoBehaviour
                 case (Room.RoomType.Boss):
                     newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.red;
                     break;
-                case (Room.RoomType.Mobs):
+                case (Room.RoomType.Enemy):
                     newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
                     break;
                 case (Room.RoomType.Chest):

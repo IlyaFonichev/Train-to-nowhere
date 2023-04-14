@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         _rigidBody.transform.position = Vector3.zero;
+        CameraController.instance.SetCurrentRoom();
     }
 
     private IEnumerator Dash(Vector3 direction)

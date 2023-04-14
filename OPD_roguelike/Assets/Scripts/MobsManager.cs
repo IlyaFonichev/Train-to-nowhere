@@ -36,7 +36,6 @@ public class MobsManager : MonoBehaviour
     {
         RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().RemoveMob(mob);
         mobs.Remove(mob);
-        Destroy(mob);
         if (mobs.Count == 0 && portalIsNeed)
         {
             Minimap.instance.PortalRoom();

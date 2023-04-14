@@ -148,16 +148,12 @@ MonoBehaviour:
   originRoom: {fileID: 3804587957496717788}
   decorationPrefab: {fileID: 7074952758764395874, guid: ec0f1762bdcacab42b0e47f158089c60, type: 3}
   mobsInTheRoom: []
-  topRoom: {fileID: 0}
-  leftRoom: {fileID: 0}
-  rightRoom: {fileID: 0}
-  bottomRoom: {fileID: 0}
   border: {fileID: 4354865195405111709}
   spawnPointsMobs: {fileID: 2550847023139847252}
   mobsPrefabs:
-  - {fileID: 7494076192074464342, guid: 20f206c0fd27a684a89afe71f9646c54, type: 3}
-  - {fileID: 4799079590569297277, guid: 9573162286502ca4893187d6867ce485, type: 3}
-  - {fileID: 9192340341513421623, guid: 15a567d0fd953e845895e1188361f9ae, type: 3}
+  - {fileID: 6331835044778535025, guid: f060421c1d0992d47963937e325328fd, type: 3}
+  - {fileID: 1039747636955266577, guid: 24e8bca15616c5440a8d7f018b1f37f4, type: 3}
+  - {fileID: 3127604684852329730, guid: 1620cdf3d3c4525408df573974f18d0b, type: 3}
 --- !u!1 &3811036466306521213
 GameObject:
   m_ObjectHideFlags: 0

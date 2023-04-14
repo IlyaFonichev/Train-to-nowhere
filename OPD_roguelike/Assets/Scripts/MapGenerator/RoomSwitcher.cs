@@ -95,8 +95,18 @@ public class RoomSwitcher : MonoBehaviour
                 break;
         }
         HideDoorCollider(currentRoom.GetComponent<Room>().OriginRoom,
-                !(currentRoom.GetComponent<Room>().Type != Room.RoomType.Boss && currentRoom.GetComponent<Room>().Type != Room.RoomType.Mobs));
-        Camera.main.transform.position = currentRoom.transform.position + startCameraPosition;
+                !(currentRoom.GetComponent<Room>().Type != Room.RoomType.Boss && currentRoom.GetComponent<Room>().Type != Room.RoomType.Enemy));
+        Camera.main.transform.position = currentRoom.transform.position + CameraController.instance.DeltaPosition + new Vector3(0, -4, 0);
+        if(currentRoom.GetComponent<Room>().Type == Room.RoomType.Enemy || currentRoom.GetComponent<Room>().Type == Room.RoomType.Boss)
+            MobActivate();
+        CameraController.instance.SetCurrentRoom();
+    }
+
+    private void MobActivate()
+    {
+        List<GameObject> mobsInTheRoom = currentRoom.GetComponent<Room>().mobsInTheRoom;
+        for (int i = 0; i < mobsInTheRoom.Count; i++)
+            mobsInTheRoom[i].GetComponent<OriginEnemy>().Spawn();
     }
 
     public void HideDoorCollider(GameObject originRoom, bool state)

@@ -12,17 +12,14 @@ public abstract class Room : MonoBehaviour
     private Vector2 position;
     [HideInInspector]
     public List<GameObject> mobsInTheRoom;
-    [SerializeField, Header("Neighbors at the current room")]
-    private GameObject topRoom;
-    [SerializeField]
-    private GameObject leftRoom, rightRoom, bottomRoom;
+    private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
     private RoomType type;
     [SerializeField]
     private GameObject border;
     public enum RoomType
     {
         Start, 
-        Mobs, 
+        Enemy, 
         Boss,
         Chest,
         Empty

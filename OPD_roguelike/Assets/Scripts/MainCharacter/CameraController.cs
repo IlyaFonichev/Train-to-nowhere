@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float smoothSpeed = 0.125f;
 
     private RectTransform scope_rt;
-    private float deltaPosX, deltaPosY, deltaPosZ;
+    private Vector3 deltaPosition;
 
     public static CameraController instance;
+
+    private Vector3 currentRoomPosition;
 
     private void Awake()
     {
@@ -35,9 +38,9 @@ public class CameraController : MonoBehaviour
             scope.TryGetComponent<RectTransform>(out scope_rt);
 
         // „тобы камеру потом можно было двигать
-        deltaPosX = transform.position.x - player.transform.position.x;
-        deltaPosY = transform.position.y - player.transform.position.y;
-        deltaPosZ = transform.position.z - player.transform.position.z;
+        deltaPosition.x = transform.position.x - player.transform.position.x;
+        deltaPosition.y = transform.position.y - player.transform.position.y;
+        deltaPosition.z = transform.position.z - player.transform.position.z;
 
     }
 
@@ -58,8 +61,31 @@ public class CameraController : MonoBehaviour
 
     private void followPlayer()
     {
-        Vector3 target = player.transform.position + new Vector3(deltaPosX, deltaPosY, deltaPosZ);
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, target, smoothSpeed);
-        transform.position = smoothedPosition;
+        Vector3 target = player.transform.position + deltaPosition;
+        transform.position = Vector3.Lerp(transform.position, target, smoothSpeed);
+        if (RoomSwitcher.instance != null)
+        {
+            if (transform.position.z < currentRoomPosition.z - 4.5f)
+                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z - 4.5f);
+            if (transform.position.z > currentRoomPosition.z - 3)
+                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z - 3);
+            if (transform.position.x < currentRoomPosition.x - 1)
+                transform.position = new Vector3(currentRoomPosition.x - 1, transform.position.y, transform.position.z);
+            if (transform.position.x > currentRoomPosition.x + 1)
+                transform.position = new Vector3(currentRoomPosition.x + 1, transform.position.y, transform.position.z);
+        }
+    }
+
+    public void SetCurrentRoom()
+    {
+        if (RoomSwitcher.instance != null)
+            currentRoomPosition = RoomSwitcher.instance.CurrentRoom.transform.position;
+        else
+            currentRoomPosition = Vector3.zero;
+    }
+
+    public Vector3 DeltaPosition
+    {
+        get { return deltaPosition; }
     }
 }

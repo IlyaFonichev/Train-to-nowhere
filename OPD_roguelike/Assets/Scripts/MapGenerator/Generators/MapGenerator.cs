@@ -55,7 +55,7 @@ public abstract class MapGenerator : MonoBehaviour
     private void Update()
     {
         if (currentLoad < loadScene)
-            currentLoad += 20 * Time.deltaTime;
+            currentLoad += 50 * Time.deltaTime;
         if (currentLoad >= 100)
         {
             sceneIsLoded = true;
