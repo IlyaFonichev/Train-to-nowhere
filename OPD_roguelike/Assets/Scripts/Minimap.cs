@@ -74,20 +74,13 @@ public class Minimap : MonoBehaviour
                 offsetPosition.transform.position + new Vector3(rooms[i].GetComponent<Room>().Position.x * (width + space), rooms[i].GetComponent<Room>().Position.y * (height + space), 0),
                 Quaternion.identity);
             newUIRoom.transform.SetParent(offsetPosition.transform);
-            switch (rooms[i].GetComponent<Room>().Type)
-            {
-                case (Room.RoomType.Boss):
-                    newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.red;
-                    break;
-                case (Room.RoomType.Enemy):
-                    newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
-                    break;
-                case (Room.RoomType.Chest):
-                    newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.gray;
-                    break;
-                default:
-                    break;
-            }
+            Room.RoomType roomType = rooms[i].GetComponent<Room>().Type;
+            if (roomType == Room.RoomType.Boss)
+                newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.red;
+            if (roomType == Room.RoomType.Chest)
+                newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+            if (roomType == Room.RoomType.Enemy && rooms[i].GetComponent<Room>().mobsInTheRoom.Count != 0)
+                newUIRoom.transform.GetChild(0).GetComponent<Image>().color = Color.yellow;
             if (uiRooms.Count == 0)
                 newUIRoom.transform.localScale *= changeScale;
             uiRooms.Add(newUIRoom);
