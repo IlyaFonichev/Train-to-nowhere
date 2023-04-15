@@ -67,6 +67,11 @@ public abstract class OriginEnemy : MonoBehaviour
         TakeDamge();
     }
 
+    private void OnDestroy()
+    {
+        PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability.GetComponent<ActiveAbility>().curCoolDown -= 1;
+    }
+
     public void Spawn()
     {
         condition = Condition.Walking;

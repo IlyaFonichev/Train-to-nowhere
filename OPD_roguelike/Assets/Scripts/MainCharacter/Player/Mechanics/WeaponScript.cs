@@ -33,6 +33,7 @@ public class WeaponScript : MonoBehaviour
     private Text txt;
 
     private Quaternion weaponAngle;
+    private float cameraDistance;
 
     private bool isReloading = false;
 
@@ -49,6 +50,8 @@ public class WeaponScript : MonoBehaviour
         pc = player.GetComponent<PlayerController>();
         txt = textBox.GetComponent<Text>();
         stats = player.GetComponent<Player>();
+
+        cameraDistance = playerCamera.gameObject.GetComponent<CameraController>().DeltaPosition.magnitude;
 
         printAmmo();
     }
@@ -88,7 +91,8 @@ public class WeaponScript : MonoBehaviour
 
         delay = 0;
 
-        Vector3 shootVector = new Vector3(mouseVector.x + Random.Range(-accuracy, accuracy), 0, mouseVector.z + Random.Range(-accuracy, accuracy));
+        Vector3 mouseShootVector = mouseVector.normalized;
+        Vector3 shootVector = new Vector3(mouseShootVector.x + Random.Range(-accuracy, accuracy), 0, mouseShootVector.z + Random.Range(-accuracy, accuracy));
         shootVector.Normalize();
 
         GameObject bullet = Instantiate(bulletPrefab, transform.position + (shootVector), new Quaternion(0, 0, 0, 0));
@@ -156,8 +160,6 @@ public class WeaponScript : MonoBehaviour
                 currMagazine += currAmmo;
                 currAmmo = 0;
             }
-
-            printAmmo();
         }
 
         printAmmo();
@@ -168,7 +170,7 @@ public class WeaponScript : MonoBehaviour
     
     public void printAmmo()
     {
-        if (magazine != 0)
+        if (!isMelee)
             txt.text = currMagazine.ToString() + " / " + currAmmo.ToString();
         else
             txt.text = "";
@@ -202,24 +204,9 @@ public class WeaponScript : MonoBehaviour
 
     private void calculateMouseVector()
     {
-        //Vector3 mousePos2D = Input.mousePosition;
-
-        //Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, playerCamera.nearClipPlane);
-
-        //Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
-        //Vector3 currCanvasCenter = playerCamera.ScreenToWorldPoint(canvasCenter);
-
-        //mouseVector = worldPointPos - currCanvasCenter;
-
-        //mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
-
-        //mouseVector.Normalize();
-
-        float distance = playerCamera.gameObject.GetComponent<CameraController>().DeltaPosition.magnitude;
-
         Vector3 mousePos2D = Input.mousePosition;
 
-        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, distance);
+        Vector3 mousePosNearClipPlane = new Vector3(mousePos2D.x, mousePos2D.y, cameraDistance);
 
         Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
 
@@ -227,33 +214,37 @@ public class WeaponScript : MonoBehaviour
 
         mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
 
-        mouseVector.Normalize();
+        //mouseVector.Normalize();
     }
 
-    // in work
     private void pointWeaponToMouse()
     {
-        if (mouseVector.x > 0)
+        Vector3 playerMouseVector = (mouseVector + gameObject.transform.position - player.transform.position);
+        playerMouseVector = new Vector3(playerMouseVector.x, 0, playerMouseVector.z).normalized;
+
+        Vector3 angleMouseVector = mouseVector.normalized;
+
+        if (playerMouseVector.x > 0)
         {
             transform.position = new Vector3(player.transform.position.x + 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mouseVector.z > 0 && mouseVector.z < 0.2f)
-                transform.rotation = Quaternion.Euler(90, -(int)Vector2.Angle(Vector2.right, mouseVector), 0);
-            else if (mouseVector.z > 0)
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.right, mouseVector), 0);
+            if (angleMouseVector.z > 0 && angleMouseVector.z < 0.2f)
+                transform.rotation = Quaternion.Euler(90, -(int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
+            else if (angleMouseVector.z > 0)
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
             else
-                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.right, mouseVector), 0);
+                transform.rotation = Quaternion.Euler(90, (int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
         }
         else
         {
             transform.position = new Vector3(player.transform.position.x - 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
 
-            if (mouseVector.z > 0 && mouseVector.z < 0.2f)
-                transform.rotation = Quaternion.Euler(-90, (int)Vector2.Angle(Vector2.left, mouseVector), -180);
-            else if (mouseVector.z > 0)
-                transform.rotation = Quaternion.Euler(90, (int)Vector2.Angle(Vector2.left, mouseVector), -180);
+            if (angleMouseVector.z > 0 && angleMouseVector.z < 0.2f)
+                transform.rotation = Quaternion.Euler(-90, (int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
+            else if (angleMouseVector.z > 0)
+                transform.rotation = Quaternion.Euler(90, (int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
             else
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector2.Angle(Vector2.left, mouseVector), -180);
+                transform.rotation = Quaternion.Euler(-90, -(int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
         }
 
         weaponAngle = transform.rotation;

@@ -11,6 +11,10 @@ public class DamageBuff : ActiveAbility
 
     public override IEnumerator ApplyBuff()
     {
+        if (curCoolDown > 0) yield break;
+
+        curCoolDown = cooldown;
+
         Player p = PlayerController.instance.gameObject.GetComponent<Player>();
 
         p.damageDealMultiplayer *= multiplayer;

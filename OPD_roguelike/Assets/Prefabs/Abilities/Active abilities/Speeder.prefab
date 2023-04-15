@@ -112,4 +112,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   multiplayer: 3
   time: 1
-  cooldown: 0
+  cooldown: 4
+  curCoolDown: 0
