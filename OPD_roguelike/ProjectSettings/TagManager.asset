@@ -21,6 +21,8 @@ TagManager:
   - Wasteland
   - DoorCollider
   - DoorSprite
+  - Item
+  - Wall
   layers:
   - Default
   - TransparentFX

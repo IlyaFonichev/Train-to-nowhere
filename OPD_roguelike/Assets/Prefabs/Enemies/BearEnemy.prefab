@@ -178,8 +178,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3127604684852329733}
   - component: {fileID: 236974248633718492}
-  - component: {fileID: 236974248633718495}
   - component: {fileID: 236974248633718494}
+  - component: {fileID: 2126537479862821969}
   m_Layer: 0
   m_Name: BearEnemy
   m_TagString: Untagged
@@ -218,30 +218,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.55, y: 1, z: 2.3807912}
   m_Center: {x: 0, y: 0, z: -0.4711161}
---- !u!114 &236974248633718495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3127604684852329730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f3aa4525a5fe204596332ecdd81907c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteManager: {fileID: 7264312004040910561}
-  canvas: {fileID: 7264312005207096150}
-  particleSystemManager: {fileID: 7264312004458536548}
-  healthBar: {fileID: 7264312004964158153}
-  maxHealth: 10
-  rb: {fileID: 0}
-  roomOrigin: {x: 0, y: 0, z: 0}
-  targetVector: {x: 0, y: 0, z: 0}
-  nextTargetPosition: {x: 0, y: 0, z: 0}
-  preTargetPosition: {x: 0, y: 0, z: 0}
-  speed: 2
-  knife: {fileID: 0}
 --- !u!54 &236974248633718494
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -258,6 +234,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &2126537479862821969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3127604684852329730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 523f93f0096064342b5609b7ca125e19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteManager: {fileID: 7264312004040910561}
+  canvas: {fileID: 7264312005207096150}
+  particleSystemManager: {fileID: 7264312004458536548}
+  healthBar: {fileID: 7264312004964158153}
+  maxHealth: 10
+  rb: {fileID: 0}
+  roomOrigin: {x: 0, y: 0, z: 0}
+  speed: 3
+  damage: 0
+  damageZone: {fileID: 0}
+  bulletPrefab: {fileID: 4347170006326144387, guid: e618c358c51ad2e49b84c2839877900b, type: 3}
+  attackTime: 1
 --- !u!1 &3127604685229930031
 GameObject:
   m_ObjectHideFlags: 0

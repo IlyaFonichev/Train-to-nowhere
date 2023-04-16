@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 6709012212583763650}
   m_Layer: 0
   m_Name: Boarder
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

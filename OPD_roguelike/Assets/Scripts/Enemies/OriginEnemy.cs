@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,17 +16,18 @@ public abstract class OriginEnemy : MonoBehaviour
     private int currentHealth;
     [HideInInspector]
     public Rigidbody rb;
-    private Condition condition;
+    private Condition _condition;
     [HideInInspector]
-    public Vector3 roomOrigin, targetVector, nextTargetPosition, preTargetPosition;
+    public Vector3 roomOrigin;
     [SerializeField]
-    private float speed;
+    private float speed, damage;
+    [HideInInspector]
+    public GameObject damageZone;
 
     public enum Condition
     {
         Spawn,
         Walking,
-        Attacking,
         Died
     }
 
@@ -33,19 +35,21 @@ public abstract class OriginEnemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         currentHealth = maxHealth;
-        condition = Condition.Spawn;
+        _condition = Condition.Spawn;
 
         if (SceneManager.GetActiveScene().name == "CaveTest") //Test
             Spawn();
     }
 
-    public abstract void Initialization();
-
     private void FixedUpdate()
     {
-        if (condition == Condition.Walking)
+        if (_condition == Condition.Walking)
             Move();
     }
+
+    public abstract void Initialization();
+
+    public abstract IEnumerator Attack();
 
     public abstract void Move();
 
@@ -70,14 +74,24 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(PlayerController.instance != null && PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability != null)
+        if (PlayerController.instance != null && PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability != null)
             PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability.GetComponent<ActiveAbility>().curCoolDown -= 1;
     }
 
     public void Spawn()
     {
-        condition = Condition.Walking;
+        _condition = Condition.Walking;
+        SetRoomPosition();
+        StartCoroutine(Attack());
         Initialization();
+    }
+
+    private void SetRoomPosition()
+    {
+        if (RoomSwitcher.instance != null)
+            roomOrigin = RoomSwitcher.instance.CurrentRoom.transform.position;
+        else
+            roomOrigin = Vector3.zero;
     }
 
     private void TakeDamge()
@@ -87,7 +101,7 @@ public abstract class OriginEnemy : MonoBehaviour
             currentHealth -= 1;
             UpdateHealthBar();
         }
-        if (currentHealth == 0 && condition != Condition.Died)
+        if (currentHealth == 0 && _condition != Condition.Died)
             StartCoroutine(Death());
     }
 
@@ -96,15 +110,15 @@ public abstract class OriginEnemy : MonoBehaviour
         healthBar.fillAmount = (float)currentHealth / maxHealth;
     }
 
-    IEnumerator Death()
+    private IEnumerator Death()
     {
-        condition = Condition.Died;
+        _condition = Condition.Died;
         Destroy(canvas);
         Destroy(spriteManager);
-        for(int i = 0; i < particleSystemManager.transform.childCount; i++)
-        {
+        for (int i = 0; i < particleSystemManager.transform.childCount; i++)
             particleSystemManager.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
-        }
+        if (damageZone != null)
+            Destroy(damageZone);
         MobsManager.instance.RemoveMob(gameObject);
         yield return new WaitForSeconds(2);
         Destroy(gameObject);
@@ -113,9 +127,11 @@ public abstract class OriginEnemy : MonoBehaviour
     public float Speed
     {
         get { return speed; }
+        set { speed = value; }
     }
-    public Vector3 TargetPosition
+
+    public Condition condition
     {
-        get { return targetVector; }
+        get { return _condition; }
     }
 }

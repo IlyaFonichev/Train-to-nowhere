@@ -69,11 +69,10 @@ MonoBehaviour:
   maxHealth: 4
   rb: {fileID: 0}
   roomOrigin: {x: 0, y: 0, z: 0}
-  targetVector: {x: 0, y: 0, z: 0}
-  nextTargetPosition: {x: 0, y: 0, z: 0}
-  preTargetPosition: {x: 0, y: 0, z: 0}
   speed: 5
-  knife: {fileID: 0}
+  damage: 0
+  dangerZonePrefab: {fileID: 8693852813885452751, guid: 6e256bc145eefdf4b8b7ab19335257ea, type: 3}
+  attackTime: 0.5
 --- !u!54 &2757172494313395661
 Rigidbody:
   m_ObjectHideFlags: 0
