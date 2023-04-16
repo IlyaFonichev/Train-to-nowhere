@@ -64,12 +64,14 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void OnMouseDown()
     {
+        //Test
         TakeDamge();
     }
 
     private void OnDestroy()
     {
-        PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability.GetComponent<ActiveAbility>().curCoolDown -= 1;
+        if(PlayerController.instance != null && PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability != null)
+            PlayerController.instance.gameObject.GetComponent<InventoryScript>().ability.GetComponent<ActiveAbility>().curCoolDown -= 1;
     }
 
     public void Spawn()

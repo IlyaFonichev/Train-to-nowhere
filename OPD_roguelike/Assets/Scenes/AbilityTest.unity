@@ -624,7 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e1731775647f74b9ba49ad3135917e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyAbilityPrefab: {fileID: 5662558178039766684, guid: 93814603bc71ad742a1c4a782b6599d8, type: 3}
+  emptyAbilityPrefab: {fileID: 5662558178039766684, guid: b21984e8c132d3141bd92344459f7ba3, type: 3}
   content: {fileID: 1452158572}
   abilities: []
 --- !u!1 &1452158572
