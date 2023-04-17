@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
                 return;
 
         if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause))
-            _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speedMultiplayer;
+            _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speed;
         else
             _rigidBody.velocity = Vector3.zero;
 

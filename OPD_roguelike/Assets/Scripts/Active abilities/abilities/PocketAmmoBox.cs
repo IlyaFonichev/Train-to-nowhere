@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageBuff : ActiveAbility
+public class PocketAmmoBox : ActiveAbility
 {
+    [SerializeField] private GameObject ammoBox;
+
     public override void Accept(ActiveAbilityVisitor visitor)
     {
         visitor.Visit(this);
@@ -15,12 +17,6 @@ public class DamageBuff : ActiveAbility
 
         curCoolDown = cooldown;
 
-        Player p = PlayerController.instance.gameObject.GetComponent<Player>();
-
-        p.damageDealMultiplayer *= multiplayer;
-
-        yield return new WaitForSeconds(time);
-
-        p.damageDealMultiplayer /= multiplayer;
+        Instantiate(ammoBox, PlayerController.instance.transform.position, Quaternion.Euler(90, 0, 0));
     }
 }

@@ -17,12 +17,12 @@ public class VodkaBuff : ActiveAbility
 
         Player p = PlayerController.instance.gameObject.GetComponent<Player>();
 
-        p.damageDealMultiplayer *= multiplayer;
-        p.speedMultiplayer /= multiplayer;
+        p.damage *= multiplayer;
+        p.speed /= multiplayer;
 
         yield return new WaitForSeconds(time);
 
-        p.damageDealMultiplayer /= multiplayer;
-        p.speedMultiplayer *= multiplayer;
+        p.damage /= multiplayer;
+        p.speed *= multiplayer;
     }
 }

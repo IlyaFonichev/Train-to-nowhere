@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ActiveAbilityVisitor : MonoBehaviour
 {
     private ActiveAbility ab;
+
+    private void OnLevelWasLoaded()
+    {
+        if (gameObject.GetComponent<InventoryScript>().ability != null)
+            GameObject.Find("ActiveAbilityBox").GetComponent<Image>().sprite = gameObject.GetComponent<InventoryScript>().ability.GetComponent<SpriteRenderer>().sprite;
+    }
 
     private void Update()
     {
@@ -28,6 +35,16 @@ public class ActiveAbilityVisitor : MonoBehaviour
     }
 
     public void Visit(VodkaBuff buff)
+    {
+        StartCoroutine(buff.ApplyBuff());
+    }
+
+    public void Visit(PocketAmmoBox buff)
+    {
+        StartCoroutine(buff.ApplyBuff());
+    }
+
+    public void Visit(InfinityAmmo buff)
     {
         StartCoroutine(buff.ApplyBuff());
     }
