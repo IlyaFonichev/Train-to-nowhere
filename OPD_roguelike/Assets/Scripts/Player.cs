@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [HideInInspector] public float health = 100;                  // health of player
+    [HideInInspector] public float health = 100;                // health of player
     [HideInInspector] public float damage = 1;                  // damage multiplayer
     [HideInInspector] public float speed = 1;                   // player movement multiplayer
     [HideInInspector] public float fireSpeed = 1;               // fire speed multiplayer

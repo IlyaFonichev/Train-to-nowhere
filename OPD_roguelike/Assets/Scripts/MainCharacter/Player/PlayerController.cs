@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause))
             _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speed;
-        else
+        else if (!isDashing)
             _rigidBody.velocity = Vector3.zero;
 
         StartCoroutine(Dash(direction));
@@ -69,11 +69,11 @@ public class PlayerController : MonoBehaviour
 
         isDashing = true;
 
-        float elapsedTime = 0.4f;
+        float elapsedTime = 0;
         while (elapsedTime < dashTime)
         {
-            _rigidBody.velocity = direction.normalized * speed * Time.fixedDeltaTime * dashSpeed * 100;
-
+            _rigidBody.velocity = direction.normalized * dashSpeed;
+            
             elapsedTime += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
         }
