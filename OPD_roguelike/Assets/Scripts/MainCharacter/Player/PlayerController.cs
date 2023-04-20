@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    private string sceneName;
+    private string sceneName, currentSceneName;
     private float switchRoomOffet = 3f;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float dashSpeed = 1f;
@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        if (SceneManager.GetActiveScene().name == "TestLobby")
+            PlayerPrefs.SetInt("Depth", 0);
         SetInstance();
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         _scoreOfOlayer = new Score(0);
@@ -31,13 +33,21 @@ public class PlayerController : MonoBehaviour
         _rigidBody = gameObject.GetComponent<Rigidbody>();
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelLoad;
+    }
     private void SetInstance()
     {
         if (instance == null)
+        {
             instance = this;
+            SceneManager.sceneLoaded += OnLevelLoad;
+            DontDestroyOnLoad(gameObject);
+        }
+
         else
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
     }
 
     private void FixedUpdate()
@@ -56,9 +66,11 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(Dash(direction));
     }
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
-        if(sceneName == "Training" ||
+        if(SceneManager.GetActiveScene().name == "TestLobby")
+            PlayerPrefs.SetInt("Depth", 0);
+        if (sceneName == "Training" ||
             sceneName == "Cave" ||
             sceneName == "Wasteland" ||
             sceneName == "Forest" ||
@@ -68,6 +80,8 @@ public class PlayerController : MonoBehaviour
         }
         _rigidBody.transform.position = Vector3.zero;
         CameraController.instance.SetCurrentRoom();
+        currentSceneName = sceneName;
+        sceneName = null;
     }
 
     private IEnumerator Dash(Vector3 direction)
@@ -98,12 +112,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Portal"))
+        {
+            sceneName = currentSceneName;
+        }
         if (other.CompareTag("Training") ||
            other.CompareTag("Cave") ||
            other.CompareTag("Forest") ||
            other.CompareTag("Wasteland") ||
            other.CompareTag("Laboratory"))
         {
+            PlayerPrefs.SetInt("Depth", PlayerPrefs.GetInt("Depth") + 1);
             sceneName = other.tag;
             SceneManager.LoadScene("Dange");
             _rigidBody.transform.position = Vector3.zero;
@@ -162,5 +181,13 @@ public class PlayerController : MonoBehaviour
     public Rigidbody Rigidbody
     {
         get { return _rigidBody; }
+    }
+    public string SceneName
+    {
+        get { return sceneName; }
+    }
+    public string CurrentSceneName
+    {
+        get { return currentSceneName; }
     }
 }

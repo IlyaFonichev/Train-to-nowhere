@@ -17,11 +17,14 @@ public class PauseManager : MonoBehaviour
     private void SetInstance()
     {
         if (instance == null)
+        {
             instance = this;
+            SceneManager.sceneLoaded += OnLevelLoad;
+        }
         else
             Destroy(gameObject);
     }
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
         gameObject.SetActive(false);
     }

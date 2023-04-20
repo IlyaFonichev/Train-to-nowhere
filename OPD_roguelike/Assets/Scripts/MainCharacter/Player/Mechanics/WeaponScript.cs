@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class WeaponScript : MonoBehaviour
@@ -44,7 +45,7 @@ public class WeaponScript : MonoBehaviour
         playerCamera = CameraController.instance.gameObject.GetComponent<Camera>();
         if (CanvasInstance.instance != null)
             textBox = CanvasInstance.instance.ammo;
-
+        SceneManager.sceneLoaded += OnLevelLoad;
         applyParameters();
 
         pc = player.GetComponent<PlayerController>();
@@ -56,7 +57,7 @@ public class WeaponScript : MonoBehaviour
         printAmmo();
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
         textBox = CanvasInstance.instance.ammo;
         txt = textBox.GetComponent<Text>();

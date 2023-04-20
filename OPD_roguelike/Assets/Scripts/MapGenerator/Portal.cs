@@ -18,28 +18,37 @@ public class Portal : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            switch (SceneManager.GetActiveScene().name)
+            switch (PlayerController.instance.CurrentSceneName)
             {
                 case "Wasteland":
-                    PlayerPrefs.SetInt("WastelandDepth", PlayerPrefs.GetInt("WastelandDepth") + 1);
-                    if (PlayerPrefs.GetInt("WastelandDepth") % 5 == 0)
-                        SceneManager.LoadScene("TestLobby");
+                    PlayerPrefs.SetInt("Depth", PlayerPrefs.GetInt("Depth") + 1);
+                    if (PlayerPrefs.GetInt("Depth") % 5 == 0)
+                    {
+                        SceneManager.LoadScene("TestLobby"); 
+                        PlayerPrefs.SetInt("Depth", 0);
+                    }
                     else
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                        SceneManager.LoadScene("Dange");
                     break;
                 case "Forest":
-                    PlayerPrefs.SetInt("ForestDepth", PlayerPrefs.GetInt("ForestDepth") + 1);
-                    if (PlayerPrefs.GetInt("ForestDepth") % 3 == 0)
+                    PlayerPrefs.SetInt("Depth", PlayerPrefs.GetInt("Depth") + 1);
+                    if (PlayerPrefs.GetInt("Depth") % 3 == 0)
+                    { 
                         SceneManager.LoadScene("TestLobby");
+                        PlayerPrefs.SetInt("Depth", 0);
+                    }
                     else
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                        SceneManager.LoadScene("Dange");
                     break;
                 case "Laboratory":
-                    PlayerPrefs.SetInt("LaboratoryDepth", PlayerPrefs.GetInt("LaboratoryDepth") + 1);
-                    if (PlayerPrefs.GetInt("LaboratoryDepth") % 7 == 0)
+                    PlayerPrefs.SetInt("Depth", PlayerPrefs.GetInt("Depth") + 1);
+                    if (PlayerPrefs.GetInt("Depth") % 7 == 0)
+                    { 
                         SceneManager.LoadScene("TestLobby");
+                        PlayerPrefs.SetInt("Depth", 0);
+                    }
                     else
-                        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                        SceneManager.LoadScene("Dange");
                     break;
                 default:
                     break;

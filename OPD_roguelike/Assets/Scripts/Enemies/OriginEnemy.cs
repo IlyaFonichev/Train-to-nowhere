@@ -108,7 +108,8 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        healthBar.fillAmount = (float)currentHealth / maxHealth;
+        if (healthBar != null)
+            healthBar.fillAmount = (float)currentHealth / maxHealth;
     }
 
     private IEnumerator Death()

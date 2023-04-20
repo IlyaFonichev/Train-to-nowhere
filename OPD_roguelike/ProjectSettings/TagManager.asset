@@ -23,6 +23,7 @@ TagManager:
   - DoorSprite
   - Item
   - Wall
+  - Portal
   layers:
   - Default
   - TransparentFX

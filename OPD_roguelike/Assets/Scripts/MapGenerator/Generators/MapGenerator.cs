@@ -39,9 +39,12 @@ public abstract class MapGenerator : MonoBehaviour
         InstantiateRoomSwitcher();
         CompletionRooms(); //+20%
 
-        Minimap.instance.ClearMap();
-        Minimap.instance.SetRooms = rooms;
-        Minimap.instance.DrawMap();
+        if (Minimap.instance != null)
+        {
+            Minimap.instance.ClearMap();
+            Minimap.instance.SetRooms = rooms;
+            Minimap.instance.DrawMap();
+        }
         gameObject.name = "Map";
         loadScene = 100;
         if (CanvasInstance.instance != null)

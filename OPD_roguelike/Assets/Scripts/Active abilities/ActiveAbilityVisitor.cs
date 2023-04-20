@@ -1,13 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ActiveAbilityVisitor : MonoBehaviour
 {
     private ActiveAbility ab;
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnLevelLoad;
+    }
 
-    private void OnLevelWasLoaded()
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnLevelLoad;
+    }
+
+    private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
         if (gameObject.GetComponent<InventoryScript>().ability != null && CanvasInstance.instance != null)
             CanvasInstance.instance.activeAbilityBox.GetComponent<Image>().sprite = gameObject.GetComponent<InventoryScript>().ability.GetComponent<SpriteRenderer>().sprite;

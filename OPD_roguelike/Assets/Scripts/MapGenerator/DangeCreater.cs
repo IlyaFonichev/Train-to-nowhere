@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DangeCreater : MonoBehaviour
@@ -11,23 +9,28 @@ public class DangeCreater : MonoBehaviour
 
     public void CreateDange(string dange)
     {
-        switch (dange)
+        if (PlayerPrefs.GetInt("Depth") != 0)
         {
-            case "Training":
-                Instantiate(training, Vector3.zero, Quaternion.identity);
-                break;
-            case "Cave":
-                Instantiate(cave, Vector3.zero, Quaternion.identity);
-                break;
-            case "Forest":
-                Instantiate(forest, Vector3.zero, Quaternion.identity);
-                break;
-            case "Wasteland":
-                Instantiate(wasteland, Vector3.zero, Quaternion.identity);
-                break;
-            case "Laboratory":
-                Instantiate(laboratory, Vector3.zero, Quaternion.identity);
-                break;
+            switch (dange)
+            {
+                case "Training":
+                    Instantiate(training, Vector3.zero, Quaternion.identity);
+                    break;
+                case "Cave":
+                    Instantiate(cave, Vector3.zero, Quaternion.identity);
+                    break;
+                case "Forest":
+                    Instantiate(forest, Vector3.zero, Quaternion.identity);
+                    break;
+                case "Wasteland":
+                    Instantiate(wasteland, Vector3.zero, Quaternion.identity);
+                    break;
+                case "Laboratory":
+                    Instantiate(laboratory, Vector3.zero, Quaternion.identity);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

@@ -22,11 +22,10 @@ public class Minimap : MonoBehaviour
     private GameObject offsetPosition;
     private Vector2 maxPosition = Vector2.zero, minPosition = Vector2.zero, startOffsetPosition;
     private int numberOfCurrentRoom;
-    private float changeScale;
+    private const float changeScale = 1.25f;
 
     private void Awake()
     {
-        changeScale = 1.25f;
         startOffsetPosition = offsetPosition.transform.position;
         InstantiateDoorManager();
         numberOfCurrentRoom = 0;

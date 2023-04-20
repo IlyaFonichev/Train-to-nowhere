@@ -12,7 +12,7 @@ public class ForestGenerator : MapGenerator
     private GameObject mobsRoom;
     public override void CountRoomInitialization()
     {
-        CountOfRooms = (uint)PlayerPrefs.GetInt("ForestDepth") + 5 + (uint)Random.Range(0, 5);
+        CountOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 5 + (uint)Random.Range(0, 5);
     }
     public override void Generate()
     {
@@ -25,7 +25,7 @@ public class ForestGenerator : MapGenerator
     public override GameObject InstantiateRoom()
     {
         int numberRoom = Random.Range(0, 5);
-        if (CurrentCountOfRooms == CountOfRooms - 2 && PlayerPrefs.GetInt("ForestDepth") % 3 == 2)
+        if (CurrentCountOfRooms == CountOfRooms - 2 && PlayerPrefs.GetInt("Depth") % 4 == 2)
             return Instantiate(bossRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));
         else
         {

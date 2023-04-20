@@ -1,4 +1,3 @@
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +10,7 @@ public class CanvasInstance : MonoBehaviour
         SetInstance();
     }
 
-    private void OnLevelWasLoaded(int level)
+    private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
         if (SceneManager.GetActiveScene().name != "TestLobby")
             instance.gameObject.SetActive(false);
@@ -19,7 +18,10 @@ public class CanvasInstance : MonoBehaviour
     private void SetInstance()
     {
         if (instance == null)
+        {
             instance = this;
+            SceneManager.sceneLoaded += OnLevelLoad;
+        }
         else
             Destroy(gameObject);
     }

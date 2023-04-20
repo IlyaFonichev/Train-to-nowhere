@@ -12,11 +12,10 @@ public class MobsManager : MonoBehaviour
     private bool portalIsNeed;
     private void Awake()
     {
-        string sceneName = SceneManager.GetActiveScene().name;
+        string sceneName = PlayerController.instance.SceneName;
         if (sceneName == "Laboratory" || sceneName == "Forest" || sceneName == "Wasteland" || sceneName == "OldDange")
             portalIsNeed = true;
         else
-
             portalIsNeed = false;
         SetInstance();
     }

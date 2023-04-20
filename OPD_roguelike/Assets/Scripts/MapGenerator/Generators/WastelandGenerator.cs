@@ -13,7 +13,7 @@ public class WastelandGenerator : MapGenerator
     private GameObject mobsRoom;
     public override void CountRoomInitialization()
     {
-        CountOfRooms = (uint)PlayerPrefs.GetInt("WastelandDepth") + 7 + (uint)Random.Range(0, 5);;
+        CountOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 7 + (uint)Random.Range(0, 5);;
     }
 
     public override void Generate()
@@ -31,7 +31,7 @@ public class WastelandGenerator : MapGenerator
     {
         if (CurrentCountOfRooms == CountOfRooms - 2)
         {
-            if(PlayerPrefs.GetInt("WastelandDepth") % 5 == 4)
+            if(PlayerPrefs.GetInt("Depth") % 6 == 4)
                 return Instantiate(bossRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));
             else
                 return Instantiate(chestRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));

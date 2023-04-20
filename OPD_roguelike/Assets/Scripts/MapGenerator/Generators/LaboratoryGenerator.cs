@@ -12,7 +12,7 @@ public class LaboratoryGenerator : MapGenerator
     private GameObject mobsRoom;
     public override void CountRoomInitialization()
     {
-        CountOfRooms = (uint)PlayerPrefs.GetInt("LaboratoryDepth") + 7 + (uint)Random.Range(0, 7);
+        CountOfRooms = (uint)PlayerPrefs.GetInt("Depth") + 7 + (uint)Random.Range(0, 7);
     }
     public override void Generate()
     {
@@ -27,7 +27,7 @@ public class LaboratoryGenerator : MapGenerator
     public override GameObject InstantiateRoom()
     {
         int numberRoom = Random.Range(0, 5);
-        if (CurrentCountOfRooms == CountOfRooms - 2 && PlayerPrefs.GetInt("LaboratoryDepth") % 7 == 6)
+        if (CurrentCountOfRooms == CountOfRooms - 2 && PlayerPrefs.GetInt("Depth") % 8 == 6)
             return Instantiate(bossRoom, Vector3.zero, Quaternion.Euler(90, 0, 0));
         else
         {
