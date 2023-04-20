@@ -8,7 +8,7 @@ public class PauseManager : MonoBehaviour
     private bool pause;
     public static PauseManager instance;
 
-    private void Start()
+    private void Awake()
     {
         pause = false;
         SetInstance();
@@ -21,14 +21,22 @@ public class PauseManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
+    private void OnLevelWasLoaded(int level)
+    {
+        gameObject.SetActive(false);
+    }
     public void Pause()
     {
-        pause = !pause;
-        gameObject.SetActive(pause);
+        if (SceneManager.GetActiveScene().name != "TestLobby")
+        {
+            pause = !pause;
+            gameObject.SetActive(pause);
+        }
     }
     public void ExitInMenu()
     {
+        gameObject.SetActive(false);
+        pause = false;
         SceneManager.LoadScene("TestLobby");
     }
 

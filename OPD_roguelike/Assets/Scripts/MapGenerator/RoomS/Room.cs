@@ -12,6 +12,7 @@ public abstract class Room : MonoBehaviour
     private Vector2 position;
     [HideInInspector]
     public List<GameObject> mobsInTheRoom;
+    [SerializeField]
     private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
     private RoomType type;
     [SerializeField]

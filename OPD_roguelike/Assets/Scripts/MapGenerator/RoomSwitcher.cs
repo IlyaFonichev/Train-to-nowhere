@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class RoomSwitcher : MonoBehaviour
 {
-    private Vector3 startCameraPosition;
     private bool isInitialized = false;
     [SerializeField]
     private List<GameObject> rooms = null;
@@ -14,7 +13,6 @@ public class RoomSwitcher : MonoBehaviour
     private void Start()
     {
         SetInstance();
-        startCameraPosition = Camera.main.transform.position - currentRoom.transform.position;
     }
     private void SetInstance()
     {

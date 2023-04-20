@@ -9,8 +9,8 @@ public class ActiveAbilityVisitor : MonoBehaviour
 
     private void OnLevelWasLoaded()
     {
-        if (gameObject.GetComponent<InventoryScript>().ability != null)
-            GameObject.Find("ActiveAbilityBox").GetComponent<Image>().sprite = gameObject.GetComponent<InventoryScript>().ability.GetComponent<SpriteRenderer>().sprite;
+        if (gameObject.GetComponent<InventoryScript>().ability != null && CanvasInstance.instance != null)
+            CanvasInstance.instance.activeAbilityBox.GetComponent<Image>().sprite = gameObject.GetComponent<InventoryScript>().ability.GetComponent<SpriteRenderer>().sprite;
     }
 
     private void Update()

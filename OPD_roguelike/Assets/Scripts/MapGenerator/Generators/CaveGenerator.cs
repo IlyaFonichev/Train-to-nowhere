@@ -54,13 +54,21 @@ public class CaveGenerator : MapGenerator
             }
 
             GameObject newRoom = InstantiateRoom();
-            CurrentCountOfRooms++;
-            rooms.Add(newRoom);
-            newRoom.name += System.Convert.ToString(CurrentCountOfRooms);
             newRoom.GetComponent<Room>().Position = currentRoom.GetComponent<Room>().Position + SetOffsetVector(currentDoorTag);
-            SetDoors(newRoom, currentRoom, currentDoorTag, true);
+            SetDoors(newRoom, currentRoom, currentDoorTag, true); 
+            GameObject existingRoom = null;
 
-            currentRoom = newRoom;
+            if (!IntersectionCheck(newRoom, out existingRoom))
+            {
+                rooms.Add(newRoom);
+                newRoom.name += System.Convert.ToString(CurrentCountOfRooms);
+                CurrentCountOfRooms++;
+                currentRoom = newRoom;
+            }
+            else
+            {
+                Destroy(newRoom);
+            }
         }
         InstantiateExitDoor(exitDoorPrefab);
     }

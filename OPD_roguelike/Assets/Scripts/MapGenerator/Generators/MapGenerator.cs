@@ -39,10 +39,13 @@ public abstract class MapGenerator : MonoBehaviour
         InstantiateRoomSwitcher();
         CompletionRooms(); //+20%
 
+        Minimap.instance.ClearMap();
         Minimap.instance.SetRooms = rooms;
         Minimap.instance.DrawMap();
         gameObject.name = "Map";
         loadScene = 100;
+        if (CanvasInstance.instance != null)
+            CanvasInstance.instance.Show();
     }
     private void InstallMobsManager()
     {
@@ -58,6 +61,8 @@ public abstract class MapGenerator : MonoBehaviour
             currentLoad += 50 * Time.deltaTime;
         if (currentLoad >= 100)
         {
+            if (CanvasInstance.instance != null)
+                CanvasInstance.instance.Show();
             sceneIsLoded = true;
             Destroy(indicator);
             Destroy(gameObject.GetComponent<MapGenerator>());
@@ -217,6 +222,7 @@ public abstract class MapGenerator : MonoBehaviour
         int neighbor = Random.Range(0, 4);
         GameObject exitDoor = null;
         GameObject exitRoomDoor = new GameObject("ExitDoor");
+        exitRoomDoor.tag = "ExitDoor";
         string exitDoorTag = "";
         switch (neighbor)
         {
@@ -279,16 +285,10 @@ public abstract class MapGenerator : MonoBehaviour
         Instantiate(exitDoorPrefab, exitDoor.transform.position, Quaternion.Euler(90, 0, angle)).transform.SetParent(rooms[0].transform);
     }
 
-    public void ProceduralGenerate(int numberOfCurrentParentDoor)
+    public bool IntersectionCheck(GameObject newRoom, out GameObject existingRoom)
     {
-        GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
-        Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
-
-        GameObject newRoom = InstantiateRoom();
-        GameObject parentRoom = currentParentDoor.transform.parent.transform.parent.gameObject;
-        newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
-        GameObject existingRoom = null;
         bool intersection = false;
+        existingRoom = null;
 
         //Обработка пересечения
         for (int i = 0; i < rooms.Count; i++)
@@ -300,6 +300,20 @@ public abstract class MapGenerator : MonoBehaviour
                 break;
             }
         }
+        return intersection;
+    }
+
+    public void ProceduralGenerate(int numberOfCurrentParentDoor)
+    {
+        GameObject currentParentDoor = doors[numberOfCurrentParentDoor];
+        Vector2 positionOffset = SetOffsetVector(currentParentDoor.tag);
+
+        GameObject newRoom = InstantiateRoom();
+        GameObject parentRoom = currentParentDoor.transform.parent.transform.parent.gameObject;
+        newRoom.GetComponent<Room>().Position = parentRoom.GetComponent<Room>().Position + positionOffset;
+        GameObject existingRoom = null;
+
+        bool intersection = IntersectionCheck(newRoom, out existingRoom);
 
         if (intersection)
         {

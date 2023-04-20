@@ -69,7 +69,8 @@ public abstract class OriginEnemy : MonoBehaviour
     private void OnMouseDown()
     {
         //Test
-        TakeDamge();
+        if (_condition != Condition.Died)
+            StartCoroutine(Death());
     }
 
     private void OnDestroy()

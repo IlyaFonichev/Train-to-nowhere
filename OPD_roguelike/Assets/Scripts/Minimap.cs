@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class Minimap : MonoBehaviour
     [SerializeField]
     private GameObject uiDoorPrefab;
     private float space;
+    [SerializeField]
     private List<GameObject> rooms;
     [SerializeField]
     private List<GameObject> uiRooms;
@@ -18,15 +20,15 @@ public class Minimap : MonoBehaviour
     public static Minimap instance;
     [SerializeField]
     private GameObject offsetPosition;
-    private Vector2 maxPosition = Vector2.zero, minPosition = Vector2.zero;
+    private Vector2 maxPosition = Vector2.zero, minPosition = Vector2.zero, startOffsetPosition;
     private int numberOfCurrentRoom;
-    [SerializeField, Range(1f, 1.5f), Min(1)]
     private float changeScale;
 
     private void Awake()
     {
-        doorManager = new GameObject("DoorManager");
-        doorManager.transform.SetParent(offsetPosition.transform);
+        changeScale = 1.25f;
+        startOffsetPosition = offsetPosition.transform.position;
+        InstantiateDoorManager();
         numberOfCurrentRoom = 0;
         space = transform.GetComponent<RectTransform>().rect.width / 16;
         SetInstance();
@@ -66,6 +68,19 @@ public class Minimap : MonoBehaviour
         }
     }
 
+    public void ClearMap()
+    {
+        offsetPosition.transform.position = startOffsetPosition;
+        maxPosition = Vector2.zero;
+        minPosition = Vector2.zero;
+        for (int i = 0; i < offsetPosition.transform.childCount; i++)
+            Destroy(offsetPosition.transform.GetChild(i).gameObject);
+        InstantiateDoorManager();
+        uiRooms.Clear();
+        offsetPosition.transform.position = startOffsetPosition;
+        numberOfCurrentRoom = 0;
+    }
+
     public void DrawMap()
     {
         for (int i = 0; i < rooms.Count; i++)
@@ -96,6 +111,11 @@ public class Minimap : MonoBehaviour
         DrawDoors();
     }
 
+    private void InstantiateDoorManager()
+    {
+        doorManager = new GameObject("DoorManager");
+        doorManager.transform.SetParent(offsetPosition.transform);
+    }
     private void DrawDoors()
     {
         for (int i = 0; i < rooms.Count; i++)

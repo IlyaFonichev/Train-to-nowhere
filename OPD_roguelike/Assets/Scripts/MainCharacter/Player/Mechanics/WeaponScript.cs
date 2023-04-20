@@ -42,7 +42,8 @@ public class WeaponScript : MonoBehaviour
     {
         player = PlayerController.instance.gameObject;
         playerCamera = CameraController.instance.gameObject.GetComponent<Camera>();
-        textBox = GameObject.Find("Ammo");
+        if (CanvasInstance.instance != null)
+            textBox = CanvasInstance.instance.ammo;
 
         applyParameters();
 
@@ -57,7 +58,7 @@ public class WeaponScript : MonoBehaviour
 
     private void OnLevelWasLoaded(int level)
     {
-        textBox = GameObject.Find("Ammo");
+        textBox = CanvasInstance.instance.ammo;
         txt = textBox.GetComponent<Text>();
 
         printAmmo();
@@ -166,7 +167,7 @@ public class WeaponScript : MonoBehaviour
 
         yield break;
     }
-    
+
     public void printAmmo()
     {
         if (!isMelee)
