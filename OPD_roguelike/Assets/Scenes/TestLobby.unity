@@ -1315,6 +1315,7 @@ GameObject:
   - component: {fileID: 1862429943}
   - component: {fileID: 1862429944}
   - component: {fileID: 1862429945}
+  - component: {fileID: 1862429946}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1455,6 +1456,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dabd4583312b7442928c4279148c691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1862429946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862429937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18dbce101f608e4bbb1ad39d74aa1df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  training: {fileID: 3957546270887743303, guid: d33847a24b566b445b435ef635366b2d, type: 3}
+  cave: {fileID: 4742348894102415542, guid: a0877bbd1cc357541a6d2f1eb5607f9f, type: 3}
+  forest: {fileID: 6569023960636060040, guid: cb2b400120a180c49a28567bd25b91e5, type: 3}
+  wasteland: {fileID: 7642683677311045937, guid: ed83264101847454981f631918dd6a44, type: 3}
+  laboratory: {fileID: 8923336034336939121, guid: c658069676a9d2c40aed921f1b16c1c6, type: 3}
 --- !u!1 &1937518453
 GameObject:
   m_ObjectHideFlags: 0

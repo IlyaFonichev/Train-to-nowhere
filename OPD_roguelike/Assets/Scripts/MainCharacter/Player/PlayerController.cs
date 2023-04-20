@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private string sceneName;
     private float switchRoomOffet = 3f;
     [SerializeField] private float speed = 10f;
     [SerializeField] private float dashSpeed = 1f;
@@ -57,6 +58,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnLevelWasLoaded(int level)
     {
+        if(sceneName == "Training" ||
+            sceneName == "Cave" ||
+            sceneName == "Wasteland" ||
+            sceneName == "Forest" ||
+            sceneName == "Laboratory")
+        {
+            GetComponent<DangeCreater>().CreateDange(sceneName);
+        }
         _rigidBody.transform.position = Vector3.zero;
         CameraController.instance.SetCurrentRoom();
     }
@@ -95,7 +104,8 @@ public class PlayerController : MonoBehaviour
            other.CompareTag("Wasteland") ||
            other.CompareTag("Laboratory"))
         {
-            SceneManager.LoadScene(other.tag);
+            sceneName = other.tag;
+            SceneManager.LoadScene("Dange");
             _rigidBody.transform.position = Vector3.zero;
         }
         if (other.CompareTag("ExitDoor"))
