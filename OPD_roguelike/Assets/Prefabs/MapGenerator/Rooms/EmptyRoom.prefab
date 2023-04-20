@@ -54,6 +54,7 @@ MonoBehaviour:
   rightRoom: {fileID: 0}
   bottomRoom: {fileID: 0}
   border: {fileID: 7127885904492023018}
+  sizeOffset: 1
 --- !u!1 &4200660226623478888
 GameObject:
   m_ObjectHideFlags: 0

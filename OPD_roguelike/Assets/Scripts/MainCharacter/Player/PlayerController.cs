@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private bool isInstantiate;
     private string sceneName, currentSceneName;
     private float switchRoomOffet = 3f;
     [SerializeField] private float speed = 10f;
@@ -24,8 +25,11 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        isInstantiate = false;
         if (SceneManager.GetActiveScene().name == "TestLobby")
+        {
             PlayerPrefs.SetInt("Depth", 0);
+        }
         SetInstance();
         _healthOfPlayer = new HealthOfPlayer(health: 70, maxHaelthValue: 100);
         _scoreOfOlayer = new Score(0);
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
             if (MapGenerator.instance.SceneIsLoad)
                 return;
 
-        if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause))
+        if (!isDashing && !(PauseManager.instance && PauseManager.instance.onPause) && isInstantiate)
             _rigidBody.velocity = direction.normalized * speed * gameObject.GetComponent<Player>().speed;
         else if (!isDashing)
             _rigidBody.velocity = Vector3.zero;
@@ -68,8 +72,12 @@ public class PlayerController : MonoBehaviour
     }
     private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
-        if(SceneManager.GetActiveScene().name == "TestLobby")
+        isInstantiate = false;
+        if (SceneManager.GetActiveScene().name == "TestLobby")
+        {
+            isInstantiate = true;
             PlayerPrefs.SetInt("Depth", 0);
+        }
         if (sceneName == "Training" ||
             sceneName == "Cave" ||
             sceneName == "Wasteland" ||
@@ -178,16 +186,24 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     public Rigidbody Rigidbody
     {
         get { return _rigidBody; }
     }
+
     public string SceneName
     {
         get { return sceneName; }
     }
+
     public string CurrentSceneName
     {
         get { return currentSceneName; }
+    }
+
+    public bool IsInstantiate
+    {
+        set { isInstantiate = value; }
     }
 }

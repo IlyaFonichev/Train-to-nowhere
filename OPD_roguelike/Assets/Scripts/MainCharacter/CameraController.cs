@@ -63,16 +63,33 @@ public class CameraController : MonoBehaviour
     {
         Vector3 target = player.transform.position + deltaPosition;
         transform.position = Vector3.Lerp(transform.position, target, smoothSpeed);
+        float offsetYdown = 0, offsetYup = 0, offsetX = 0;
         if (RoomSwitcher.instance != null)
         {
-            if (transform.position.z < currentRoomPosition.z - 4.5f)
-                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z - 4.5f);
-            if (transform.position.z > currentRoomPosition.z - 3)
-                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z - 3);
-            if (transform.position.x < currentRoomPosition.x - 1)
-                transform.position = new Vector3(currentRoomPosition.x - 1, transform.position.y, transform.position.z);
-            if (transform.position.x > currentRoomPosition.x + 1)
-                transform.position = new Vector3(currentRoomPosition.x + 1, transform.position.y, transform.position.z);
+            switch (RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().Size)
+            {
+                case 1:
+                    offsetX = 1;
+                    offsetYdown = -4.5f;
+                    offsetYup = -3;
+                    break;
+                case 2:
+                    offsetX = 9;
+                    offsetYdown = -9f;
+                    offsetYup = 1;
+                    break;
+                default:
+                    Debug.Log("Размер комнаты не задан");
+                    break;
+            }
+            if (transform.position.z < currentRoomPosition.z + offsetYdown)
+                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z + offsetYdown);
+            if (transform.position.z > currentRoomPosition.z + offsetYup)
+                transform.position = new Vector3(transform.position.x, transform.position.y, currentRoomPosition.z + offsetYup);
+            if (transform.position.x < currentRoomPosition.x - offsetX)
+                transform.position = new Vector3(currentRoomPosition.x - offsetX, transform.position.y, transform.position.z);
+            if (transform.position.x > currentRoomPosition.x + offsetX)
+                transform.position = new Vector3(currentRoomPosition.x + offsetX, transform.position.y, transform.position.z);
         }
     }
 

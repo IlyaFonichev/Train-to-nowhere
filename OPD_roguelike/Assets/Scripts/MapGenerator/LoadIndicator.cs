@@ -10,4 +10,10 @@ public class LoadIndicator : MonoBehaviour
             GetComponent<Image>().fillAmount = MapGenerator.instance.Load / 100;
         }
     }
+
+    private void OnDestroy()
+    {
+        PauseManager.instance.IsInstantiate = true;
+        PlayerController.instance.IsInstantiate = true;
+    }
 }

@@ -6,8 +6,6 @@ public class BearEnemy : OriginEnemy
     [SerializeField]
     private GameObject bulletPrefab;
     private Vector3 nextTargetPosition, preTargetPosition, targetVector;
-    [SerializeField]
-    private float attackTime;
     private int bulletCount;
 
     public override void Initialization()

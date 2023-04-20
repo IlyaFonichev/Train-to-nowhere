@@ -12,11 +12,12 @@ public abstract class Room : MonoBehaviour
     private Vector2 position;
     [HideInInspector]
     public List<GameObject> mobsInTheRoom;
-    [SerializeField]
     private GameObject topRoom, leftRoom, rightRoom, bottomRoom;
     private RoomType type;
     [SerializeField]
     private GameObject border;
+    [SerializeField]
+    private int sizeOffset;
     public enum RoomType
     {
         Start, 
@@ -95,5 +96,9 @@ public abstract class Room : MonoBehaviour
     public GameObject OriginRoom
     {
         get { return originRoom; }
+    }
+    public int Size
+    {
+        get { return sizeOffset; }
     }
 }

@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    private bool isInstantiate;
     private bool pause;
     public static PauseManager instance;
 
     private void Awake()
     {
+        isInstantiate = false;
         pause = false;
         SetInstance();
         gameObject.SetActive(false);
@@ -26,11 +28,12 @@ public class PauseManager : MonoBehaviour
     }
     private void OnLevelLoad(Scene scene, LoadSceneMode mode)
     {
+        isInstantiate = false;
         gameObject.SetActive(false);
     }
     public void Pause()
     {
-        if (SceneManager.GetActiveScene().name != "TestLobby")
+        if (SceneManager.GetActiveScene().name != "TestLobby" && isInstantiate)
         {
             pause = !pause;
             gameObject.SetActive(pause);
@@ -48,6 +51,10 @@ public class PauseManager : MonoBehaviour
         Pause();
     }
 
+    public bool IsInstantiate
+    {
+        set { isInstantiate = value; }
+    }
     public bool onPause
     {
         get { return pause; }

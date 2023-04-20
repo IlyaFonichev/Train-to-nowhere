@@ -6,8 +6,6 @@ public class MouseEnemy : OriginEnemy
     [SerializeField]
     private GameObject dangerZonePrefab;
     private Vector3 nextTargetPosition, preTargetPosition, targetVector;
-    [SerializeField]
-    private float attackTime;
 
     public override void Initialization()
     {

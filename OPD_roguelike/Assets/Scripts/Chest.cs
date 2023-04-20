@@ -16,6 +16,7 @@ public class Chest : MonoBehaviour
 
             tmp = Instantiate(drops[pickedWeapon], transform.position, Quaternion.Euler(90, 0, 0));
             tmp.name = drops[pickedWeapon].name;
+            tmp.transform.SetParent(RoomSwitcher.instance.CurrentRoom.GetComponent<Room>().ObjectManager.transform);
 
             Destroy(gameObject);
         }

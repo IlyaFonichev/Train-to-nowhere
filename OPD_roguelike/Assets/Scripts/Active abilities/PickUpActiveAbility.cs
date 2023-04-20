@@ -36,7 +36,7 @@ public class PickUpActiveAbility : MonoBehaviour
                 newAbility.name = gameObject.name;
                 player.gameObject.GetComponent<InventoryScript>().ability = newAbility;
 
-                GameObject.Find("ActiveAbilityBox").GetComponent<Image>().sprite = newAbility.GetComponent<SpriteRenderer>().sprite;
+                CanvasInstance.instance.activeAbilityBox.GetComponent<Image>().sprite = newAbility.GetComponent<SpriteRenderer>().sprite;
 
                 Destroy(gameObject);
             }

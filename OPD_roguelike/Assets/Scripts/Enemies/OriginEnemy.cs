@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public abstract class OriginEnemy : MonoBehaviour
 {
+    public float attackTime;
     [SerializeField]
     private GameObject spriteManager, canvas, particleSystemManager;
     [SerializeField]
@@ -117,8 +118,9 @@ public abstract class OriginEnemy : MonoBehaviour
         _condition = Condition.Died;
         Destroy(canvas);
         Destroy(spriteManager);
-        for (int i = 0; i < particleSystemManager.transform.childCount; i++)
-            particleSystemManager.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
+        if (particleSystemManager != null)
+            for (int i = 0; i < particleSystemManager.transform.childCount; i++)
+                particleSystemManager.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
         if (damageZone != null)
             Destroy(damageZone);
         MobsManager.instance.RemoveMob(gameObject);

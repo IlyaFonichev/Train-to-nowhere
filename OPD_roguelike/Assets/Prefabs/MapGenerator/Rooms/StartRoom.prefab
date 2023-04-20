@@ -140,6 +140,7 @@ MonoBehaviour:
   rightRoom: {fileID: 0}
   bottomRoom: {fileID: 0}
   border: {fileID: 5800791349338653014}
+  sizeOffset: 1
 --- !u!1001 &360806034588317137
 PrefabInstance:
   m_ObjectHideFlags: 0
