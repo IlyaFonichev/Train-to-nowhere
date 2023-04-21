@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     private static HealthOfPlayer _healthOfPlayer;
     private static Score _scoreOfOlayer;
     public static PlayerController instance;
+    [SerializeField]
+    private GameObject weaponManager;
     public static HealthOfPlayer GetHealthOfPlayer() { return _healthOfPlayer; }
     public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
 
@@ -205,5 +207,10 @@ public class PlayerController : MonoBehaviour
     public bool IsInstantiate
     {
         set { isInstantiate = value; }
+    }
+
+    public GameObject Weapon
+    {
+        get { return weaponManager; }
     }
 }

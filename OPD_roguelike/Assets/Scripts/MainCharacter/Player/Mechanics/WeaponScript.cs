@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class WeaponScript : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject dulo;
     private GameObject player;
     private Camera playerCamera;
 
+    private GameObject weaponManager;
     public GameObject bulletPrefab;
 
     private float bulletSpeed = 5;
@@ -41,6 +44,8 @@ public class WeaponScript : MonoBehaviour
 
     private void Start()
     {
+        weaponManager = transform.parent.gameObject;
+        transform.position = weaponManager.transform.position + new Vector3(0.9f, 0, -0.188f);
         player = PlayerController.instance.gameObject;
         playerCamera = CameraController.instance.gameObject.GetComponent<Camera>();
         if (CanvasInstance.instance != null)
@@ -96,7 +101,7 @@ public class WeaponScript : MonoBehaviour
         Vector3 shootVector = new Vector3(mouseShootVector.x + Random.Range(-accuracy, accuracy), 0, mouseShootVector.z + Random.Range(-accuracy, accuracy));
         shootVector.Normalize();
 
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + (shootVector), new Quaternion(0, 0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, dulo.transform.position, new Quaternion(0, 0, 0, 0));
         currMagazine--;
         printAmmo();
 
@@ -126,7 +131,7 @@ public class WeaponScript : MonoBehaviour
 
         delay = 0;
 
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, new Quaternion(0, 0, 0, 0));
+        GameObject bullet = Instantiate(bulletPrefab, dulo.transform.position, new Quaternion(0, 0, 0, 0));
 
         bullet.transform.localScale = new Vector3(range, range, 0.1f);
         bullet.transform.rotation = weaponAngle;
@@ -211,41 +216,31 @@ public class WeaponScript : MonoBehaviour
 
         Vector3 worldPointPos = playerCamera.ScreenToWorldPoint(mousePosNearClipPlane);
 
-        mouseVector = worldPointPos - gameObject.transform.position;
+        mouseVector = worldPointPos - PlayerController.instance.Weapon.transform.position;
 
-        mouseVector = new Vector3(mouseVector.x, 0, mouseVector.z);
+        mouseVector.y = 0;
 
         //mouseVector.Normalize();
     }
 
     private void pointWeaponToMouse()
     {
-        Vector3 playerMouseVector = (mouseVector + gameObject.transform.position - player.transform.position);
-        playerMouseVector = new Vector3(playerMouseVector.x, 0, playerMouseVector.z).normalized;
-
         Vector3 angleMouseVector = mouseVector.normalized;
 
-        if (playerMouseVector.x > 0)
+        if(mouseVector.x > 0)
         {
-            transform.position = new Vector3(player.transform.position.x + 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
-
-            if (angleMouseVector.z > 0 && angleMouseVector.z < 0.2f)
-                transform.rotation = Quaternion.Euler(90, -(int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
-            else if (angleMouseVector.z > 0)
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
+            if (angleMouseVector.z > 0)
+                weaponManager.transform.rotation = Quaternion.Euler(0, Vector3.Angle(Vector3.left, angleMouseVector) + 180, 0);
             else
-                transform.rotation = Quaternion.Euler(90, (int)Vector3.Angle(Vector3.right, angleMouseVector), 0);
+                weaponManager.transform.rotation = Quaternion.Euler(0, -Vector3.Angle(Vector3.left, angleMouseVector) + 180, 0);
         }
         else
         {
-            transform.position = new Vector3(player.transform.position.x - 0.872f, player.transform.position.y, player.transform.position.z + -0.188f);
-
-            if (angleMouseVector.z > 0 && angleMouseVector.z < 0.2f)
-                transform.rotation = Quaternion.Euler(-90, (int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
-            else if (angleMouseVector.z > 0)
-                transform.rotation = Quaternion.Euler(90, (int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
+            if (angleMouseVector.z > 0)
+                weaponManager.transform.rotation = Quaternion.Euler(-180, Vector3.Angle(Vector3.left, angleMouseVector) + 180, 0);
             else
-                transform.rotation = Quaternion.Euler(-90, -(int)Vector3.Angle(Vector3.left, angleMouseVector), -180);
+                weaponManager.transform.rotation = Quaternion.Euler(-180, -Vector3.Angle(Vector3.left, angleMouseVector) + 180, 0);
+
         }
 
         weaponAngle = transform.rotation;
