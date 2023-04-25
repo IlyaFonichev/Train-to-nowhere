@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ActiveAbilityVisitor : MonoBehaviour
 {
-    private ActiveAbility ab;
+    private Ability ab;
     private void Awake()
     {
         SceneManager.sceneLoaded += OnLevelLoad;
@@ -28,18 +28,22 @@ public class ActiveAbilityVisitor : MonoBehaviour
         try
         {
             if (Input.GetKeyDown(KeyCode.Q))
-                if (gameObject.GetComponent<InventoryScript>().ability.TryGetComponent<ActiveAbility>(out ab) && (PauseManager.instance == null || !PauseManager.instance.GetComponent<PauseManager>().onPause))
-                    ab.Accept(this);
+                if (gameObject.GetComponent<InventoryScript>().ability != null)
+                    foreach (Ability a in gameObject.GetComponent<InventoryScript>().ability.GetComponents<Ability>())
+                        a.Accept(this);
+
+                //if (gameObject.GetComponent<InventoryScript>().ability.TryGetComponent<Ability>(out ab) && (PauseManager.instance == null || !PauseManager.instance.GetComponent<PauseManager>().onPause))
+                //    ab.Accept(this);
         }
         catch { }
     }
 
-    public void Visit(SpeedBuff buff)
+    public void Visit(TmpSpeedBuff buff)
     {
         StartCoroutine(buff.ApplyBuff());
     }
 
-    public void Visit(DamageBuff buff)
+    public void Visit(TmpDamageBuff buff)
     {
         StartCoroutine(buff.ApplyBuff());
     }

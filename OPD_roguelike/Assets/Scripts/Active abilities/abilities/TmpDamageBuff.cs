@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpeedBuff : ActiveAbility
+public class TmpDamageBuff : ActiveAbility
 {
-    public override void Accept(ActiveAbilityVisitor visitor) 
+    public override void Accept(ActiveAbilityVisitor visitor)
     {
         visitor.Visit(this);
     }
@@ -17,10 +17,10 @@ public class SpeedBuff : ActiveAbility
 
         Player p = PlayerController.instance.gameObject.GetComponent<Player>();
 
-        p.speed *= multiplayer;
+        p.damage *= multiplayer;
 
         yield return new WaitForSeconds(time);
 
-        p.speed /= multiplayer;
+        p.damage /= multiplayer;
     }
 }

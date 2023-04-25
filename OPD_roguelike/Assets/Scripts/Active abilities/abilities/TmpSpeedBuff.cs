@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageBuff : ActiveAbility
+public class TmpSpeedBuff : ActiveAbility
 {
-    public override void Accept(ActiveAbilityVisitor visitor)
+    public override void Accept(ActiveAbilityVisitor visitor) 
     {
         visitor.Visit(this);
     }
@@ -17,10 +17,14 @@ public class DamageBuff : ActiveAbility
 
         Player p = PlayerController.instance.gameObject.GetComponent<Player>();
 
-        p.damage *= multiplayer;
+        p.speed *= multiplayer;
+
+        PlayerController.instance.gameObject.GetComponent<InventoryScript>().buffsList.Add(this);
 
         yield return new WaitForSeconds(time);
 
-        p.damage /= multiplayer;
+        PlayerController.instance.gameObject.GetComponent<InventoryScript>().buffsList.Remove(this);
+
+        p.speed /= multiplayer;
     }
 }

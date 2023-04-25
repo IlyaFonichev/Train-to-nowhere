@@ -13,7 +13,6 @@ public class PickUpActiveAbility : MonoBehaviour
         player = PlayerController.instance.gameObject;
     }
 
-    // realize later appearence of image in box
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
