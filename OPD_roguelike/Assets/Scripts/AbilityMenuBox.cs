@@ -25,6 +25,8 @@ public class AbilityMenuBox : MonoBehaviour, IPointerClickHandler
 
         gameObject.transform.parent.gameObject.SetActive(false);
 
+        PauseManager.instance.gameObject.GetComponent<PauseManager>().setPause();
+
         Destroy(ability);
     }
 }

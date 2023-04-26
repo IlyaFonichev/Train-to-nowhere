@@ -99,7 +99,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5aba90cd7878747a9c04bbda206f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menu: {fileID: 0}
 --- !u!114 &6094851653606064760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074e25795f6754845805f63853d3ef68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  multiplayer: 2
+  multiplayer: 1.1
 --- !u!65 &-6632550643470521541
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -51,6 +51,11 @@ public class PauseManager : MonoBehaviour
         Pause();
     }
 
+    public void setPause()
+    {
+        pause = !pause;
+    }
+
     public bool IsInstantiate
     {
         set { isInstantiate = value; }

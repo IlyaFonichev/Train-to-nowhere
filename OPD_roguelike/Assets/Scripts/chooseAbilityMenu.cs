@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,13 +26,21 @@ public class chooseAbilityMenu : MonoBehaviour
     private void OnEnable()
     {
         Image[] abilityBoxes = gameObject.GetComponentsInChildren<Image>();
+        Text[] abilityNames = gameObject.GetComponentsInChildren<Text>();
 
-        for (int i = 1; i < PassiveAbilitiesInventory.instance.gameObject.transform.childCount + 1; i++)
+        GameObject abilitiesInventory = PassiveAbilitiesInventory.instance.gameObject;
+        for (int i = 1; i < abilitiesInventory.transform.childCount + 1; i++)
         {
-            abilityBoxes[i].sprite = PassiveAbilitiesInventory.instance.gameObject.transform.GetChild(i - 1).gameObject.GetComponent<SpriteRenderer>().sprite;
-            abilityBoxes[i].color = PassiveAbilitiesInventory.instance.gameObject.transform.GetChild(i - 1).gameObject.GetComponent<SpriteRenderer>().color;
+            GameObject ability = abilitiesInventory.transform.GetChild(i - 1).gameObject;
 
-            abilityBoxes[i].gameObject.GetComponent<AbilityMenuBox>().Ability = PassiveAbilitiesInventory.instance.gameObject.transform.GetChild(i - 1).gameObject;
+            abilityBoxes[i].sprite = ability.GetComponent<SpriteRenderer>().sprite;
+            abilityBoxes[i].color = ability.GetComponent<SpriteRenderer>().color;
+
+            abilityNames[i - 1].text = ability.name;
+
+            abilityBoxes[i].gameObject.GetComponent<AbilityMenuBox>().Ability = ability;
         }
+
+        PauseManager.instance.gameObject.GetComponent<PauseManager>().setPause();
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Ability : MonoBehaviour
 {
     [SerializeField] protected float multiplayer;
+    [SerializeField] protected string description;
 
     public virtual void Accept(ActiveAbilityVisitor visitor) { }
 

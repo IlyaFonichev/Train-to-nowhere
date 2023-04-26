@@ -26,6 +26,9 @@ public class PickUpActiveAbility : MonoBehaviour
                     spawnedCurAbility.GetComponent<SpriteRenderer>().enabled = true;
                     spawnedCurAbility.name = curAbility.name;
 
+                    foreach (PassiveAbility ability in spawnedCurAbility.GetComponents<PassiveAbility>())
+                        ability.DisableBuff();
+
                     Destroy(curAbility);
                 }
 
@@ -36,6 +39,9 @@ public class PickUpActiveAbility : MonoBehaviour
                 player.gameObject.GetComponent<InventoryScript>().ability = newAbility;
 
                 CanvasInstance.instance.activeAbilityBox.GetComponent<Image>().sprite = newAbility.GetComponent<SpriteRenderer>().sprite;
+
+                foreach (PassiveAbility ability in newAbility.GetComponents<PassiveAbility>())
+                    StartCoroutine(ability.ApplyBuff());
 
                 Destroy(gameObject);
             }
