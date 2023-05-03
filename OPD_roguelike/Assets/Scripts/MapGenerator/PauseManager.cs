@@ -51,6 +51,12 @@ public class PauseManager : MonoBehaviour
         Pause();
     }
 
+    public void openInventory()
+    {
+        gameObject.SetActive(false);
+        InventoryMenu.instance.gameObject.SetActive(true);
+    }
+
     public void setPause()
     {
         pause = !pause;
