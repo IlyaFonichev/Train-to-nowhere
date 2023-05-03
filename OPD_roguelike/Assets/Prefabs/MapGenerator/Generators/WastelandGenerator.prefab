@@ -44,6 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e165a0bac4dcbf4abaf349c0ccca5bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grounds:
+  - {fileID: 21300000, guid: ebf14df88a02c884583368066313dc09, type: 3}
+  - {fileID: 21300000, guid: ebf14df88a02c884583368066313dc09, type: 3}
+  colors:
+  - {r: 0.8113208, g: 0.73247224, b: 0.4477572, a: 1}
+  - {r: 0.754717, g: 0.71107846, b: 0.5517978, a: 1}
+  - {r: 0.8301887, g: 0.6414131, b: 0.37201852, a: 1}
   startRoomPrefab: {fileID: 9203718568796747491, guid: 0556df7d3179a6d4980c6f21a31674a9, type: 3}
   rooms: []
   doors: []

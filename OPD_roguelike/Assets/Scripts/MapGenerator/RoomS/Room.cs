@@ -4,6 +4,7 @@ using System.Collections.Generic;
 [SelectionBase]
 public abstract class Room : MonoBehaviour
 {
+    public SpriteRenderer Ground;
     [SerializeField]
     private GameObject originRoom;
     [SerializeField]
@@ -34,6 +35,12 @@ public abstract class Room : MonoBehaviour
         InstantiateObjectManager();
         Instantiation();
         InstantiateDecoration();
+    }
+    public void Coloring(Color roomColor)
+    {
+        Ground.gameObject.transform.localScale = new Vector3(Mathf.Pow(-1, Random.Range(0, 2)) * sizeOffset, 1 * sizeOffset, 1 * sizeOffset);
+        Ground.color = roomColor;
+        originRoom.GetComponent<OriginRoom>().Recolor(roomColor);
     }
     private void InstantiateObjectManager()
     {

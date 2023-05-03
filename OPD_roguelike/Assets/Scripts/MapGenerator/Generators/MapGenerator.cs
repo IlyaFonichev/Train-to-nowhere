@@ -4,6 +4,11 @@ using UnityEngine;
 public abstract class MapGenerator : MonoBehaviour
 {
     [SerializeField]
+    private List<Sprite> grounds;
+    [SerializeField]
+    private List<Color> colors;
+    private Color currentColor;
+    [SerializeField]
     private GameObject startRoomPrefab;
     private GameObject startRoom;
     [HideInInspector]
@@ -25,6 +30,7 @@ public abstract class MapGenerator : MonoBehaviour
 
     private void Awake()
     {
+        currentColor = colors[Random.Range(0, colors.Count)];
         sceneIsLoded = false;
         loadScene = 0;
         InstallMobsManager();
@@ -35,6 +41,7 @@ public abstract class MapGenerator : MonoBehaviour
         Generate();
         DestroyEmptyDoors(); //+20%
         PlacementRoomPosition(); //+20%
+        Recolor();
         SetParent();
         InstantiateRoomSwitcher();
         CompletionRooms(); //+20%
@@ -93,6 +100,16 @@ public abstract class MapGenerator : MonoBehaviour
                 || originRoom.transform.GetChild(i).CompareTag("TopDoor")
                 || originRoom.transform.GetChild(i).CompareTag("RightDoor"))
                 doors.Add(originRoom.transform.GetChild(i).gameObject);
+    }
+
+    public void Recolor()
+    {
+        CameraController.instance.GetComponent<Camera>().backgroundColor = currentColor - Color.white / 5;
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            rooms[i].GetComponent<Room>().Ground.sprite = grounds[Random.Range(0, grounds.Count)];
+            rooms[i].GetComponent<Room>().Coloring(currentColor);
+        }
     }
 
     public abstract void Generate();
@@ -285,7 +302,9 @@ public abstract class MapGenerator : MonoBehaviour
         for (int i = 0; i < rooms[0].GetComponent<Room>().OriginRoom.transform.childCount; i++)
             if (rooms[0].GetComponent<Room>().OriginRoom.transform.GetChild(i).CompareTag(exitDoorTag))
                 exitDoor = rooms[0].GetComponent<Room>().OriginRoom.transform.GetChild(i).gameObject;
-        Instantiate(exitDoorPrefab, exitDoor.transform.position, Quaternion.Euler(90, 0, angle)).transform.SetParent(rooms[0].transform);
+        GameObject door = Instantiate(exitDoorPrefab, exitDoor.transform.position, Quaternion.Euler(90, 0, angle));
+        door.transform.SetParent(rooms[0].transform);
+        door.transform.GetChild(0).GetComponent<SpriteRenderer>().color = currentColor;
     }
 
     public bool IntersectionCheck(GameObject newRoom, out GameObject existingRoom)

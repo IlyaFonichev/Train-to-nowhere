@@ -12,6 +12,7 @@ public class TrainingGenerator : MapGenerator
     }
     public override void Generate()
     {
+        Recolor();
         while (CurrentCountOfRooms != CountOfRooms - 1)
         {
             AddLoadSceneIndicator();

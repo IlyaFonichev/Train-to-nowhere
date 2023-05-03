@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
         isInstantiate = false;
         if (SceneManager.GetActiveScene().name == "TestLobby")
         {
+            CameraController.instance.GetComponent<Camera>().backgroundColor = Color.blue;
             isInstantiate = true;
             PlayerPrefs.SetInt("Depth", 0);
         }
