@@ -10235,7 +10235,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 0
   useUnscaledTime: 0
@@ -11164,7 +11164,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 30
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -11551,7 +11551,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -11559,17 +11559,17 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0, b: 0, a: 1}
-        key1: {r: 1, g: 0.7108608, b: 0, a: 1}
-        key2: {r: 1, g: 0.7108608, b: 0, a: 0}
+        key0: {r: 1, g: 0.5235849, b: 0.93104523, a: 1}
+        key1: {r: 0.5518868, g: 0.59566796, b: 1, a: 1}
+        key2: {r: 0, g: 0.10349083, b: 1, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
-        ctime0: 0
-        ctime1: 37394
-        ctime2: 44718
+        ctime0: 16191
+        ctime1: 27949
+        ctime2: 35659
         ctime3: 0
         ctime4: 0
         ctime5: 0
@@ -15576,5 +15576,9 @@ MonoBehaviour:
   speed: 10
   damage: 0
   damageZone: {fileID: 0}
+  isSpawn: 0
+  stickParticleSystem: {fileID: 8058412260181215629}
+  animator: {fileID: 594676746152168715}
   bulletPrefab: {fileID: 4347170006326144387, guid: e618c358c51ad2e49b84c2839877900b, type: 3}
   meteorPrefab: {fileID: 4347170006326144387, guid: e618c358c51ad2e49b84c2839877900b, type: 3}
+  hpBar: {fileID: 2363352700897697939}

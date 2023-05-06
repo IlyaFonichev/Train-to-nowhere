@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private GameObject weaponManager;
     public static HealthOfPlayer GetHealthOfPlayer() { return _healthOfPlayer; }
     public static Score GetScoreOfPlayer() { return _scoreOfOlayer; }
+    public Vector3 position;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        position = _rigidBody.position;
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
         float moveVertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(moveHorizontal, 0, moveVertical);

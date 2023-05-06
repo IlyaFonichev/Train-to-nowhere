@@ -70,9 +70,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 551689209
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: 261442263
+  m_SortingLayer: 2
+  m_SortingOrder: 6
   m_Sprite: {fileID: -2413806693520163455, guid: 72cab5f0cf9fd9346804a7e9ac9daeeb, type: 3}
   m_Color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
   m_FlipX: 0
@@ -93,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8103496059101521384}
+  - component: {fileID: -7894309474938544508}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -116,3 +117,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7894309474938544508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103496059101521383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c3383da63cc5a4c8c85a3376030d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 8103496058374023036}
+  variant:
+  - {fileID: -1540140533, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -1407883078, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: 1331136546, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -1210403894, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: 916227408, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -1464363080, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: 1072690731, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -9163775, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}

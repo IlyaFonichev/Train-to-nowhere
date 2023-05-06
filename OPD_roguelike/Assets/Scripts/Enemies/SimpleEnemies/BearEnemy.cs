@@ -10,6 +10,7 @@ public class BearEnemy : OriginEnemy
 
     public override void Initialization()
     {
+        isSpawn = true;
         nextTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
         preTargetPosition = new Vector3(roomOrigin.x + Random.Range(-6f, 6f), 0, roomOrigin.z + Random.Range(-3f, 3f));
         targetVector = preTargetPosition;

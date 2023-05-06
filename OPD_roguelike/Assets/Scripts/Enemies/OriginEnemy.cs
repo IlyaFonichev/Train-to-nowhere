@@ -22,6 +22,8 @@ public abstract class OriginEnemy : MonoBehaviour
     private float speed, damage;
     [HideInInspector]
     public GameObject damageZone;
+    [HideInInspector]
+    public bool isSpawn;
 
     public enum Condition
     {
@@ -54,14 +56,17 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch (other.tag)
+        if(isSpawn)
         {
-            case "Bullet":
-                TakeDamge();
-                Destroy(other);
-                break;
-            default:
-                break;
+            switch (other.tag)
+            {
+                case "Bullet":
+                    TakeDamge();
+                    Destroy(other);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

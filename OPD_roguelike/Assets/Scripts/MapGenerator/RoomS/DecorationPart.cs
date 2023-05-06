@@ -22,6 +22,7 @@ public class DecorationPart : MonoBehaviour
                     Quaternion.identity);
                 dekor.transform.SetParent(transform.parent);
                 dekor.transform.localScale = new Vector3(dekor.transform.localScale.x * Mathf.Pow(-1, Random.Range(0, 2)), dekor.transform.localScale.y, dekor.transform.localScale.z);
+                dekor.GetComponent<Decorations>().SetSprite();
             }
             Destroy(dekorPositions.transform.GetChild(i).gameObject);
         }

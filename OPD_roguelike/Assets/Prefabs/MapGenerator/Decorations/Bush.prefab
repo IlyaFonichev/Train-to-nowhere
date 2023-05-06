@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1489210731275986742}
+  - component: {fileID: -3923834038539583262}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -32,6 +33,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3923834038539583262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489210731275986745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c3383da63cc5a4c8c85a3376030d1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1489210732171552162}
+  variant:
+  - {fileID: 1167366069, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -663441921, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -669365770, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: -1106840855, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
+  - {fileID: 376006155, guid: de9ce3fd03ab54f43a6e8ccef750b9ab, type: 3}
 --- !u!1 &1489210732171552164
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,9 +122,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 551689209
-  m_SortingLayer: 1
-  m_SortingOrder: 1
+  m_SortingLayerID: 261442263
+  m_SortingLayer: 2
+  m_SortingOrder: 6
   m_Sprite: {fileID: 7482667652216324306, guid: 89fbb7718032f8a458b78bb4aa55651a, type: 3}
   m_Color: {r: 0.0141509175, g: 1, b: 0.30780172, a: 1}
   m_FlipX: 0
