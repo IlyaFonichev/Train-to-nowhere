@@ -21,6 +21,10 @@ public class MouseEnemy : OriginEnemy
         Vector3 direction = (targetVector - rb.transform.position).normalized;
         rb.velocity = new Vector3(direction.x,
             0, direction.z) * Speed;
+        if (rb.velocity.x > 0)
+            sprite.localScale = new Vector3(2, 2, 1);
+        if (rb.velocity.x < 0)
+            sprite.localScale = new Vector3(-2, 2, 1);
     }
 
     public void CheckDistance()

@@ -24,6 +24,7 @@ public abstract class OriginEnemy : MonoBehaviour
     public GameObject damageZone;
     [HideInInspector]
     public bool isSpawn;
+    public Transform sprite;
 
     public enum Condition
     {
@@ -72,9 +73,9 @@ public abstract class OriginEnemy : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //Test
-        if (_condition != Condition.Died)
-            StartCoroutine(Death());
+        ////Test
+        //if (_condition != Condition.Died)
+        //    StartCoroutine(Death());
     }
 
     private void OnDestroy()

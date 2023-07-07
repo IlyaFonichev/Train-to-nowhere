@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 1f;
     [SerializeField] private AnimationCurve dashSpeedCurve;
     [SerializeField] private float dashTime = 0.5f;
+    [SerializeField] private Transform spriteRenderer;
 
     private Rigidbody _rigidBody;
     private bool isDashing;
@@ -61,6 +62,10 @@ public class PlayerController : MonoBehaviour
     {
         position = _rigidBody.position;
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        if (moveHorizontal > 0)
+            spriteRenderer.localScale = new Vector3(-0.7f, spriteRenderer.localScale.y, spriteRenderer.localScale.z);
+        if (moveHorizontal < 0)
+            spriteRenderer.localScale = new Vector3(0.7f, spriteRenderer.localScale.y, spriteRenderer.localScale.z);
         float moveVertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(moveHorizontal, 0, moveVertical);
         if (MapGenerator.instance)
@@ -79,7 +84,6 @@ public class PlayerController : MonoBehaviour
         isInstantiate = false;
         if (SceneManager.GetActiveScene().name == "TestLobby")
         {
-            CameraController.instance.GetComponent<Camera>().backgroundColor = Color.blue;
             isInstantiate = true;
             PlayerPrefs.SetInt("Depth", 0);
         }

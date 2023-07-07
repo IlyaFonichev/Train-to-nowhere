@@ -90,32 +90,7 @@ public class WizardBoss : OriginEnemy
 
     private void Update()
     {
-        if(isSpawn)
-        {
-            rb.velocity = new Vector3(direction.x,
-                0, direction.z) * Speed;
-            if (type == TypeOfAtack.Dash)
-            {
-                if (Vector3.Distance(transform.position, targetDashVector) > 0.5f)
-                {
-                    if (Speed < maxSpeed)
-                        Speed += Time.deltaTime * 25f;
-                    else
-                        Speed = maxSpeed;
-                }
-                else
-                {
-                    if (Speed > 0)
-                        Speed -= Time.deltaTime * 50f;
-                    else
-                    {
-                        rb.velocity = Vector3.zero;
-                        Speed = 0;
-                        type = TypeOfAtack.Stay;
-                    }
-                }
-            }
-        }
+
     }
 
     public override void Initialization()
